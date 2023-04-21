@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->string('signed_by')->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FormControllers\PeopleController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -21,4 +22,13 @@ Route::get('/', function () {
 
 Auth::routes(['verify' => true]);
 
-Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('verified');
+
+Route::prefix('/home')->middleware(['auth', 'verified'])->group(function () {
+
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+
+    Route::post("/guest-application", [PeopleController::class, 'store'])->name('user.app.create');
+    Route::get("/guest-application/{app}", [PeopleController::class, 'show'])->name('user.app.show');
+});
+
+

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class PeopleList extends Model
 {
@@ -11,6 +12,7 @@ class PeopleList extends Model
 
     protected $fillable = [
 
+        'user_id',
         'signed_by',
         'start_date', 'end_date',
         'object', 'purpose',
@@ -20,5 +22,13 @@ class PeopleList extends Model
         'phone_number'
 
     ];
+
+
+    public function user(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class);
+
+    }
+
 
 }
