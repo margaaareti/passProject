@@ -14,17 +14,16 @@ return new class extends Migration
         Schema::create('people_lists', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->unsignedBigInteger('user_id');
             $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete();
-            $table->string('signed_by')->nullable();
-            $table->date('start_date')->nullable();
-            $table->date('end_date')->nullable();
-            $table->string('object')->nullable();
-            $table->string('purpose')->nullable();
+            $table->string('signed_by');
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->string('object');
+            $table->string('purpose');
             $table->string('contract_number');
-            $table->string('equipment');
-            $table->string('guests')->nullable();
-            $table->string('phone_number')->nullable();
+            $table->string('equipment')->nullable();
+            $table->string('guest');
+            $table->string('phone_number');
 
         });
     }
