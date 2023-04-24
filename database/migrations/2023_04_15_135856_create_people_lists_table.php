@@ -22,11 +22,12 @@ return new class extends Migration
             $table->string('purpose');
             $table->string('contract_number');
             $table->string('equipment')->nullable();
-            $table->string('guest');
+            $table->integer('guests_count')->default(0);
             $table->string('phone_number');
 
         });
     }
+
 
     /**
      * Reverse the migrations.

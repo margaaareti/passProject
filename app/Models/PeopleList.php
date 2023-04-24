@@ -16,7 +16,7 @@ class PeopleList extends Model
         'signed_by',
         'start_date', 'end_date',
         'object', 'purpose',
-        'guest',
+        'guests_count',
         'contract_number',
         'equipment',
         'phone_number'
@@ -29,5 +29,8 @@ class PeopleList extends Model
       return $this->belongsTo(User::class);
     }
 
+    public function guests() {
+        return $this->belongsToMany(Guest::class, 'form_guests');
+    }
 
 }

@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class GuestAppController extends Controller
 {
 
-    protected $guestAppService;
+    protected GuestAppService $guestAppService;
 
     public function __construct(GuestAppService $guestAppService)
     {
@@ -37,6 +37,7 @@ class GuestAppController extends Controller
         $request->validated($request->all());
 
         $this->guestAppService->create($request->all());
+
 
         return redirect()->route('home');
     }

@@ -101,8 +101,8 @@
 
                         <div class="form-group">
                             <label for="guest">ФИО гостя:</label>
-                            <input type="text" name="guest" value="{{ old('guest') }}" id="guest" class="form-control @error('guest') is-invalid @enderror" required>
-                            @error('guest')
+                            <input type="text" name="guests" value="{{ old('guests') }}" id="guest" class="form-control @error('guests') is-invalid @enderror" required>
+                            @error('guests')
                             <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
