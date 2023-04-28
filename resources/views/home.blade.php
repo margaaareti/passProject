@@ -39,6 +39,7 @@
                             @enderror
                         </div>
 
+
                         <div class="form-group">
                             <label for="start_date">Начальная дата:</label>
                             <input type="date" name="start_date" value="{{ old('start_date') ?? now()->format('Y-m-d') }}" id="start_date" class="form-control @error('start_date') is-invalid @enderror" required>
@@ -51,7 +52,7 @@
 
                         <div class="form-group">
                             <label for="end_date">Конечная дата:</label>
-                            <input type="date" name="end_date" value="{{ old('start_date') ?? now()->format('Y-m-d') }}" id="end_date" class="form-control @error('start_date') is-invalid @enderror " required>
+                            <input type="date" name="end_date" value="{{ old('end_date') ?? now()->format('Y-m-d') }}" id="end_date" class="form-control @error('end_date') is-invalid @enderror " required>
                             @error('end_date')
                             <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -73,6 +74,16 @@
                             <label for="purpose">Цель приглашения:</label>
                             <textarea name="purpose" id="purpose" class="form-control @error('start_date') is-invalid @enderror " required>{{ old('purpose') }}</textarea>
                             @error('purpose')
+                            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="department">Подразделение:</label>
+                            <textarea name="department" id="department" class="form-control @error('department') is-invalid @enderror " required>{{ old('department') }}</textarea>
+                            @error('department')
                             <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

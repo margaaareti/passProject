@@ -23,6 +23,7 @@ class StoreGuestAppRequest extends FormRequest
     {
         return [
             'signed_by' => ['required', 'string', 'max:100'],
+            'department' => ['required', 'string', 'max:100'],
             'start_date' => ['required', 'date', 'after or equal:today'],
             'end_date' => ['required', 'after or equal: today'],
             'object' => ['required', 'string'],
