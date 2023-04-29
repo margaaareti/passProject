@@ -58,7 +58,7 @@ class GuestAppRepository
             $data['number'] = $date . '/' . $number;
 
 
-            $appList = $this->appModel->create($data);
+            $appList = $this->appMogit del->create($data);
 
             foreach ($data['guests'] as $guest_name) {
 
