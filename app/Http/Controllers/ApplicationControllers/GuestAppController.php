@@ -15,6 +15,7 @@ class GuestAppController extends Controller
     public function __construct(GuestAppService $guestAppService)
     {
         $this->guestAppService = $guestAppService;
+        $this->middleware('custom.throttle
 
     }
 
@@ -38,8 +39,7 @@ class GuestAppController extends Controller
 
         $this->guestAppService->create($request->all());
 
-
-        return redirect()->route('home');
+        return redirect('home')->withInput();
     }
 
 
