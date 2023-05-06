@@ -6,7 +6,6 @@ namespace App\Repositories;
 use App\Models\Guest;
 use App\Models\PeopleList;
 use Illuminate\Support\Facades\Auth;
-use Revolution\Google\Sheets\Facades\Sheets;
 
 
 class GuestAppRepository
@@ -41,6 +40,7 @@ class GuestAppRepository
 
                 $appList->guests()->attach($guest->id);
             }
+
 
             $this->guestAppSheets->create($data);
 

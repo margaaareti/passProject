@@ -14,8 +14,8 @@ class GuestAppController extends Controller
 
     public function __construct(GuestAppService $guestAppService)
     {
+        $this->middleware('custom.throttle');
         $this->guestAppService = $guestAppService;
-        $this->middleware('custom.throttle
 
     }
 
@@ -35,11 +35,32 @@ class GuestAppController extends Controller
     public function store(StoreGuestAppRequest $request)
     {
 
+        $token = $request->input('_token');
+
+
+        // Получаем время последнего отправленного запроса, связанного с CSRF токеном, из сессии сервера
+        $lastRequestTime = $request->session()->get('lastRequestTime_' . $token, 0);
+
+        //Получаем текущее время
+        $currentTime = time();
+
+
+        if ($currentTime - $lastRequestTime < 5) {
+
+            $request->session()->flashInput($request->input());
+            return redirect()->back()->withErrors('Ошибка:превышено ограничение количества запросов');
+        }
+
+        // Сохраняем время текущего запроса для CSRF токена в сессии сервера
+        $request->session()->put('lastRequestTime_' . $token, $currentTime);
+
+
+
         $request->validated($request->all());
 
         $this->guestAppService->create($request->all());
 
-        return redirect('home')->withInput();
+        return redirect('home')->withInput()->with('success','Форма отправлено успешно');
     }
 
 
