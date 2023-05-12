@@ -26,10 +26,11 @@
 
                 <div class="card mt-4 ps-4 pe-4">
 
+
                     <form class="mt-3" method="POST" action="{{ route('user.app.create') }}">
                         @csrf
                         @if ($errors->any())
-                            <div class="alert alert-danger">
+                            <div class="alert alert-danger pb-0">
                                 <ul>
                                     @foreach ($errors->all() as $error)
                                         <li>{{ $error }}</li>
@@ -43,6 +44,19 @@
                                 </div>
                             @endif
                         @endif
+
+                        <div class="form-group">
+                            <label for="department">Подразделение:</label>
+                            <input name="department" id="department"
+                                   class="form-control @error('department') is-invalid @enderror"
+                                   value="{{ old('department') }}" required>
+
+                            @error('department')
+                            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                            @enderror
+                        </div>
 
                         <div class="form-group">
                             <label for="signed_by">Кем одобрена заявка:</label>
@@ -80,15 +94,59 @@
                             @enderror
                         </div>
 
-                        <div class="form-group">
-                            <label for="object">Объекты, на который необходим доступ:</label>
-                            <textarea name="object" id="object" class="form-control"
-                                      required> {{ old('object') }} </textarea>
-                            @error('object')
-                            <span class="invalid-feedback" role="alert">
+
+                        <div class="time_range">
+
+                            <div class="form-group time_start">
+                                <label for="time_start">Время c:</label>
+                                <input type="text" name="time_start" value="{{ old('time_range') }}"
+                                       id="time_start" class="form-control @error('time_range') is-invalid @enderror ">
+                                @error('time_range')
+                                <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
-                            @enderror
+                                @enderror
+                            </div>
+
+                            <div class="form-group time_end">
+                                <label for="time_end">До:</label>
+                                <input type="text" name="time_end" value="{{ old('time_end') }}"
+                                       id="time_end" class="form-control @error('time_end') is-invalid @enderror ">
+                                @error('time_start')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="object">Объекты, на который необходим доступ:</label>
+                                <select name="object[]" id="object" class="form-control" multiple="multiple"
+                                        required>
+                                    <option value="К49">Кронверский,49</option>
+                                    <option value="Л9">Ломоносова,9</option>
+                                    <option value="Л9 лит.М">Ломоносова,9 (здание бывш. церкви)</option>
+                                    <option value="Гр14">Гривцова,14</option>
+                                    <option value="Б4">Биржевая,4</option>
+                                    <option value="Б14">Биржевая,14</option>
+                                    <option value="Б16">Биржевая,16</option>
+                                    <option value="Ч14">Чайковского,11</option>
+                                    <option value="Хрустальная">Хрустальная</option>
+                                    <option value="Вяземский">Вяземский</option>
+                                    <option value="Ленсовета">Ленсовета</option>
+                                    <option value="Серебристый">Серебристый</option>
+                                </select>
+
+                                @error('object')
+
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                 </span>
+
+                                @enderror
                         </div>
 
                         <div class="form-group">
@@ -103,17 +161,6 @@
                             @enderror
                         </div>
 
-                        <div class="form-group">
-                            <label for="department">Подразделение:</label>
-                            <textarea name="department" id="department"
-                                      class="form-control @error('department') is-invalid @enderror "
-                                      required>{{ old('department') }}</textarea>
-                            @error('department')
-                            <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                            @enderror
-                        </div>
 
                         <div class="form-group">
                             <label for="contract_number">Номер договора:</label>
@@ -154,9 +201,13 @@
                             <input type="text" name="phone_number" value="{{ old('phone_number','89384528803')}}"
                                    id="phone_number" class="form-control @error('phone_number') is-invalid @enderror">
                             @error('phone_number')
-                            <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+
+                            @foreach($errors->get('phone_number') as $error)
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $error }}</strong>
                                     </span>
+                            @endforeach
+
                             @enderror
                         </div>
 
@@ -164,8 +215,9 @@
                             <button type="submit" class="btn btn-primary">Отправить</button>
                         </div>
 
-
                     </form>
+
+
 
                     <script>
                         const successMessage = document.getElementById('success-message');
@@ -180,5 +232,8 @@
                 </div>
             </div>
         </div>
+
+
+    </div>
     </div>
 @endsection

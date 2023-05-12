@@ -39,6 +39,8 @@ return [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
+            'remember' => true, // включаем "запоминание" для guard 'web'
+            'lifetime' => 43200, // время хранения токена "запоминания" в минутах (30 дней = 43200 минут)
         ],
     ],
 

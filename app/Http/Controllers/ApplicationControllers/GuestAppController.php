@@ -55,7 +55,6 @@ class GuestAppController extends Controller
         $request->session()->put('lastRequestTime_' . $token, $currentTime);
 
 
-
         $request->validated($request->all());
 
         $this->guestAppService->create($request->all());

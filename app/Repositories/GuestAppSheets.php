@@ -46,12 +46,20 @@ class GuestAppSheets
             $counter->save();
         }
 
+
+
         // форматируем номер заявки в строку с нулями в начале
         $number = sprintf('%03d', $counter->value);
         $data['number'] = $this->date . '/' . $number;
+
+        //Приводим дату к виду день.месяц.год
+        $data['start_date'] = date_format(date_create($data['start_date']), 'd.m.Y');
+        $data['end_date'] = date_format(date_create($data['end_date']), 'd.m.Y');
+
+
         $array = [
-            $data['number'], $data['department'],//null,$data['signed_by'],$data['start_date'],$data['end_date'],
-            //null,$data['object'],$data['type'],
+            $data['number'], $data['department'],$data['signed_by'],$data['start_date'],$data['end_date'],
+            $data['time_range'],$data['object'],$data['type'], $data['purpose'],
             //null,$data['contract_number'],null,$data['equipment'],$data['guests'],null,null,null,null,
             //null,$data['responsible_person'],$data['phone_number']
         ];
@@ -63,6 +71,7 @@ class GuestAppSheets
 
 
         $sheet = Sheets::spreadsheet(config('google.post_spreadsheet_id'))->sheetById('google.post_sheet_id')->range($range_to_fill)->append([$array]);
+
 
         $response = Sheets::spreadsheet($spreadsheetId)->range($range_to_paint)->get();
         $rows = $response->toArray();

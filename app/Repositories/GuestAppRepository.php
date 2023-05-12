@@ -30,6 +30,8 @@ class GuestAppRepository
 
         $data['responsible_person'] = Auth::user()->name;
 
+        $data['object'] = implode("\n", $data['object']);
+
             $appList = $this->appModel->create($data);
 
             foreach ($data['guests'] as $guest_name) {

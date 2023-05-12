@@ -1,8 +1,54 @@
-// Fonts
-@import url('https://fonts.bunny.net/css?family=Nunito');
-
 // Variables
 @import 'variables';
 
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
+
+
+.time_range {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+    .time_start {
+        width: 30%;
+        margin-right: 12px;
+
+        label {
+            margin-left: 3px;
+        }
+    }
+
+    .time_end {
+        width: 30%;
+
+        label {
+            margin-left: 3px;
+        }
+    }
+}
+
+
+.select2-close-btn {
+    width: 150px;
+    position: relative;
+    margin: 10px;
+    padding: 5px;
+    background-color: #e50c0c;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+
+    &:hover {
+        background: #1a202c;
+    }
+}
+
+
+
+
+
+
+

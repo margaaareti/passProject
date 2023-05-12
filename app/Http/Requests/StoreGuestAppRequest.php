@@ -26,7 +26,7 @@ class StoreGuestAppRequest extends FormRequest
             'department' => ['required', 'string', 'max:100'],
             'start_date' => ['required', 'date', 'after or equal:today'],
             'end_date' => ['required', 'after or equal: today'],
-            'object' => ['required', 'string'],
+            'object' => ['required','array'],
             'purpose' => ['required', 'string', 'max:150'],
             'contract_number' => ['string', 'max:150'],
             'equipment' => ['required', 'string', 'max:250'],
