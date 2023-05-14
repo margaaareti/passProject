@@ -4,11 +4,13 @@ namespace App\Repositories;
 
 use App\Models\Counter;
 use App\Models\PeopleList;
+use DateTime;
 use Revolution\Google\Sheets\Facades\Sheets;
 
 
 class GuestAppSheets
 {
+
 
     protected string $date;
     protected peopleList $appModel;
@@ -26,30 +28,10 @@ class GuestAppSheets
     public function create(array $data)
     {
 
-        $data['type'] = 'Проход посетителей';
-
-        $lastRecord = $this->appModel->latest()->first();
-
-
-        //Получаем значение счетчика из базы данных
-        $counter = Counter::first();
-        if (!$counter) {
-            $counter = new Counter(['value' => 0]);
-            $counter->save();
-        }
-
-        if ($lastRecord && $lastRecord->created_at->format('d.m.Y') == $this->date) {
-            $counter->increment('value');
-            $counter->save();
-        } else {
-            $counter->update(['value' => 1]);
-            $counter->save();
-        }
-
 
 
         // форматируем номер заявки в строку с нулями в начале
-        $number = sprintf('%03d', $counter->value);
+        $number = sprintf('%03d',$data['counter']);
         $data['number'] = $this->date . '/' . $number;
 
         //Приводим дату к виду день.месяц.год
@@ -60,7 +42,7 @@ class GuestAppSheets
         $array = [
             $data['number'], $data['department'],$data['signed_by'],$data['start_date'],$data['end_date'],
             $data['time_range'],$data['object'],$data['type'], $data['purpose'],
-            //null,$data['contract_number'],null,$data['equipment'],$data['guests'],null,null,null,null,
+            $data['contract_number'],//null,$data['equipment'],$data['guests'],null,null,null,null,
             //null,$data['responsible_person'],$data['phone_number']
         ];
 

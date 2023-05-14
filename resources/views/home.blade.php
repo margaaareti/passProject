@@ -129,15 +129,20 @@
                                     <option value="К49">Кронверский,49</option>
                                     <option value="Л9">Ломоносова,9</option>
                                     <option value="Л9 лит.М">Ломоносова,9 (здание бывш. церкви)</option>
-                                    <option value="Гр14">Гривцова,14</option>
-                                    <option value="Б4">Биржевая,4</option>
-                                    <option value="Б14">Биржевая,14</option>
-                                    <option value="Б16">Биржевая,16</option>
-                                    <option value="Ч14">Чайковского,11</option>
-                                    <option value="Хрустальная">Хрустальная</option>
-                                    <option value="Вяземский">Вяземский</option>
-                                    <option value="Ленсовета">Ленсовета</option>
-                                    <option value="Серебристый">Серебристый</option>
+                                    <option value="Гривцова 14">Гривцова,14</option>
+                                    <option value="Биржевая 4">Биржевая,4</option>
+                                    <option value="Биржевая 14">Биржевая,14</option>
+                                    <option value="Биржевая 16">Биржевая,16</option>
+                                    <option value="Чайковского 14">Чайковского,11</option>
+                                    <option value="Хрустальная 14">Хрустальная</option>
+                                    <option value="Гастелло 12">Хрустальная</option>
+                                    <option value="Вяземский 5-7">Вяземский</option>
+                                    <option value="Ленсовета 23">Ленсовета</option>
+                                    <option value="Новоизмайловский,34">Новоизмайловский</option>
+                                    <option value="2-я Комсомольская 5-7">2-я Комсомольская</option>
+                                    <option value="Альпийский 15">Альпийский 15</option>
+                                    <option value="Кадетская 3">Кадетская 3</option>
+                                    <option value="Ягодное">Ягодное</option>
                                 </select>
 
                                 @error('object')
