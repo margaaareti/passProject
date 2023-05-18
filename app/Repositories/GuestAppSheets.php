@@ -2,9 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\Counter;
 use App\Models\PeopleList;
-use DateTime;
 use Revolution\Google\Sheets\Facades\Sheets;
 
 
@@ -28,7 +26,7 @@ class GuestAppSheets
     public function create(array $data)
     {
 
-
+        $data['guests'] = implode("\n", $data['guests']);
 
         // форматируем номер заявки в строку с нулями в начале
         $number = sprintf('%03d',$data['counter']);
@@ -41,8 +39,8 @@ class GuestAppSheets
 
         $array = [
             $data['number'], $data['department'],$data['signed_by'],$data['start_date'],$data['end_date'],
-            $data['time_range'],$data['object'],$data['type'], $data['purpose'],
-            $data['contract_number'],//null,$data['equipment'],$data['guests'],null,null,null,null,
+            $data['time_range'],$data['object'],$data['application_type'], $data['purpose'],
+            $data['contract_number'],$data['rooms'],$data['equipment'],$data['guests']//null,null,null,null,
             //null,$data['responsible_person'],$data['phone_number']
         ];
 

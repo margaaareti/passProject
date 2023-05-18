@@ -11,7 +11,7 @@ use Illuminate\Http\Response;
 class CustomThrottleMiddleware
 {
 
-    protected $limiter;
+    protected RateLimiter $limiter;
 
     public function __construct(RateLimiter $limiter)
     {

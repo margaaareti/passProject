@@ -18,9 +18,9 @@ class GuestAppService
     public function create(array $data)
     {
 
-        $data['guests_count'] = count(explode(',', $data['guests']));
-        $data['guests'] = explode(',', $data['guests']);
-        $data['type'] = 'Проход посетителей';
+        $data['guests'] = preg_split("/[\n,]+/", str_replace("\r\n", "\n", $data['guests']));
+        $data['guests_count'] = count($data['guests']);
+        $data['application_type'] = 'Проход посетителей';
 
 
         if (isset($data['time_start']) && isset($data['time_end'])) {
@@ -32,7 +32,6 @@ class GuestAppService
         if (!isset($data['contract_number'])) {
             $data['contract_number'] = '';
         };
-
 
         return $this->guestAppRepository->create($data);
 

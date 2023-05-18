@@ -1,6 +1,8 @@
 import './bootstrap';
 
-    $('#time_start, #time_end').timepicker({
+//Выпадающий список с выбором времени
+
+$('#time_start, #time_end').timepicker({
     timeFormat: 'HH:mm',
     interval: 60,
     minTime: '00:00',
@@ -10,13 +12,15 @@ import './bootstrap';
     scrollbar: true,
     range: true,
     //startTime: '08:00',
-   // endTime: '22:00',
-   // defaultTime: '08:00',
-   // defaultValue: '08:00-09:00',
+    // endTime: '22:00',
+    // defaultTime: '08:00',
+    // defaultValue: '08:00-09:00',
 });
 
 
-$(document).ready(function() {
+//Выпадающий список с выбором объектов
+
+$(document).ready(function () {
     var $objectSelect = $('#object');
 
     $objectSelect.select2({
@@ -25,12 +29,12 @@ $(document).ready(function() {
     });
 
 
-    $objectSelect.on('select2:close', function() {
+    $objectSelect.on('select2:close', function () {
         $(this).select2('close');
     });
 
 
-    $objectSelect.on('select2:open', function() {
+    $objectSelect.on('select2:open', function () {
         var $dropdown = $('.select2-dropdown');
         if ($dropdown.find('.select2-close-btn').length === 0) {
             $dropdown.append('<button class="select2-close-btn">Закрыть</button>');
@@ -38,18 +42,29 @@ $(document).ready(function() {
     });
 
 
-    $(document).on('click', '.select2-close-btn', function() {
+    $(document).on('click', '.select2-close-btn', function () {
         $('#object').select2('close');
     });
 
-    $(document).ready(function() {
-        $('#object').on('change', function() {
+
+    $(document).ready(function () {
+        $('#object').on('change', function () {
             var selectedValues = $(this).val();
             console.log(selectedValues);
         });
     });
 
 });
+
+
+//Обработка ввода пользователя в поле выбора помещений. Добавление запятое после каждого пробела при вводе
+var roomsInput = document.getElementById('rooms');
+
+roomsInput.addEventListener('input', function(event) {
+    var inputValue = event.target.value;
+    event.target.value = inputValue.replace(/(?<=\w|\p{L})(?=\s)/gu, ',');
+});
+
 
 
 

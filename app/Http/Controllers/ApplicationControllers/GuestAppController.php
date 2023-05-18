@@ -54,7 +54,6 @@ class GuestAppController extends Controller
         // Сохраняем время текущего запроса для CSRF токена в сессии сервера
         $request->session()->put('lastRequestTime_' . $token, $currentTime);
 
-
         $request->validated($request->all());
 
         $this->guestAppService->create($request->all());

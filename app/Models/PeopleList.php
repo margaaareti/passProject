@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class PeopleList extends Model
@@ -16,6 +17,7 @@ class PeopleList extends Model
         'signed_by',
         'start_date', 'end_date',
         'object', 'purpose',
+        'rooms',
         'guests_count',
         'contract_number',
         'equipment',
@@ -24,12 +26,13 @@ class PeopleList extends Model
     ];
 
 
-    public function user()
+    public function user(): BelongsTo
     {
       return $this->belongsTo(User::class);
     }
 
-    public function guests() {
+    public function guests(): BelongsToMany
+    {
         return $this->belongsToMany(Guest::class, 'form_guests');
     }
 

@@ -14,11 +14,12 @@ return new class extends Migration
         Schema::create('people_lists', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('signed_by');
             $table->date('start_date');
             $table->date('end_date');
             $table->string('object');
+            $table->string('rooms')->nullable();
             $table->string('purpose');
             $table->string('contract_number');
             $table->string('equipment')->nullable();

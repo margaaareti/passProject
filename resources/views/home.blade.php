@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -25,7 +26,6 @@
 
 
                 <div class="card mt-4 ps-4 pe-4">
-
 
                     <form class="mt-3" method="POST" action="{{ route('user.app.create') }}">
                         @csrf
@@ -124,34 +124,46 @@
 
                         <div class="form-group">
                             <label for="object">Объекты, на который необходим доступ:</label>
-                                <select name="object[]" id="object" class="form-control" multiple="multiple"
-                                        required>
-                                    <option value="К49">Кронверский,49</option>
-                                    <option value="Л9">Ломоносова,9</option>
-                                    <option value="Л9 лит.М">Ломоносова,9 (здание бывш. церкви)</option>
-                                    <option value="Гривцова 14">Гривцова,14</option>
-                                    <option value="Биржевая 4">Биржевая,4</option>
-                                    <option value="Биржевая 14">Биржевая,14</option>
-                                    <option value="Биржевая 16">Биржевая,16</option>
-                                    <option value="Чайковского 14">Чайковского,11</option>
-                                    <option value="Хрустальная 14">Хрустальная</option>
-                                    <option value="Гастелло 12">Хрустальная</option>
-                                    <option value="Вяземский 5-7">Вяземский</option>
-                                    <option value="Ленсовета 23">Ленсовета</option>
-                                    <option value="Новоизмайловский,34">Новоизмайловский</option>
-                                    <option value="2-я Комсомольская 5-7">2-я Комсомольская</option>
-                                    <option value="Альпийский 15">Альпийский 15</option>
-                                    <option value="Кадетская 3">Кадетская 3</option>
-                                    <option value="Ягодное">Ягодное</option>
-                                </select>
+                            <select name="object[]" id="object" class="form-control" multiple="multiple"
+                                    required>
+                                <option value="К49">Кронверский,49</option>
+                                <option value="Л9">Ломоносова,9</option>
+                                <option value="Л9 лит.М">Ломоносова,9 (здание бывш. церкви)</option>
+                                <option value="Гривцова 14">Гривцова,14</option>
+                                <option value="Биржевая 4">Биржевая,4</option>
+                                <option value="Биржевая 14">Биржевая,14</option>
+                                <option value="Биржевая 16">Биржевая,16</option>
+                                <option value="Чайковского 14">Чайковского,11</option>
+                                <option value="Хрустальная 14">Хрустальная</option>
+                                <option value="Гастелло 12">Хрустальная</option>
+                                <option value="Вяземский 5-7">Вяземский</option>
+                                <option value="Ленсовета 23">Ленсовета</option>
+                                <option value="Новоизмайловский,34">Новоизмайловский</option>
+                                <option value="2-я Комсомольская 5-7">2-я Комсомольская</option>
+                                <option value="Альпийский 15">Альпийский 15</option>
+                                <option value="Кадетская 3">Кадетская 3</option>
+                                <option value="Ягодное">Ягодное</option>
+                            </select>
 
-                                @error('object')
+                            @error('object')
 
-                                <span class="invalid-feedback" role="alert">
+                            <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                  </span>
 
-                                @enderror
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="rooms">Номера помещений:</label>
+                            <textarea name="rooms" id="rooms"
+                                      class="form-control @error('rooms') is-invalid @enderror "
+                                      required>{{ old('rooms') }}</textarea>
+                            @error('rooms')
+                            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                            @enderror
                         </div>
 
                         <div class="form-group">
@@ -191,14 +203,19 @@
                         </div>
 
                         <div class="form-group">
+
                             <label for="guest">ФИО гостя:</label>
-                            <input type="text" name="guests" value="{{ old('guests') }}" id="guest"
-                                   class="form-control @error('guests') is-invalid @enderror" required>
+
+                            <textarea type="text" name="guests" id="guests"
+                                      class="form-control @error('guests') is-invalid @enderror"
+                                      required>{{ old('guests') }}</textarea>
+
                             @error('guests')
                             <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                             @enderror
+
                         </div>
 
                         <div class="form-group">
@@ -221,7 +238,6 @@
                         </div>
 
                     </form>
-
 
 
                     <script>

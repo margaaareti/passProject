@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Guest extends Model
 {
@@ -14,7 +15,8 @@ class Guest extends Model
     ];
 
 
-    public function form() {
+    public function form():BelongsToMany
+    {
         return $this->belongsToMany(PeopleList::class, 'form_guests');
     }
 }
