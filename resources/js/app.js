@@ -57,13 +57,55 @@ $(document).ready(function () {
 });
 
 
-//Обработка ввода пользователя в поле выбора помещений. Добавление запятое после каждого пробела при вводе
+//Обработка ввода пользователя в поле выбора помещений. Добавление запятой после каждого пробела при вводе
 var roomsInput = document.getElementById('rooms');
 
-roomsInput.addEventListener('input', function(event) {
+roomsInput.addEventListener('input', function (event) {
     var inputValue = event.target.value;
     event.target.value = inputValue.replace(/(?<=\w|\p{L})(?=\s)/gu, ',');
 });
+
+
+// Функция для форматирования номера телефона
+$(document).ready(function () {
+    var $phoneNumberInput = $('#phone_number');
+    var maxDigits = 11; // Максимальное количество цифр
+
+    $phoneNumberInput.on('input', function () {
+        var phoneNumber = $(this).val();
+        phoneNumber = phoneNumber.replace(/\D/g, ''); // Удаление всех нецифровых символов
+        var formattedNumber = '';
+
+        if (phoneNumber.length > 0) {
+            formattedNumber += phoneNumber.substring(0, 1);
+        }
+        if (phoneNumber.length > 1) {
+            formattedNumber += '-' + phoneNumber.substring(1, 4);
+        }
+        if (phoneNumber.length > 4) {
+            formattedNumber += '-' + phoneNumber.substring(4, 7);
+        }
+        if (phoneNumber.length > 7) {
+            formattedNumber += '-' + phoneNumber.substring(7, 9);
+        }
+        if (phoneNumber.length > 9) {
+            formattedNumber += '-' + phoneNumber.substring(9, maxDigits);
+        }
+
+        var cursorPosition = getCaretPosition(this);
+        var isDeleting = cursorPosition < $(this).val().length;
+
+        $(this).val(formattedNumber);
+
+
+    });
+
+    $phoneNumberInput.attr('maxlength', maxDigits + 4); // Установка максимальной длины поля вместе с дефисами
+
+});
+
+
+
 
 
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreGuestAppRequest;
 use App\Services\Applications\GuestAppService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class GuestAppController extends Controller
 {
@@ -34,6 +35,7 @@ class GuestAppController extends Controller
 
     public function store(StoreGuestAppRequest $request)
     {
+        $user = Auth::user();
 
         $token = $request->input('_token');
 
@@ -57,6 +59,7 @@ class GuestAppController extends Controller
         $request->validated($request->all());
 
         $this->guestAppService->create($request->all());
+
 
         return redirect('home')->withInput()->with('success','Форма отправлено успешно');
     }

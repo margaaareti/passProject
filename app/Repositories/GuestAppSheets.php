@@ -30,7 +30,7 @@ class GuestAppSheets
 
         // форматируем номер заявки в строку с нулями в начале
         $number = sprintf('%03d',$data['counter']);
-        $data['number'] = $this->date . '/' . $number;
+        $data['application_number'] = $this->date . '/' . $number;
 
         //Приводим дату к виду день.месяц.год
         $data['start_date'] = date_format(date_create($data['start_date']), 'd.m.Y');
@@ -38,10 +38,9 @@ class GuestAppSheets
 
 
         $array = [
-            $data['number'], $data['department'],$data['signed_by'],$data['start_date'],$data['end_date'],
+            $data['application_number'], $data['department'],$data['signed_by'],$data['start_date'],$data['end_date'],
             $data['time_range'],$data['object'],$data['application_type'], $data['purpose'],
-            $data['contract_number'],$data['rooms'],$data['equipment'],$data['guests']//null,null,null,null,
-            //null,$data['responsible_person'],$data['phone_number']
+            $data['contract_number'],$data['rooms'],$data['equipment'],$data['guests'],'','','',$data['responsible_person'], $data['phone_number']
         ];
 
         $range_to_fill = 'A1';
