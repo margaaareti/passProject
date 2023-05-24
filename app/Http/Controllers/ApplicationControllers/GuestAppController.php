@@ -35,7 +35,6 @@ class GuestAppController extends Controller
 
     public function store(StoreGuestAppRequest $request)
     {
-        $user = Auth::user();
 
         $token = $request->input('_token');
 
@@ -61,7 +60,7 @@ class GuestAppController extends Controller
         $this->guestAppService->create($request->all());
 
 
-        return redirect('home')->withInput()->with('success','Форма отправлено успешно');
+        return redirect('home', compact('objects'))->withInput()->with('success','Форма отправлено успешно');
     }
 
 

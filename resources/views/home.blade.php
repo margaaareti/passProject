@@ -45,8 +45,8 @@
                             @endif
                         @endif
 
-                        <div class="form-group">
-                            <label for="department">Подразделение:</label>
+                        <div class="form-group ">
+                            <label for="department" class="required">Подразделение:</label>
                             <input name="department" id="department"
                                    class="form-control @error('department') is-invalid @enderror"
                                    value="{{ old('department') }}" required>
@@ -59,7 +59,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="signed_by">Кем одобрена заявка:</label>
+                            <label for="signed_by" class="required">Кем одобрена заявка:</label>
                             <input type="text" name="signed_by" value="{{  old('signed_by', 'Иванов Иван Иванович')  }}"
                                    class="form-control @error('signed_by') is-invalid @enderror " id="signed_by"
                                    placeholder="Иванов Иван Иванович" required>
@@ -72,7 +72,7 @@
 
 
                         <div class="form-group">
-                            <label for="start_date">Начальная дата:</label>
+                            <label for="start_date" class="required">Начальная дата:</label>
                             <input type="date" name="start_date"
                                    value="{{ old('start_date') ?? now()->format('Y-m-d') }}" id="start_date"
                                    class="form-control @error('start_date') is-invalid @enderror" required>
@@ -84,7 +84,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="end_date">Конечная дата:</label>
+                            <label for="end_date" class="required">Конечная дата:</label>
                             <input type="date" name="end_date" value="{{ old('end_date') ?? now()->format('Y-m-d') }}"
                                    id="end_date" class="form-control @error('end_date') is-invalid @enderror " required>
                             @error('end_date')
@@ -123,26 +123,14 @@
 
 
                         <div class="form-group">
-                            <label for="object">Объекты, на который необходим доступ:</label>
+                            <label for="object" class="required">Объекты, на который необходим доступ:</label>
                             <select name="object[]" id="object" class="form-control" multiple="multiple"
                                     required>
-                                <option value="К49">Кронверский,49</option>
-                                <option value="Л9">Ломоносова,9</option>
-                                <option value="Л9 лит.М">Ломоносова,9 (здание бывш. церкви)</option>
-                                <option value="Гривцова 14">Гривцова,14</option>
-                                <option value="Биржевая 4">Биржевая,4</option>
-                                <option value="Биржевая 14">Биржевая,14</option>
-                                <option value="Биржевая 16">Биржевая,16</option>
-                                <option value="Чайковского 14">Чайковского,11</option>
-                                <option value="Хрустальная 14">Хрустальная</option>
-                                <option value="Гастелло 12">Хрустальная</option>
-                                <option value="Вяземский 5-7">Вяземский</option>
-                                <option value="Ленсовета 23">Ленсовета</option>
-                                <option value="Новоизмайловский,34">Новоизмайловский</option>
-                                <option value="2-я Комсомольская 5-7">2-я Комсомольская</option>
-                                <option value="Альпийский 15">Альпийский 15</option>
-                                <option value="Кадетская 3">Кадетская 3</option>
-                                <option value="Ягодное">Ягодное</option>
+
+                                @foreach($objects as $value => $text)
+                                    <option value="{{$value}}">{{$text}}</option>
+                                @endforeach
+
                             </select>
 
                             @error('object')
@@ -157,8 +145,7 @@
                         <div class="form-group">
                             <label for="rooms">Номера помещений:</label>
                             <textarea name="rooms" id="rooms"
-                                      class="form-control @error('rooms') is-invalid @enderror "
-                                      required>{{ old('rooms') }}</textarea>
+                                      class="form-control @error('rooms') is-invalid @enderror ">{{ old('rooms') }}</textarea>
                             @error('rooms')
                             <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -167,7 +154,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="purpose">Цель приглашения:</label>
+                            <label for="purpose" class="required">Цель приглашения:</label>
                             <textarea name="purpose" id="purpose"
                                       class="form-control @error('start_date') is-invalid @enderror "
                                       required>{{ old('purpose') }}</textarea>
@@ -203,7 +190,7 @@
 
                         <div class="form-group">
 
-                            <label for="guests">ФИО гостя:</label>
+                            <label for="guests" class="required">ФИО гостя:</label>
 
                             <textarea type="text" name="guests" id="guests"
                                       class="form-control @error('guests') is-invalid @enderror"
@@ -218,7 +205,7 @@
                         </div>
 
                         <div class="responsible_person">
-                            <label for="responsible_person">Ответственный:</label>
+                            <label for="responsible_person" class="required">Ответственный:</label>
                             <input type="text" name="responsible_person"
                                    value="{{ old('responsible_person', $user->name)}}"
                                    id="responsible_person"
@@ -235,7 +222,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="phone_number">Номер телефона ответственного лица:</label>
+                            <label for="phone_number" class="required">Номер телефона ответственного лица:</label>
                             <input type="text" name="phone_number" value="{{ old('phone_number','89384528803')}}"
                                    id="phone_number" class="form-control @error('phone_number') is-invalid @enderror">
                             @error('phone_number')

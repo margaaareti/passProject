@@ -33,8 +33,18 @@ class StoreGuestAppRequest extends FormRequest
             'purpose' => ['required', 'string', 'max:150'],
             'contract_number' => ['string', 'max:150','nullable'],
             'equipment' => ['string', 'max:250', 'nullable'],
-            'guests' => ['required', 'string', 'max:250'],
+            'guests' => ['required', 'string', 'max:1000','regex:/^[^0-9]+$/'],
             'phone_number' => ['required', 'string', 'regex:/^8[0-9]{10}$/', 'starts_with:89', 'size:11', 'min:11'],
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'signed_by.regex' => 'Поле "Кем одобрена заявка" должно содержать только буквы',
+            'department' => 'Поле "Подразделение" может содержать только буквы',
+            'guests.regex' => 'Поле "ФИО гостя" может содержать только буквы',
+        ];
+    }
 }
+

@@ -38,6 +38,10 @@ class GuestAppService
             $data['equipment'] = '';
         };
 
+        if (!isset($data['rooms'])) {
+            $data['rooms'] = '';
+        };
+
 
         return $this->guestAppRepository->create($data);
 

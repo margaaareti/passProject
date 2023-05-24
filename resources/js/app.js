@@ -92,11 +92,7 @@ $(document).ready(function () {
             formattedNumber += '-' + phoneNumber.substring(9, maxDigits);
         }
 
-        var cursorPosition = getCaretPosition(this);
-        var isDeleting = cursorPosition < $(this).val().length;
-
         $(this).val(formattedNumber);
-
 
     });
 
