@@ -38,12 +38,12 @@ class GuestAppSheets
 
 
         $array = [
-            $data['application_number'], $data['department'],$data['signed_by'],$data['start_date'],$data['end_date'],
+            $data['application_number'], $data['department'],'',$data['signed_by'],$data['start_date'],$data['end_date'],
             $data['time_range'],$data['object'],$data['application_type'], $data['purpose'],
             $data['contract_number'],$data['rooms'],$data['equipment'],$data['guests'],'','','',$data['responsible_person'], $data['phone_number']
         ];
 
-        $range_to_fill = 'A1';
+        $range_to_fill = 'A2';
         $range_to_paint = 'A:Z';
         $spreadsheetId = '1QSGJj-_sfHAvJcFnPWLOsTDb71Wh_5DmEmpeuPW7iWg';
 

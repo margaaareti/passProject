@@ -3,6 +3,7 @@
 namespace App\Services\Applications;
 
 use App\Repositories\GuestAppRepository;
+use Illuminate\Support\Facades\Auth;
 
 
 class GuestAppService
@@ -40,6 +41,10 @@ class GuestAppService
 
         if (!isset($data['rooms'])) {
             $data['rooms'] = '';
+        };
+
+        if (!isset($data['responsible_person'])) {
+            $data['responsible_person'] = Auth::user()->name;
         };
 
 

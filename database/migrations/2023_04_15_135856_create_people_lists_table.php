@@ -15,16 +15,18 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->string('signed_by');
-            $table->date('start_date');
-            $table->date('end_date');
-            $table->string('object');
+            $table->string('signed_by')->nullable(false);
+            $table->date('start_date')->nullable(false);
+            $table->date('end_date')->nullable(false);
+            $table->string('object')->nullable(false);
             $table->string('rooms')->nullable();
-            $table->string('purpose');
-            $table->string('contract_number');
-            $table->string('equipment')->nullable();
+            $table->string('purpose')->nullable(false);
+            $table->string('contract_number')->nullable();
+            $table->string('equipment', 1000)->nullable();
             $table->integer('guests_count')->default(0);
-            $table->string('phone_number');
+            $table->string('responsible_person')->nullable(false);
+            $table->string('phone_number')->nullable(false);
+            $table->string('additional_info', 300)->nullable();
 
         });
     }

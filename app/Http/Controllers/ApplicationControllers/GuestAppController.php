@@ -60,7 +60,7 @@ class GuestAppController extends Controller
         $this->guestAppService->create($request->all());
 
 
-        return redirect('home', compact('objects'))->withInput()->with('success','Форма отправлено успешно');
+        return redirect('home')->withInput()->with('success','Форма отправлено успешно');
     }
 
 

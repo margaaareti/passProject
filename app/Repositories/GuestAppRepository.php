@@ -18,8 +18,7 @@ class GuestAppRepository
     protected GuestAppSheets $guestAppSheets;
 
 
-
-    public function __construct(PeopleList $appModel, GuestAppSheets $guestAppSheets )
+    public function __construct(PeopleList $appModel, GuestAppSheets $guestAppSheets)
     {
         $this->date = date('d.m.Y');
         $this->appModel = $appModel;
@@ -52,23 +51,21 @@ class GuestAppRepository
 
         $data['user_id'] = Auth::id();
 
-        $data['responsible_person'] = Auth::user()->name;
-
         $data['object'] = implode("\n", $data['object']);
 
-            $appList = $this->appModel->create($data);
+        $appList = $this->appModel->create($data);
 
-            foreach ($data['guests'] as $guest_name) {
+        foreach ($data['guests'] as $guest_name) {
 
-                $guest = new Guest(['name' => $guest_name]);
+            $guest = new Guest(['name' => $guest_name]);
 
-                $guest->save();
+            $guest->save();
 
-                $appList->guests()->attach($guest->id);
-            }
-
-
-            $this->guestAppSheets->create($data);
-
+            $appList->guests()->attach($guest->id);
         }
+
+
+        $this->guestAppSheets->create($data);
+
+    }
 }

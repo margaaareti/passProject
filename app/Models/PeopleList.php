@@ -21,7 +21,8 @@ class PeopleList extends Model
         'guests_count',
         'contract_number',
         'equipment',
-        'phone_number'
+        'phone_number',
+        'responsible_person',
 
     ];
 

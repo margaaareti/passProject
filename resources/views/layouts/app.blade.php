@@ -17,19 +17,20 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 
+
     <!-- Выпадающие списки для поля Objects -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
 
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/js/timepicker.js', 'resources/js/objectSelector.js','resources/js/numberRedactor.js'])
 
 </head>
 
 <body>
 
-    <div id="app">
+    <div id="app" class="bg-dark bg-gradient">
 
         @include('includes.header')
 

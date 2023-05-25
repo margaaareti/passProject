@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="container">
+    <div class="container py-3">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
@@ -20,12 +20,12 @@
                         {{ __('You are logged in!') }}
                     </div>
 
-                    <div class="ps-4"><h1>Hello {{__($user->name)}}</h1></div>
+                    <div class="ps-4"><h1>Hello {{__(sprintf('%s %s %s', $user->last_name, $user->name, $user->patronymic))}}</h1></div>
 
                 </div>
 
 
-                <div class="card mt-4 ps-4 pe-4">
+                <div class="card mt-4 ps-4 pe-4 silver-gradient-form">
 
                     <form class="mt-3" method="POST" action="{{ route('user.app.create') }}">
                         @csrf
@@ -45,11 +45,11 @@
                             @endif
                         @endif
 
-                        <div class="form-group ">
-                            <label for="department" class="required">Подразделение:</label>
+                        <div class="form-group">
+                            <label for="department" class="required">{{__('Подразделение')}}:</label>
                             <input name="department" id="department"
                                    class="form-control @error('department') is-invalid @enderror"
-                                   value="{{ old('department') }}" required>
+                                   value="{{ old('department', $user->department )}}" required>
 
                             @error('department')
                             <span class="invalid-feedback" role="alert">
@@ -59,7 +59,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="signed_by" class="required">Кем одобрена заявка:</label>
+                            <label for="signed_by" class="required">{{__('Кем одобрена заявка')}}:</label>
                             <input type="text" name="signed_by" value="{{  old('signed_by', 'Иванов Иван Иванович')  }}"
                                    class="form-control @error('signed_by') is-invalid @enderror " id="signed_by"
                                    placeholder="Иванов Иван Иванович" required>
@@ -72,7 +72,7 @@
 
 
                         <div class="form-group">
-                            <label for="start_date" class="required">Начальная дата:</label>
+                            <label for="start_date" class="required">{{__('Начальная дата:')}}</label>
                             <input type="date" name="start_date"
                                    value="{{ old('start_date') ?? now()->format('Y-m-d') }}" id="start_date"
                                    class="form-control @error('start_date') is-invalid @enderror" required>
@@ -84,7 +84,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="end_date" class="required">Конечная дата:</label>
+                            <label for="end_date" class="required">{{__('Конечная дата:')}}</label>
                             <input type="date" name="end_date" value="{{ old('end_date') ?? now()->format('Y-m-d') }}"
                                    id="end_date" class="form-control @error('end_date') is-invalid @enderror " required>
                             @error('end_date')
@@ -98,9 +98,9 @@
                         <div class="time_range">
 
                             <div class="form-group time_start">
-                                <label for="time_start">Время c:</label>
+                                <label for="time_start">{{__('Время c :')}}</label>
                                 <input type="text" name="time_start" value="{{ old('time_start') }}"
-                                       id="time_start" class="form-control @error('time_start') is-invalid @enderror ">
+                                       id="time_start" class="form-control @error('time_start') is-invalid @enderror" autocomplete="off">
                                 @error('time_start')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -109,7 +109,7 @@
                             </div>
 
                             <div class="form-group time_end">
-                                <label for="time_end">До:</label>
+                                <label for="time_end"> {{__('До :')}}</label>
                                 <input type="text" name="time_end" value="{{ old('time_end') }} "
                                        id="time_end" class="form-control @error('time_end') is-invalid @enderror ">
                                 @error('time_end')
@@ -123,12 +123,12 @@
 
 
                         <div class="form-group">
-                            <label for="object" class="required">Объекты, на который необходим доступ:</label>
+                            <label for="object" class="required">{{__('Объекты, на который необходим доступ:')}}</label>
                             <select name="object[]" id="object" class="form-control" multiple="multiple"
                                     required>
 
                                 @foreach($objects as $value => $text)
-                                    <option value="{{$value}}">{{$text}}</option>
+                                    <option class="select-option" value="{{$value}}">{{$text}}</option>
                                 @endforeach
 
                             </select>
@@ -143,7 +143,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="rooms">Номера помещений:</label>
+                            <label for="rooms">{{__('Номера помещений:')}}</label>
                             <textarea name="rooms" id="rooms"
                                       class="form-control @error('rooms') is-invalid @enderror ">{{ old('rooms') }}</textarea>
                             @error('rooms')
@@ -154,7 +154,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="purpose" class="required">Цель приглашения:</label>
+                            <label for="purpose" class="required">{{__('Цель приглашения:')}}</label>
                             <textarea name="purpose" id="purpose"
                                       class="form-control @error('start_date') is-invalid @enderror "
                                       required>{{ old('purpose') }}</textarea>
@@ -167,7 +167,7 @@
 
 
                         <div class="form-group">
-                            <label for="contract_number">Номер договора:</label>
+                            <label for="contract_number">{{__('Номер договора:')}}</label>
                             <input type="text" name="contract_number" value="{{ old('contract_number') }}"
                                    id="contract_number" class="form-control @error('start_date') is-invalid @enderror ">
                             @error('contract_number')
@@ -178,7 +178,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="equipment">Вносимое или выносимое снаряжение:</label>
+                            <label for="equipment">{{__('Вносимое или выносимое снаряжение:')}}</label>
                             <textarea name="equipment" id="equipment"
                                       class="form-control @error('equipment') is-invalid @enderror "> {{ old('equipment') }}</textarea>
                             @error('equipment')
@@ -190,7 +190,7 @@
 
                         <div class="form-group">
 
-                            <label for="guests" class="required">ФИО гостя:</label>
+                            <label for="guests" class="required">{{__('ФИО гостя:')}}</label>
 
                             <textarea type="text" name="guests" id="guests"
                                       class="form-control @error('guests') is-invalid @enderror"
@@ -205,9 +205,9 @@
                         </div>
 
                         <div class="responsible_person">
-                            <label for="responsible_person" class="required">Ответственный:</label>
+                            <label for="responsible_person" class="required">{{__('Ответственный:')}}</label>
                             <input type="text" name="responsible_person"
-                                   value="{{ old('responsible_person', $user->name)}}"
+                                   value="{{ old('responsible_person', sprintf('%s %s %s', $user->last_name, $user->name, $user->patronymic))}}"
                                    id="responsible_person"
                                    class="form-control @error('responsible_person') is-invalid @enderror">
                             @error('responsible_person')
@@ -222,8 +222,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="phone_number" class="required">Номер телефона ответственного лица:</label>
-                            <input type="text" name="phone_number" value="{{ old('phone_number','89384528803')}}"
+                            <label for="phone_number" class="required">{{__('Номер телефона ответственного лица:')}}</label>
+                            <input type="text" name="phone_number" value="{{ old('phone_number', $user->phone_number)}}"
                                    id="phone_number" class="form-control @error('phone_number') is-invalid @enderror">
                             @error('phone_number')
 
@@ -236,9 +236,19 @@
                             @enderror
                         </div>
 
+                        <div class="form-group">
+                            <label for="additional_info">{{__('Дополнительная информация')}}:</label>
+                            <textarea type="text" name="additional_info" id="additional_info" rows="4" cols="40"
+                                      class="form-control @error('additional_info') is-invalid @enderror">{{old('additional_info')}} </textarea>
+                            @error('additional_info')
+
+
+                            @enderror
+                        </div>
+
 
                         <div class="mt-3 mb-3">
-                            <button type="submit" class="btn btn-primary">Отправить</button>
+                            <button type="submit" class="btn btn-primary">{{__('Отправить')}}</button>
                         </div>
 
                     </form>

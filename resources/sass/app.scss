@@ -4,7 +4,7 @@
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
 
-
+//блок с окнами ввода временного промежутка
 .time_range {
     display: flex;
     flex-wrap: wrap;
@@ -29,7 +29,8 @@
     }
 }
 
-
+//стили выпадающего списка при выборе объекта
+//кнопка
 .select2-close-btn {
     width: 150px;
     position: relative;
@@ -46,11 +47,54 @@
     }
 }
 
+//Выпадающее меню
+.select2-container {
+    // Стилизация поля ввода
+    &--default .select2-selection {
+        background: linear-gradient(to bottom right, #e0e0e0, #d1d1d1);
+        border-width: 2px;
+    }
 
+    // Стилизация выбранных элементов в поле ввода
+    .select2-selection {
+        .select2-selection__choice {
+            background: #c5bfbf;
+            color: black;
+        }
+    }
+
+    // Стилизация выпадающего списка
+    .select2-results {
+        .select2-results__option {
+            background: linear-gradient(to bottom right, #e0e0e0, #d1d1d1);
+
+            &:hover {
+                background: rgba(6, 6, 31, 0.85);
+            }
+
+            &[aria-selected="true"] {
+                background: rgba(6, 6, 31, 0.85);
+                color: whitesmoke;
+                border: #ef4444;
+            }
+        }
+    }
+}
+
+
+//красная звездочка после содержимого lable для обязательных полей
 .required::after {
     content: '*';
     color: red;
     margin-left: 3px
+}
+
+.bg-gradient-blue {
+    background: linear-gradient(to right, #5ddad7, #08518c);
+}
+
+.card.silver-gradient-form input, textarea, select {
+    background: linear-gradient(to bottom right, #e0e0e0, #d1d1d1);
 }
 
 

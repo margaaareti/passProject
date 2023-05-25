@@ -46,6 +46,7 @@ class HomeController extends Controller
 //            'Кадетская 3' => 'Кадетская 3',
 //            'Ягодное' => 'Ягодное',
         ];
+
         return view('home', compact('user', 'objects'));
     }
 }

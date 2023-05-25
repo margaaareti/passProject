@@ -1,7 +1,7 @@
 $('#time_start, #time_end').timepicker({
     timeFormat: 'HH:mm',
-    interval: 60,
-    minTime: '00:00',
+    interval: 30,
+    minTime: '06:00',
     maxTime: '23:59',
     dynamic: true,
     dropdown: true,

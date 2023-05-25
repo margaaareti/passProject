@@ -55,8 +55,13 @@ class RegisterController extends Controller
         ];
 
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'itmo_email'],
+            'last_name' => ['required', 'regex:/^[a-zA-Zа-яА-Я\s]+$/u', 'max:50'],
+            'name' => ['required', 'regex:/^[a-zA-Zа-яА-Я\s]+$/u', 'max:50'],
+            'patronymic' => ['regex:/^[a-zA-Zа-яА-Я\s]+$/u', 'max:50'],
+            'email' => ['required', 'string', 'email', 'max:150', 'unique:users', 'itmo_email'],
+            'department' => ['required', 'string'],
+            'isu_number' => ['required', 'string', 'digits:6','unique:users'],
+            'phone_number' => ['required', 'string', 'regex:/^8-[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}$/','starts_with:8', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ], $messages);
     }
@@ -70,9 +75,14 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
+            'last_name' => $data['last_name'],
             'name' => $data['name'],
+            'patronymic' => $data['patronymic'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'department' => $data['department'],
+            'isu_number' => $data['isu_number'],
+            'phone_number' => $data['phone_number'],
         ]);
     }
 
