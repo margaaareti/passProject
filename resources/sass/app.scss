@@ -5,6 +5,7 @@
 @import 'bootstrap/scss/bootstrap';
 
 //блок с окнами ввода временного промежутка
+
 .time_range {
     display: flex;
     flex-wrap: wrap;
@@ -52,8 +53,27 @@
     // Стилизация поля ввода
     &--default .select2-selection {
         background: linear-gradient(to bottom right, #e0e0e0, #d1d1d1);
-        border-width: 2px;
+        border-color: black;
+        border-width: 1px;
+        margin-top: 3px;
+        margin-bottom: 5px;
+
+        &:hover {
+            border-width: 2px;
+        }
+
+        &:focus {
+            box-shadow: 0 0 5px 3px rgba(62, 63, 66, 0.85)
+        }
+
+        .select2-search__field {
+            &:focus {
+                box-shadow: none;
+            }
+        }
+
     }
+
 
     // Стилизация выбранных элементов в поле ввода
     .select2-selection {
@@ -65,7 +85,7 @@
 
     // Стилизация выпадающего списка
     .select2-results {
-        .select2-results__option {
+        &__option {
             background: linear-gradient(to bottom right, #e0e0e0, #d1d1d1);
 
             &:hover {
@@ -93,9 +113,56 @@
     background: linear-gradient(to right, #5ddad7, #08518c);
 }
 
-.card.silver-gradient-form input, textarea, select {
+.card.silver-gradient-form input,
+.card.silver-gradient-form textarea {
     background: linear-gradient(to bottom right, #e0e0e0, #d1d1d1);
+    border-style: solid;
+    border-width: 1px;
+    border-color: #484545;
+    transition: border-width 2ms ease-in-out;
+    margin-top: 3px;
+    margin-bottom: 5px;
+    resize: none;
+
+    &:hover {
+        border-width: 2px;;
+    }
+
+    &:focus {
+        box-shadow: 0 0 5px 3px rgba(62, 63, 66, 0.5);
+        transform: scale(1.01);
+    }
 }
+
+.form-group textarea {
+    resize: vertical; /* Разрешаем изменение размера только по вертикали */
+    min-height: 50px; /* Минимальная высота textarea */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

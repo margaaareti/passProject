@@ -20,12 +20,14 @@
                         {{ __('You are logged in!') }}
                     </div>
 
-                    <div class="ps-4"><h1>Hello {{__(sprintf('%s %s %s', $user->last_name, $user->name, $user->patronymic))}}</h1></div>
+                    <div class="ps-4"><h1>
+                            Hello {{__(sprintf('%s %s %s', $user->last_name, $user->name, $user->patronymic))}}</h1>
+                    </div>
 
                 </div>
 
 
-                <div class="card mt-4 ps-4 pe-4 silver-gradient-form">
+                <div class="card silver-gradient-form mt-4 ps-4 pe-4">
 
                     <form class="mt-3" method="POST" action="{{ route('user.app.create') }}">
                         @csrf
@@ -100,7 +102,8 @@
                             <div class="form-group time_start">
                                 <label for="time_start">{{__('Время c :')}}</label>
                                 <input type="text" name="time_start" value="{{ old('time_start') }}"
-                                       id="time_start" class="form-control @error('time_start') is-invalid @enderror" autocomplete="off">
+                                       id="time_start" class="form-control @error('time_start') is-invalid @enderror"
+                                       autocomplete="off">
                                 @error('time_start')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -189,19 +192,18 @@
                         </div>
 
                         <div class="form-group">
-
                             <label for="guests" class="required">{{__('ФИО гостя:')}}</label>
 
                             <textarea type="text" name="guests" id="guests"
                                       class="form-control @error('guests') is-invalid @enderror"
                                       required>{{ old('guests') }}</textarea>
-
-                            @error('guests')
-                            <span class="invalid-feedback" role="alert">
+                            <div>
+                                @error('guests')
+                                <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
-                            @enderror
-
+                                @enderror
+                            </div>
                         </div>
 
                         <div class="responsible_person">
@@ -222,9 +224,12 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="phone_number" class="required">{{__('Номер телефона ответственного лица:')}}</label>
-                            <input type="text" name="phone_number" value="{{ old('phone_number', $user->phone_number)}}"
-                                   id="phone_number" class="form-control @error('phone_number') is-invalid @enderror">
+                            <label for="phone_number"
+                                   class="required">{{__('Номер телефона ответственного лица:')}}</label>
+                            <input type="text" name="phone_number"
+                                   value="{{ old('phone_number', $user->phone_number)}}"
+                                   id="phone_number"
+                                   class="form-control @error('phone_number') is-invalid @enderror">
                             @error('phone_number')
 
                             @foreach($errors->get('phone_number') as $error)

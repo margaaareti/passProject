@@ -23,8 +23,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
 
+
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/js/timepicker.js', 'resources/js/objectSelector.js','resources/js/numberRedactor.js'])
+    @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/js/timepicker.js', 'resources/js/objectSelector.js','resources/js/numberRedactor.js','resources/js/textAreaResizer.js'])
 
 </head>
 
@@ -39,7 +40,6 @@
         </main>
 
     </div>
-
 
 </body>
 </html>
