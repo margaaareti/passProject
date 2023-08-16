@@ -29,9 +29,9 @@
 
 </head>
 
-<body>
+<body class="bg-dark bg-gradient">
 
-    <div id="app" class="bg-dark bg-gradient">
+    <div id="app">
 
         @include('includes.header')
 

@@ -5,7 +5,7 @@ namespace App\Repositories;
 
 use App\Models\Counter;
 use App\Models\Guest;
-use App\Models\PeopleList;
+use App\Models\PeopleApplication;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -14,14 +14,15 @@ class GuestAppRepository
 
     protected string $date;
 
-    protected PeopleList $appModel;
+    protected PeopleApplication $peopleAppModel;
     protected GuestAppSheets $guestAppSheets;
 
 
-    public function __construct(PeopleList $appModel, GuestAppSheets $guestAppSheets)
+
+    public function __construct(PeopleApplication $peopleAppModel, GuestAppSheets $guestAppSheets )
     {
         $this->date = date('d.m.Y');
-        $this->appModel = $appModel;
+        $this->peopleAppModel = $peopleAppModel;
         $this->guestAppSheets = $guestAppSheets;
 
     }
@@ -30,7 +31,7 @@ class GuestAppRepository
     public function create(array $data)
     {
 
-        $lastRecord = $this->appModel->latest()->first();
+        $lastRecord = $this->peopleAppModel->latest()->first();
 
         //Получаем значение счетчика из базы данных
         $counter = Counter::first();
@@ -51,21 +52,23 @@ class GuestAppRepository
 
         $data['user_id'] = Auth::id();
 
+        $data['responsible_person'] = Auth::user()->name;
+
         $data['object'] = implode("\n", $data['object']);
 
-        $appList = $this->appModel->create($data);
+            $newPeopleApplication = $this->peopleAppModel->create($data);
 
-        foreach ($data['guests'] as $guest_name) {
+            foreach ($data['guests'] as $guest_name) {
 
-            $guest = new Guest(['name' => $guest_name]);
+                $guest = new Guest(['name' => $guest_name]);
 
-            $guest->save();
+                $guest->save();
 
-            $appList->guests()->attach($guest->id);
+                $newPeopleApplication->guests()->attach($guest->id);
+            }
+
+
+            $this->guestAppSheets->create($data);
+
         }
-
-
-        $this->guestAppSheets->create($data);
-
-    }
 }

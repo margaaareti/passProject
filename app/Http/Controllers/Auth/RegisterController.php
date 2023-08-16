@@ -55,9 +55,9 @@ class RegisterController extends Controller
         ];
 
         return Validator::make($data, [
-            'last_name' => ['required', 'regex:/^[a-zA-Zа-яА-Я\s]+$/u', 'max:50'],
-            'name' => ['required', 'regex:/^[a-zA-Zа-яА-Я\s]+$/u', 'max:50'],
-            'patronymic' => ['regex:/^[a-zA-Zа-яА-Я\s]+$/u', 'max:50'],
+            'last_name' => ['required', 'regex:/^[а-яА-ЯёЁ\s]+$/u', 'max:50'],
+            'name' => ['required', 'regex:/^[а-яА-ЯёЁ\s]+$/u', 'max:50'],
+            'patronymic' => ['regex:/^[а-яА-ЯёЁ\s]+$/u', 'max:50'],
             'email' => ['required', 'string', 'email', 'max:150', 'unique:users', 'itmo_email'],
             'department' => ['required', 'string'],
             'isu_number' => ['required', 'string', 'digits:6','unique:users'],
@@ -65,6 +65,7 @@ class RegisterController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ], $messages);
     }
+
 
     /**
      * Create a new user instance after a valid registration.
@@ -85,6 +86,5 @@ class RegisterController extends Controller
             'phone_number' => $data['phone_number'],
         ]);
     }
-
 
 }

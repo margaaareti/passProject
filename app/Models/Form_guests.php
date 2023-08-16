@@ -11,13 +11,13 @@ class Form_guests extends Model
 
     protected $fillable = [
 
-        "people_list_id", "guest_id"
+        "people_applications_id", "guest_id"
 
     ];
 
 
     public function form() {
-        return $this->belongsTo(PeopleList::class);
+        return $this->belongsTo(PeopleApplication::class);
     }
 
     public function guest() {

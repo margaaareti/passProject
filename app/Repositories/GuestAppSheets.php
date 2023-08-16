@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\PeopleList;
+use App\Models\PeopleApplication;
 use Revolution\Google\Sheets\Facades\Sheets;
 
 
@@ -11,10 +11,10 @@ class GuestAppSheets
 
 
     protected string $date;
-    protected peopleList $appModel;
+    protected PeopleApplication $appModel;
 
 
-    public function __construct(PeopleList $appModel)
+    public function __construct(PeopleApplication $appModel)
     {
 
         $this->appModel = $appModel;

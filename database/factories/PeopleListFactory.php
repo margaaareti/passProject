@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PeopleList>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PeopleApplication>
  */
 class PeopleListFactory extends Factory
 {
@@ -19,7 +19,7 @@ class PeopleListFactory extends Factory
     {
         return [
             'user_id'=>User::all()->random()->id,
-            
+
 
         ];
     }

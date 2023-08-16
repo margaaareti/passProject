@@ -4,8 +4,12 @@
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
 
-//блок с окнами ввода временного промежутка
+//фон body
+.bg-dark-gradient {
+    background: linear-gradient(to right, #232222, #4f4c4c);
+}
 
+//блок с окнами ввода временного промежутка
 .time_range {
     display: flex;
     flex-wrap: wrap;
@@ -31,6 +35,7 @@
 }
 
 //стили выпадающего списка при выборе объекта
+
 //кнопка
 .select2-close-btn {
     width: 150px;
@@ -50,6 +55,16 @@
 
 //Выпадающее меню
 .select2-container {
+
+    //стилизация крестика удаления объекта в поле выьора
+    &--default .select2-selection--multiple .select2-selection__choice__remove {
+        color: #c53838 !important;
+        cursor: pointer;
+        display: inline-block;
+        font-weight: bold;
+        margin-right: 3px;
+    }
+
     // Стилизация поля ввода
     &--default .select2-selection {
         background: linear-gradient(to bottom right, #e0e0e0, #d1d1d1);
@@ -71,7 +86,6 @@
                 box-shadow: none;
             }
         }
-
     }
 
 
@@ -82,6 +96,7 @@
             color: black;
         }
     }
+
 
     // Стилизация выпадающего списка
     .select2-results {
@@ -106,7 +121,7 @@
 .required::after {
     content: '*';
     color: red;
-    margin-left: 3px
+    margin-left: 3px;
 }
 
 .bg-gradient-blue {
@@ -123,9 +138,11 @@
     margin-top: 3px;
     margin-bottom: 5px;
     resize: none;
+    box-sizing: border-box;
+    outline: none;
 
     &:hover {
-        border-width: 2px;;
+        border-width: 2px;
     }
 
     &:focus {
@@ -138,6 +155,7 @@
     resize: vertical; /* Разрешаем изменение размера только по вертикали */
     min-height: 50px; /* Минимальная высота textarea */
 }
+
 
 
 

@@ -17,6 +17,6 @@ class Guest extends Model
 
     public function form():BelongsToMany
     {
-        return $this->belongsToMany(PeopleList::class, 'form_guests');
+        return $this->belongsToMany(PeopleApplication::class, 'form_guests');
     }
 }

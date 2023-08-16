@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('form_guests', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('people_list_id')->references('id')->on('people_lists')->onDelete('cascade');
+            $table->foreignId('people_application_id')->references('id')->on('people_applications')->onDelete('cascade');
             $table->foreignId('guest_id')->references('id')->on('guests')->onDelete('cascade');
             $table->timestamps();
         });
