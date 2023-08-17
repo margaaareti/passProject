@@ -48,7 +48,9 @@
                         @endif
 
                         <div class="form-group">
-                            <label for="department" class="required">{{__('Подразделение')}}:</label>
+                            <label for="department" class="required">
+                                {{__('Подразделение:')}} <span class="tooltip-icon" title="Введите название подразделения"><i class="fas fa-info-circle"></i></span>
+                            </label>
                             <input name="department" id="department"
                                    class="form-control @error('department') is-invalid @enderror"
                                    value="{{ old('department', $user->department )}}" required>
@@ -56,7 +58,7 @@
                             @error('department')
                             <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
-                                    </span>
+                            </span>
                             @enderror
                         </div>
 
@@ -73,27 +75,31 @@
                         </div>
 
 
-                        <div class="form-group">
-                            <label for="start_date" class="required">{{__('Начальная дата:')}}</label>
-                            <input type="date" name="start_date"
-                                   value="{{ old('start_date') ?? now()->format('Y-m-d') }}" id="start_date"
-                                   class="form-control @error('start_date') is-invalid @enderror" required>
-                            @error('start_date')
-                            <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                            @enderror
-                        </div>
+                        <div class="date_range">
 
-                        <div class="form-group">
-                            <label for="end_date" class="required">{{__('Конечная дата:')}}</label>
-                            <input type="date" name="end_date" value="{{ old('end_date') ?? now()->format('Y-m-d') }}"
-                                   id="end_date" class="form-control @error('end_date') is-invalid @enderror " required>
-                            @error('end_date')
-                            <span class="invalid-feedback" role="alert">
+                            <div class="form-group start_date">
+                                <label for="start_date" class="required">{{__('Начальная дата:')}}</label>
+                                <input type="date" name="start_date"
+                                       value="{{ old('start_date') ?? now()->format('Y-m-d') }}" id="start_date"
+                                       class="form-control @error('start_date') is-invalid @enderror" required>
+                                @error('start_date')
+                                <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
-                            @enderror
+                                @enderror
+                            </div>
+
+                            <div class="form-group end_date">
+                                <label for="end_date" class="required">{{__('Конечная дата:')}}</label>
+                                <input type="date" name="end_date" value="{{ old('end_date') ?? now()->format('Y-m-d') }}"
+                                       id="end_date" class="form-control @error('end_date') is-invalid @enderror " required>
+                                @error('end_date')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
                         </div>
 
 
@@ -121,7 +127,6 @@
                                     </span>
                                 @enderror
                             </div>
-
                         </div>
 
 
@@ -181,7 +186,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="equipment">{{__('Вносимое или выносимое снаряжение:')}}</label>
+                            <label for="equipment">{{__('Вносимое или выносимое снаряжение/имущество/оборудование:')}}</label>
                             <textarea name="equipment" id="equipment"
                                       class="form-control @error('equipment') is-invalid @enderror "> {{ old('equipment') }}</textarea>
                             @error('equipment')

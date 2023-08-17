@@ -4,34 +4,45 @@
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
 
+@mixin input-range-styles {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 15px;
+    margin-bottom: 10px;
+
+    .time_start,
+    .time_end {
+        width: $input-width;
+        margin-right: $input-margin;
+    }
+
+    .start_date,
+    .end_date {
+        width: $input-width;
+        margin-right: $input-margin;
+    }
+
+    label {
+        margin-left: 3px;
+    }
+
+}
+
+//блок с окнами ввода временного промежутка и дат
+.time_range,
+.date_range {
+    @include input-range-styles;
+}
+
+
+
 //фон body
-.bg-dark-gradient {
+body {
     background: linear-gradient(to right, #232222, #4f4c4c);
 }
 
-//блок с окнами ввода временного промежутка
-.time_range {
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: 20px;
-    margin-bottom: 20px;
-
-    .time_start {
-        width: 30%;
-        margin-right: 12px;
-
-        label {
-            margin-left: 3px;
-        }
-    }
-
-    .time_end {
-        width: 30%;
-
-        label {
-            margin-left: 3px;
-        }
-    }
+.bg-dark-gradient {
+    background: linear-gradient(to right, #232222, #4f4c4c);
 }
 
 //стили выпадающего списка при выборе объекта
@@ -67,14 +78,15 @@
 
     // Стилизация поля ввода
     &--default .select2-selection {
-        background: linear-gradient(to bottom right, #e0e0e0, #d1d1d1);
+        background: linear-gradient(to bottom right, #e7e1e1, #e3e1e1);
         border-color: black;
         border-width: 1px;
         margin-top: 3px;
         margin-bottom: 5px;
 
         &:hover {
-            border-width: 2px;
+            border-width: 1px;
+            box-shadow: 0 0 5px 3px rgba(62, 63, 66, 0.5);
         }
 
         &:focus {
@@ -130,7 +142,7 @@
 
 .card.silver-gradient-form input,
 .card.silver-gradient-form textarea {
-    background: linear-gradient(to bottom right, #e0e0e0, #d1d1d1);
+    background: linear-gradient(to bottom right, #e7e1e1, #e3e1e1);
     border-style: solid;
     border-width: 1px;
     border-color: #484545;
@@ -142,7 +154,7 @@
     outline: none;
 
     &:hover {
-        border-width: 2px;
+        box-shadow: 0 0 5px 3px rgba(62, 63, 66, 0.5);
     }
 
     &:focus {

@@ -17,7 +17,7 @@
                             <label for="last_name" class="col-md-4 col-form-label text-md-end">{{ __('Фамилия') }}</label>
 
                             <div class="col-md-6">
-                                <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" required autocomplete="name" autofocus>
+                                <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" required autocomplete="last_name" autofocus>
 
                                 @error('surname')
                                 <span class="invalid-feedback" role="alert">
@@ -49,7 +49,7 @@
                             <label for="patronymic" class="col-md-4 col-form-label text-md-end">{{ __('Отчество') }}</label>
 
                             <div class="col-md-6">
-                                <input id="patronymic" type="text" class="form-control @error('') is-invalid @enderror" name="patronymic" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                <input id="patronymic" type="text" class="form-control @error('') is-invalid @enderror" name="patronymic" value="{{ old('patronymic') }}" required autocomplete="patronymic" autofocus>
 
                                 @error('name')
                                 <span class="invalid-feedback" role="alert">

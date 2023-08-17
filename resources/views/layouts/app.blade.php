@@ -29,15 +29,21 @@
 
 </head>
 
-<body class="bg-dark bg-gradient">
+<body>
 
-    <div id="app">
+    <div id="app" class="app">
 
-        @include('includes.header')
+        <header>
+            @include('includes.header')
+        </header>
 
         <main class="py-4">
             @yield('content')
         </main>
+
+        <footer>
+
+        </footer>
 
     </div>
 

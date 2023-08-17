@@ -37,7 +37,7 @@ class GuestAppController extends Controller
     {
 
         $token = $request->input('_token');
-
+        //dd($request->input(),$token);
 
         // Получаем время последнего отправленного запроса, связанного с CSRF токеном, из сессии сервера
         $lastRequestTime = $request->session()->get('lastRequestTime_' . $token, 0);
@@ -59,8 +59,19 @@ class GuestAppController extends Controller
 
         $this->guestAppService->create($request->all());
 
+        //очищаем поля после успешной отправки
+        $clearedFields = [
+            'time_start',
+            'time_end'
+        ];
 
-        return redirect('home')->withInput()->with('success','Форма отправлено успешно');
+        //Задаем значения по умолчанию для очищаемых полей
+        foreach ($clearedFields as $field) {
+            $request->merge([$field => null]);
+        }
+
+
+        return redirect('home')->with('success','Форма отправлено успешно');
     }
 
 
