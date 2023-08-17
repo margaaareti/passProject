@@ -1,0 +1,31 @@
+.tooltip-icon {
+    display: inline-block;
+    margin-left: 4px;
+    cursor: pointer;
+    position: relative;
+}
+
+.tooltip-icon i {
+    font-size: 15px;
+    color: #373738;
+    &:hover {
+        color: #c72525;
+    }
+}
+
+.tooltip-text {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 200px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: none;
+}
+
+.tooltip-icon:hover .tooltip-text {
+    display: block;
+}

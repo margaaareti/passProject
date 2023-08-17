@@ -4,6 +4,8 @@
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
 
+@import 'icons';
+
 @mixin input-range-styles {
     display: flex;
     flex-wrap: wrap;
@@ -167,6 +169,16 @@ body {
     resize: vertical; /* Разрешаем изменение размера только по вертикали */
     min-height: 50px; /* Минимальная высота textarea */
 }
+
+#guests{
+    &:focus{
+        min-height: 100px;
+    }
+}
+
+
+
+
 
 
 

@@ -49,7 +49,7 @@
 
                         <div class="form-group">
                             <label for="department" class="required">
-                                {{__('Подразделение:')}} <span class="tooltip-icon" title="Введите название подразделения"><i class="fas fa-info-circle"></i></span>
+                                {{__('Подразделение:')}} <span class="tooltip-icon" title="Сокращенное название подразделения"><i class="fa-solid fa-circle-exclamation"></i></span>
                             </label>
                             <input name="department" id="department"
                                    class="form-control @error('department') is-invalid @enderror"
@@ -63,7 +63,9 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="signed_by" class="required">{{__('Кем одобрена заявка')}}:</label>
+                            <label for="signed_by" class="required">{{__('Кем одобрена заявка:')}}
+                                <span class="tooltip-icon" title="Руководитель подразделения или лицо его замещающее"><i class="fa-solid fa-circle-exclamation"></i></span>
+                            </label>
                             <input type="text" name="signed_by" value="{{  old('signed_by', 'Иванов Иван Иванович')  }}"
                                    class="form-control @error('signed_by') is-invalid @enderror " id="signed_by"
                                    placeholder="Иванов Иван Иванович" required>
@@ -131,7 +133,9 @@
 
 
                         <div class="form-group">
-                            <label for="object" class="required">{{__('Объекты, на который необходим доступ:')}}</label>
+                            <label for="object" class="required">{{__('Объекты, на который необходим доступ:')}}
+                                <span class="tooltip-icon" title="Указаны объекты, где имеется СКУД. Если нужный объект отсутствует в списке- необходимо подавать заявку на почту"><i class="fa-solid fa-circle-exclamation"></i></span>
+                            </label>
                             <select name="object[]" id="object" class="form-control" multiple="multiple"
                                     required>
 
@@ -151,7 +155,9 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="rooms">{{__('Номера помещений:')}}</label>
+                            <label for="rooms">{{__('Номера помещений:')}}
+                                <span class="tooltip-icon" title="Ввод через пробел. Запятые проставляются автоматически."><i class="fa-solid fa-circle-exclamation"></i></span>
+                            </label>
                             <textarea name="rooms" id="rooms"
                                       class="form-control @error('rooms') is-invalid @enderror ">{{ old('rooms') }}</textarea>
                             @error('rooms')
@@ -162,7 +168,9 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="purpose" class="required">{{__('Цель приглашения:')}}</label>
+                            <label for="purpose" class="required">{{__('Цель приглашения:')}}
+                                <span class="tooltip-icon" title="Кратко, цель приглашения: стажировка, проведение работ, съемки, участие в мероприятии *название мероприятия* и т.д."><i class="fa-solid fa-circle-exclamation"></i></span>
+                            </label>
                             <textarea name="purpose" id="purpose"
                                       class="form-control @error('start_date') is-invalid @enderror "
                                       required>{{ old('purpose') }}</textarea>
@@ -197,9 +205,11 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="guests" class="required">{{__('ФИО гостя:')}}</label>
+                            <label for="guests" class="required">{{__('ФИО гостя:')}}
+                                <span class="tooltip-icon" title="ФИО каждого гостя с новой строки"><i class="fa-solid fa-circle-exclamation"></i></span>
+                            </label>
 
-                            <textarea type="text" name="guests" id="guests"
+                            <textarea type="text" name="guests" id="guests" placeholder="Иванов Иван Иванович&#10Сергеев Сергей Сергеевич&#10Андреев Андрей Андреевич&#10и т.д."
                                       class="form-control @error('guests') is-invalid @enderror"
                                       required>{{ old('guests') }}</textarea>
                             <div>
@@ -212,7 +222,9 @@
                         </div>
 
                         <div class="responsible_person">
-                            <label for="responsible_person" class="required">{{__('Ответственный:')}}</label>
+                            <label for="responsible_person" class="required">{{__('Ответственный:')}}
+                                <span class="tooltip-icon" title="ФИО ответственного лица от подразделения"><i class="fa-solid fa-circle-exclamation"></i></span>
+                            </label>
                             <input type="text" name="responsible_person"
                                    value="{{ old('responsible_person', sprintf('%s %s %s', $user->last_name, $user->name, $user->patronymic))}}"
                                    id="responsible_person"
@@ -229,8 +241,9 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="phone_number"
-                                   class="required">{{__('Номер телефона ответственного лица:')}}</label>
+                            <label for="phone_number" class="required">{{__('Номер телефона ответственного лица:')}}
+                                <span class="tooltip-icon" title="Номер тел. ответственного лица для оперативной связи"><i class="fa-solid fa-circle-exclamation"></i></span>
+                            </label>
                             <input type="text" name="phone_number"
                                    value="{{ old('phone_number', $user->phone_number)}}"
                                    id="phone_number"
