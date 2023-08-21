@@ -1,10 +1,13 @@
 // Variables
 @import 'variables';
-
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
-
 @import 'icons';
+@import 'custom-modal';
+
+*{
+    box-sizing: border-box;
+}
 
 @mixin input-range-styles {
     display: flex;
@@ -85,6 +88,7 @@ body {
         border-width: 1px;
         margin-top: 3px;
         margin-bottom: 5px;
+        transition: box-shadow 0.3s ease-in-out;;
 
         &:hover {
             border-width: 1px;
@@ -148,7 +152,7 @@ body {
     border-style: solid;
     border-width: 1px;
     border-color: #484545;
-    transition: border-width 2ms ease-in-out;
+    transition: box-shadow 0.3s ease-in-out;
     margin-top: 3px;
     margin-bottom: 5px;
     resize: none;
@@ -175,6 +179,42 @@ body {
         min-height: 100px;
     }
 }
+
+
+.btn {
+    color: whitesmoke;
+    background: #4e555b;
+    border-color: #010c0c;
+    transition: transform 0.2s ease, box-shadow 0.3s ease; /* Добавляем плавные переходы */
+
+    &:hover {
+        color: whitesmoke;
+        background: #505454;
+        border-color: #010c0c;
+        transform: scale(1.01); /* Увеличиваем размер кнопки при наведении */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Добавляем плавную тень при наведении */
+    }
+
+    &:active {
+        color: whitesmoke;
+        background: #7c1d1d ;
+        border-color: #010c0c;
+        transform: scale(0.95); /* Уменьшаем размер кнопки при активации (нажатии) */
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

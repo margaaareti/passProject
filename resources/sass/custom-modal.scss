@@ -1,0 +1,16 @@
+// Центрирование вертикально
+.modal-dialog {
+    display: flex;
+    align-items: center;
+    min-height: 100vh;
+}
+
+// Центрирование горизонтально
+.modal-content {
+    margin: auto;
+}
+
+// Дополнительные стили вашего контента
+.modal-body {
+    padding: 20px;
+}

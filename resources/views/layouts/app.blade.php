@@ -22,10 +22,14 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
+    <!-- Модальное окно bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
 
 
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/js/timepicker.js', 'resources/js/objectSelector.js','resources/js/numberRedactor.js','resources/js/textAreaResizer.js'])
+    @vite(['resources/sass/app.scss', 'resources/js/app.js',])
 
 </head>
 

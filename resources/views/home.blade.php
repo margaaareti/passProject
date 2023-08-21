@@ -1,6 +1,37 @@
 @extends('layouts.app')
 
 @section('content')
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Запустите демо модального окна
+    </button>
+
+    <!-- Модальное окно -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Заголовок модального окна</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="exampleSelect" class="form-label">Выберите что-то</label>
+                            <select class="form-select" id="exampleSelect">
+                                <option value="" disabled selected>Выберите тип заявки</option>
+                                <option value="Guests">Вариант 1</option>
+                                <option value="Car">Вариант 2</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                    <button type="button" class="btn btn-primary">Сохранить изменения</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="container py-3">
         <div class="row justify-content-center">
@@ -29,7 +60,27 @@
 
                 <div class="card silver-gradient-form mt-4 ps-4 pe-4">
 
-                    <form class="mt-3" method="POST" action="{{ route('user.app.create') }}">
+                    <form class="mt-3" id="form1" method="POST" action="{{ route('user.app.create') }}>
+                        @csrf
+                        <div class="form-group">
+                            <label for="department" class="required">
+                                {{__('SDFSDFSDF:')}} <span class="tooltip-icon"
+                                                               title="Сокращенное название подразделения"><i
+                                        class="fa-solid fa-circle-exclamation"></i></span>
+                            </label>
+                            <input name="department" id="department"
+                                   class="form-control @error('department') is-invalid @enderror"
+                                   value="{{ old('department', $user->department )}}" required>
+
+                            @error('department')
+                            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                    </form>
+
+                    <form class="mt-3" id="form2" method="POST" action="{{ route('user.app.create') }}" style="display: none">
                         @csrf
                         @if ($errors->any())
                             <div class="alert alert-danger pb-0">
@@ -49,7 +100,9 @@
 
                         <div class="form-group">
                             <label for="department" class="required">
-                                {{__('Подразделение:')}} <span class="tooltip-icon" title="Сокращенное название подразделения"><i class="fa-solid fa-circle-exclamation"></i></span>
+                                {{__('Подразделение:')}} <span class="tooltip-icon"
+                                                               title="Сокращенное название подразделения"><i
+                                        class="fa-solid fa-circle-exclamation"></i></span>
                             </label>
                             <input name="department" id="department"
                                    class="form-control @error('department') is-invalid @enderror"
@@ -64,7 +117,8 @@
 
                         <div class="form-group">
                             <label for="signed_by" class="required">{{__('Кем одобрена заявка:')}}
-                                <span class="tooltip-icon" title="Руководитель подразделения или лицо его замещающее"><i class="fa-solid fa-circle-exclamation"></i></span>
+                                <span class="tooltip-icon" title="Руководитель подразделения или лицо его замещающее"><i
+                                        class="fa-solid fa-circle-exclamation"></i></span>
                             </label>
                             <input type="text" name="signed_by" value="{{  old('signed_by', 'Иванов Иван Иванович')  }}"
                                    class="form-control @error('signed_by') is-invalid @enderror " id="signed_by"
@@ -93,8 +147,10 @@
 
                             <div class="form-group end_date">
                                 <label for="end_date" class="required">{{__('Конечная дата:')}}</label>
-                                <input type="date" name="end_date" value="{{ old('end_date') ?? now()->format('Y-m-d') }}"
-                                       id="end_date" class="form-control @error('end_date') is-invalid @enderror " required>
+                                <input type="date" name="end_date"
+                                       value="{{ old('end_date') ?? now()->format('Y-m-d') }}"
+                                       id="end_date" class="form-control @error('end_date') is-invalid @enderror "
+                                       required>
                                 @error('end_date')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -134,7 +190,9 @@
 
                         <div class="form-group">
                             <label for="object" class="required">{{__('Объекты, на который необходим доступ:')}}
-                                <span class="tooltip-icon" title="Указаны объекты, где имеется СКУД. Если нужный объект отсутствует в списке- необходимо подавать заявку на почту"><i class="fa-solid fa-circle-exclamation"></i></span>
+                                <span class="tooltip-icon"
+                                      title="Указаны объекты, где имеется СКУД. Если нужный объект отсутствует в списке- необходимо подавать заявку на почту"><i
+                                        class="fa-solid fa-circle-exclamation"></i></span>
                             </label>
                             <select name="object[]" id="object" class="form-control" multiple="multiple"
                                     required>
@@ -156,7 +214,9 @@
 
                         <div class="form-group">
                             <label for="rooms">{{__('Номера помещений:')}}
-                                <span class="tooltip-icon" title="Ввод через пробел. Запятые проставляются автоматически."><i class="fa-solid fa-circle-exclamation"></i></span>
+                                <span class="tooltip-icon"
+                                      title="Ввод через пробел. Запятые проставляются автоматически."><i
+                                        class="fa-solid fa-circle-exclamation"></i></span>
                             </label>
                             <textarea name="rooms" id="rooms"
                                       class="form-control @error('rooms') is-invalid @enderror ">{{ old('rooms') }}</textarea>
@@ -169,7 +229,9 @@
 
                         <div class="form-group">
                             <label for="purpose" class="required">{{__('Цель приглашения:')}}
-                                <span class="tooltip-icon" title="Кратко, цель приглашения: стажировка, проведение работ, съемки, участие в мероприятии *название мероприятия* и т.д."><i class="fa-solid fa-circle-exclamation"></i></span>
+                                <span class="tooltip-icon"
+                                      title="Кратко, цель приглашения: стажировка, проведение работ, съемки, участие в мероприятии *название мероприятия* и т.д."><i
+                                        class="fa-solid fa-circle-exclamation"></i></span>
                             </label>
                             <textarea name="purpose" id="purpose"
                                       class="form-control @error('start_date') is-invalid @enderror "
@@ -194,7 +256,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="equipment">{{__('Вносимое или выносимое снаряжение/имущество/оборудование:')}}</label>
+                            <label
+                                for="equipment">{{__('Вносимое или выносимое снаряжение/имущество/оборудование:')}}</label>
                             <textarea name="equipment" id="equipment"
                                       class="form-control @error('equipment') is-invalid @enderror "> {{ old('equipment') }}</textarea>
                             @error('equipment')
@@ -206,10 +269,12 @@
 
                         <div class="form-group">
                             <label for="guests" class="required">{{__('ФИО гостя:')}}
-                                <span class="tooltip-icon" title="ФИО каждого гостя с новой строки"><i class="fa-solid fa-circle-exclamation"></i></span>
+                                <span class="tooltip-icon" title="ФИО каждого гостя с новой строки"><i
+                                        class="fa-solid fa-circle-exclamation"></i></span>
                             </label>
 
-                            <textarea type="text" name="guests" id="guests" placeholder="Иванов Иван Иванович&#10Сергеев Сергей Сергеевич&#10Андреев Андрей Андреевич&#10и т.д."
+                            <textarea type="text" name="guests" id="guests"
+                                      placeholder="Иванов Иван Иванович&#10Сергеев Сергей Сергеевич&#10Андреев Андрей Андреевич&#10и т.д."
                                       class="form-control @error('guests') is-invalid @enderror"
                                       required>{{ old('guests') }}</textarea>
                             <div>
@@ -223,7 +288,8 @@
 
                         <div class="responsible_person">
                             <label for="responsible_person" class="required">{{__('Ответственный:')}}
-                                <span class="tooltip-icon" title="ФИО ответственного лица от подразделения"><i class="fa-solid fa-circle-exclamation"></i></span>
+                                <span class="tooltip-icon" title="ФИО ответственного лица от подразделения"><i
+                                        class="fa-solid fa-circle-exclamation"></i></span>
                             </label>
                             <input type="text" name="responsible_person"
                                    value="{{ old('responsible_person', sprintf('%s %s %s', $user->last_name, $user->name, $user->patronymic))}}"
@@ -242,7 +308,8 @@
 
                         <div class="form-group">
                             <label for="phone_number" class="required">{{__('Номер телефона ответственного лица:')}}
-                                <span class="tooltip-icon" title="Номер тел. ответственного лица для оперативной связи"><i class="fa-solid fa-circle-exclamation"></i></span>
+                                <span class="tooltip-icon" title="Номер тел. ответственного лица для оперативной связи"><i
+                                        class="fa-solid fa-circle-exclamation"></i></span>
                             </label>
                             <input type="text" name="phone_number"
                                    value="{{ old('phone_number', $user->phone_number)}}"
@@ -271,7 +338,7 @@
 
 
                         <div class="mt-3 mb-3">
-                            <button type="submit" class="btn btn-primary">{{__('Отправить')}}</button>
+                            <button type="submit" class="btn">{{__('Отправить')}}</button>
                         </div>
 
                     </form>
