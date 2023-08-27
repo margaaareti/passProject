@@ -1,10 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
-    <div>
-        <a href="{{}}"></a>
-    </div>
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Запустите демо модального окна
     </button>
