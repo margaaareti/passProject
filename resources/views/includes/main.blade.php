@@ -1,6 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
+    <button type="button" class="btn btn-primary">
+        <a href="{{route('home')}}">Ссылка на главную</a>
+    </button>
+
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Запустите демо модального окна
     </button>
@@ -195,7 +199,7 @@
                                       title="Указаны объекты, где имеется СКУД. Если нужный объект отсутствует в списке- необходимо подавать заявку на почту"><i
                                         class="fa-solid fa-circle-exclamation"></i></span>
                             </label>
-                            <select name="object[]" id="object" class="form-control" multiple="multiple"
+                            <select name="object[]" id="object" class="form-control" multiple="multiple" style="width: 100%"
                                     required>
 
                                 @foreach($objects as $value => $text)

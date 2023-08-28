@@ -71,7 +71,6 @@ body {
 
 //Выпадающее меню
 .select2-container {
-
     //стилизация крестика удаления объекта в поле выьора
     &--default .select2-selection--multiple .select2-selection__choice__remove {
         color: #c53838 !important;
@@ -117,8 +116,8 @@ body {
 
 
     // Стилизация выпадающего списка
-    .select2-results {
-        &__option {
+    .select2 {
+        &-results__option {
             background: linear-gradient(to bottom right, #e0e0e0, #d1d1d1);
 
             &:hover {
@@ -131,8 +130,14 @@ body {
                 border: #ef4444;
             }
         }
+
+        &-search__field{
+            display: none;
+        }
     }
 }
+
+
 
 
 //красная звездочка после содержимого lable для обязательных полей
@@ -149,29 +154,27 @@ body {
 .card.silver-gradient-form input,
 .card.silver-gradient-form textarea {
     background: linear-gradient(to bottom right, #e7e1e1, #e3e1e1);
-    border-style: solid;
-    border-width: 1px;
-    border-color: #484545;
-    transition: box-shadow 0.3s ease-in-out;
-    margin-top: 3px;
-    margin-bottom: 5px;
+    border: 1px solid #484545;
+    transition: box-shadow 0.3s ease-in-out !important;
+    margin: 3px 0 5px; //top left-right bottom
     resize: none;
     box-sizing: border-box;
     outline: none;
 
-    &:hover {
+    &:hover{
         box-shadow: 0 0 5px 3px rgba(62, 63, 66, 0.5);
     }
 
     &:focus {
-        box-shadow: 0 0 5px 3px rgba(62, 63, 66, 0.5);
         transform: scale(1.01);
+        box-shadow: 0 0 5px 3px rgba(62, 63, 66, 0.5) !important;
     }
 }
 
 .form-group textarea {
     resize: vertical; /* Разрешаем изменение размера только по вертикали */
     min-height: 50px; /* Минимальная высота textarea */
+    transition: min-height 0.3s ease !important;
 }
 
 #guests{
