@@ -9,6 +9,9 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    <!-- Модальное окно bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
@@ -22,10 +25,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
-    <!-- Модальное окно bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-
 
 
     <!-- Scripts -->
@@ -35,21 +34,19 @@
 
 <body>
 
-    <div id="app" class="app">
+<div id="app" class="app d-flex flex-column justify-content-between min-vh-100">
+    <header>
+        @include('includes.header')
+    </header>
 
-        <header>
-            @include('includes.header')
-        </header>
+    <main class="flex-grow-1 py-4">
+        @yield('content')
+    </main>
 
-        <main class="py-4">
-            @yield('content')
-        </main>
-
-        <footer>
-
-        </footer>
-
-    </div>
+    <footer>
+        <div style="background-color: #0c5460">sdfgsd</div>
+    </footer>
+</div>
 
 </body>
 </html>

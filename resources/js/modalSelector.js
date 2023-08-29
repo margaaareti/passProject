@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
             form1.style.display = 'none';
             form2.style.display = 'block';
         }
+
     });
 
     var modalSubmit = document.getElementById('modalSubmit');
