@@ -6,7 +6,9 @@ namespace App\Repositories;
 use App\Models\Counter;
 use App\Models\Guest;
 use App\Models\PeopleApplication;
+use Couchbase\QueryException;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 
 class GuestAppRepository
@@ -28,8 +30,12 @@ class GuestAppRepository
     }
 
 
+    /**
+     * @throws \Exception
+     */
     public function create(array $data)
     {
+        try {
 
         $lastRecord = $this->peopleAppModel->latest()->first();
 
@@ -46,7 +52,6 @@ class GuestAppRepository
             $counter->update(['value' => 1]);
         }
         $counter->save();
-
 
         $data['counter'] = $counter->value;
 
@@ -70,5 +75,9 @@ class GuestAppRepository
 
             $this->guestAppSheets->create($data);
 
+        } catch (QueryException $error) {
+            // Обработка ошибки базы данных
+            throw new \Exception('Произошла ошибка при создании заявки, обратитесь в УФБ: ' . $error->getMessage());
         }
+    }
 }

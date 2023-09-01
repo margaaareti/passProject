@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('page.title', config('app.name'))</title>
 
     <!-- Модальное окно bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -35,17 +35,16 @@
 <body>
 
 <div id="app" class="app d-flex flex-column justify-content-between min-vh-100">
-    <header>
+
         @include('includes.header')
-    </header>
+
 
     <main class="flex-grow-1 py-4">
         @yield('content')
     </main>
 
-    <footer>
-        <div style="background-color: #0c5460">sdfgsd</div>
-    </footer>
+
+        @include('includes.footer')
 </div>
 
 </body>

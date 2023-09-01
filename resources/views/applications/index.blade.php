@@ -1,14 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <button type="button" class="btn btn-primary">
-        <a href="{{route('home')}}">Ссылка на главную</a>
-    </button>
-
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Запустите демо модального окна
-    </button>
-
     <!-- Модальное окно -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -23,8 +15,8 @@
                             <label for="exampleSelect" class="form-label">Выберите что-то</label>
                             <select class="form-select" id="exampleSelect">
                                 <option value="" disabled selected>Выберите тип заявки</option>
-                                <option value="Guests">Вариант 1</option>
-                                <option value="Car">Вариант 2</option>
+                                <option value="Guests" >Приглашение гостей</option>
+                                <option value="Car"  >Въезд автотранспорта</option>
                             </select>
                         </div>
                     </form>
@@ -38,9 +30,33 @@
     </div>
 
     <!-- Основной контент -->
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+
+                <div class="nav-buttons">
+                    <button type="button" class="nav-buttons__button btn btn-primary">
+                        <a class="nav-buttons__link nav-link" href="{{ route('home') }}">Ссылка на главную</a>
+                    </button>
+
+                    <button type="button" class="nav-buttons__button btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Выбрать тип заявки
+                    </button>
+
+                    <button type="button" class="nav-buttons__button btn btn-primary">
+                        <a class="nav-buttons__link nav-link" href="{{ route('user.app.show') }}">Посмотреть все заявки</a>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
     <div class="container py-3">
         <div class="row justify-content-center">
             <div class="col-md-8">
+
                 <div class="card">
 
                     <div class="card-header">
@@ -65,12 +81,12 @@
 
                 <div class="card silver-gradient-form mt-4 ps-4 pe-4">
 
-                    <form class="mt-3" id="form1" method="POST" action="{{ route('user.app.create') }}">
+                    <form class="mt-3" id="form1" method="POST" style="display: none" action="{{ route('user.app.create') }}">
                         @csrf
                         <div class="form-group">
                             <label for="department" class="required">
                                 {{__('SDFSDFSDF:')}} <span class="tooltip-icon"
-                                                               title="Сокращенное название подразделения"><i
+                                                           title="Сокращенное название подразделения"><i
                                         class="fa-solid fa-circle-exclamation"></i></span>
                             </label>
                             <input name="department" id="department"
@@ -85,7 +101,8 @@
                         </div>
                     </form>
 
-                    <form class="mt-3" id="form2" method="POST" action="{{ route('user.app.create') }}" style="display: none">
+                    <form class="mt-3" id="form2" method="POST" action="{{ route('user.app.create') }}"
+                          style="display:none">
                         @csrf
                         @if ($errors->any())
                             <div class="alert alert-danger pb-0">
@@ -102,6 +119,7 @@
                                 </div>
                             @endif
                         @endif
+
 
                         <div class="form-group">
                             <label for="department" class="required">
@@ -199,7 +217,8 @@
                                       title="Указаны объекты, где имеется СКУД. Если нужный объект отсутствует в списке- необходимо подавать заявку на почту"><i
                                         class="fa-solid fa-circle-exclamation"></i></span>
                             </label>
-                            <select name="object[]" id="object" class="form-control" multiple="multiple" style="width: 100%"
+                            <select name="object[]" id="object" class="form-control" multiple="multiple"
+                                    style="width: 100%"
                                     required>
 
                                 @foreach($objects as $value => $text)

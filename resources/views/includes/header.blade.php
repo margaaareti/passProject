@@ -14,6 +14,7 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="navbar-nav me-auto">
 
+
                 </ul>
 
                 <!-- Right Side Of Navbar -->
@@ -36,8 +37,8 @@
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-
                                     {{ __(sprintf('%s %s %s', $user->last_name, $user->name, $user->patronymic))}}
+
                                 </a>
                                 @endif
 

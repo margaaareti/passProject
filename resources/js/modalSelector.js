@@ -1,9 +1,9 @@
 import 'bootstrap';
 
-document.addEventListener('DOMContentLoaded',()=>{
-    var modal = new bootstrap.Modal(document.getElementById('exampleModal'))
-    modal.show();
-})
+// document.addEventListener('DOMContentLoaded',()=>{
+//     var modal = new bootstrap.Modal(document.getElementById('exampleModal'))
+//     modal.show();
+// })
 
 
 document.addEventListener('DOMContentLoaded', function() {

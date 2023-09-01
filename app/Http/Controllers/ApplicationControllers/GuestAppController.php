@@ -46,7 +46,9 @@ class GuestAppController extends Controller
 //            'Ягодное' => 'Ягодное',
             ];
 
-            return view('includes.main', compact('user', 'objects'));
+            $selectedForm = 'Car';
+
+            return view('applications.index', compact('user', 'objects', 'selectedForm'));
         }
     }
 
@@ -61,14 +63,12 @@ class GuestAppController extends Controller
     {
 
         $token = $request->input('_token');
-        //dd($request->input(),$token);
 
         // Получаем время последнего отправленного запроса, связанного с CSRF токеном, из сессии сервера
         $lastRequestTime = $request->session()->get('lastRequestTime_' . $token, 0);
 
         //Получаем текущее время
         $currentTime = time();
-
 
         if ($currentTime - $lastRequestTime < 5) {
 
@@ -81,27 +81,34 @@ class GuestAppController extends Controller
 
         $request->validated($request->all());
 
-        $this->guestAppService->create($request->all());
+        try {
+            $this->guestAppService->create($request->all());
 
-        //очищаем поля после успешной отправки
-        $clearedFields = [
-            'time_start',
-            'time_end'
-        ];
+            //очищаем поля после успешной отправки
+            $clearedFields = [
+                'time_start',
+                'time_end'
+            ];
 
-        //Задаем значения по умолчанию для очищаемых полей
-        foreach ($clearedFields as $field) {
-            $request->merge([$field => null]);
+            //Задаем значения по умолчанию для очищаемых полей
+            foreach ($clearedFields as $field) {
+                $request->merge([$field => null]);
+            }
+
+            return redirect()->back()->with([
+                'success' => 'Форма отправлено успешно',
+            ]);
+
+        } catch (\Exception $error) {
+            return redirect()->back()->withErrors($error->getMessage());
         }
-
-
-        return redirect('home')->with('success','Форма отправлено успешно');
     }
 
 
-    public function show(string $id)
+    public function show()
     {
-        //
+        $user = Auth::user();
+        return view('applications.show',compact('user'));
     }
 
 

@@ -206,12 +206,35 @@ body {
     }
 }
 
-@media (max-width: 767px) {
+.nav-buttons {
+    display: flex; // Делаем контейнер флекс-контейнером
+    flex-wrap: wrap; // Позволяет элементам оборачиваться на новую строку при нехватке места
+    justify-content: center; // Выравниваем кнопки по центру по горизонтали
+    gap: 10px; // Расстояние между кнопками (можете настроить по вашему желанию)
+
+    .nav-buttons__button {
+        flex: 1; // Делаем кнопки равномерно распределенными по ширине
+        text-align: center; // Выравниваем текст внутри кнопок по центру
+        }
+    }
+
+
+
+@media (max-width: 768px) {
     main {
         display: flex;
         flex-direction: column;
-        align-items: flex-start; //по вертикали
-        justify-content: flex-start; //по горизонтали
+        align-items: center; //по вертикали
+        justify-content: center; //по горизонтали
+    }
+
+    .nav-buttons{
+        flex-direction: column;
+    }
+
+    .nav-buttons__button {
+        margin-right: 0; // Убираем правый отступ у кнопок на маленьких экранах
+        margin-bottom: 10px; // Добавляем отступ снизу между кнопками
     }
 }
 

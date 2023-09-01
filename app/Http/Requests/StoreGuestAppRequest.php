@@ -29,7 +29,7 @@ class StoreGuestAppRequest extends FormRequest
             'time_start' => ['required_with:time_end','nullable', 'regex:/^\d{2}:\d{2}$/'],
             'time_end' => ['required_with:time_start','nullable', 'regex:/^\d{2}:\d{2}$/' ],
             'object' => ['required','array'],
-            'rooms' => ['required','string'],
+            'rooms' => ['string'],
             'purpose' => ['required', 'string', 'max:150'],
             'contract_number' => ['string', 'max:150','nullable'],
             'equipment' => ['string', 'max:250', 'nullable'],
