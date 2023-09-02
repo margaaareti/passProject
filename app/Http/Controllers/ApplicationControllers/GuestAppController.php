@@ -46,7 +46,7 @@ class GuestAppController extends Controller
 //            'Ягодное' => 'Ягодное',
             ];
 
-            $selectedForm = 'Car';
+            $selectedForm = 'Guests';
 
             return view('applications.index', compact('user', 'objects', 'selectedForm'));
         }
@@ -61,6 +61,7 @@ class GuestAppController extends Controller
 
     public function store(StoreGuestAppRequest $request)
     {
+
 
         $token = $request->input('_token');
 
@@ -81,6 +82,12 @@ class GuestAppController extends Controller
 
         $request->validated($request->all());
 
+        $selectedForm = $request->input('selected_form');
+
+        if(!$selectedForm) {
+            $selectedForm='';
+        }
+
         try {
             $this->guestAppService->create($request->all());
 
@@ -97,6 +104,7 @@ class GuestAppController extends Controller
 
             return redirect()->back()->with([
                 'success' => 'Форма отправлено успешно',
+                'selected_form'=> $selectedForm
             ]);
 
         } catch (\Exception $error) {

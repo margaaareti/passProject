@@ -23,8 +23,9 @@
                             <label for="exampleSelect" class="form-label">Выберите что-то</label>
                             <select class="form-select" id="exampleSelect">
                                 <option value="" disabled selected>Выберите тип заявки</option>
-                                <option value="Guests">Вариант 1</option>
-                                <option value="Car">Вариант 2</option>
+                                <option value="Guests"{{$selectedForm === 'Guests' ? 'selected' : ''}}>Вариант 1</option>
+                                <option value="Car"{{$selectedForm === 'Car' ? 'selected' : ''}}>Вариант 2</option>
+                                <option value="{{$selectedForm}}">{{$selectedForm}}</option>
                             </select>
                         </div>
                     </form>
@@ -67,6 +68,7 @@
 
                     <form class="mt-3" id="form1" method="POST" action="{{ route('user.app.create') }}">
                         @csrf
+                        <input type="hidden" name="selectedForm" value="Car">
                         <div class="form-group">
                             <label for="department" class="required">
                                 {{__('SDFSDFSDF:')}} <span class="tooltip-icon"
@@ -103,6 +105,7 @@
                             @endif
                         @endif
 
+                        <input type="hidden" name="selectedForm" value="Guests">
                         <div class="form-group">
                             <label for="department" class="required">
                                 {{__('Подразделение:')}} <span class="tooltip-icon"

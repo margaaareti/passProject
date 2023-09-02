@@ -15,8 +15,8 @@
                             <label for="exampleSelect" class="form-label">Выберите что-то</label>
                             <select class="form-select" id="exampleSelect">
                                 <option value="" disabled selected>Выберите тип заявки</option>
-                                <option value="Guests" >Приглашение гостей</option>
-                                <option value="Car"  >Въезд автотранспорта</option>
+                                <option class="form-select__option" value="Guests"{{$selectedForm === 'Guests' ? 'selected' : ''}}>Приглашение посетителей</option>
+                                <option class="form-select__option" value="Car"{{$selectedForm === 'Car' ? 'selected' : ''}}>Въезд автотранспорта</option>
                             </select>
                         </div>
                     </form>
@@ -81,8 +81,9 @@
 
                 <div class="card silver-gradient-form mt-4 ps-4 pe-4">
 
-                    <form class="mt-3" id="form1" method="POST" style="display: none" action="{{ route('user.app.create') }}">
+                    <form class="mt-3" id="car_form" method="POST" style="display: none" action="{{ route('user.app.create') }}">
                         @csrf
+                        <input type="hidden" name="selected_form" value="Car">
                         <div class="form-group">
                             <label for="department" class="required">
                                 {{__('SDFSDFSDF:')}} <span class="tooltip-icon"
@@ -101,7 +102,7 @@
                         </div>
                     </form>
 
-                    <form class="mt-3" id="form2" method="POST" action="{{ route('user.app.create') }}"
+                    <form class="mt-3" id="guest_form" method="POST" action="{{ route('user.app.create') }}"
                           style="display:none">
                         @csrf
                         @if ($errors->any())
@@ -120,7 +121,7 @@
                             @endif
                         @endif
 
-
+                        <input type="hidden" name="selected_form" value="Guests">
                         <div class="form-group">
                             <label for="department" class="required">
                                 {{__('Подразделение:')}} <span class="tooltip-icon"
@@ -268,16 +269,6 @@
                         </div>
 
 
-                        <div class="form-group">
-                            <label for="contract_number">{{__('Номер договора:')}}</label>
-                            <input type="text" name="contract_number" value="{{ old('contract_number') }}"
-                                   id="contract_number" class="form-control @error('start_date') is-invalid @enderror ">
-                            @error('contract_number')
-                            <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                            @enderror
-                        </div>
 
                         <div class="form-group">
                             <label

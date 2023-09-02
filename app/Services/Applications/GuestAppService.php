@@ -21,7 +21,6 @@ class GuestAppService
 
         try {
 
-
             $data['application_type'] = 'Проход посетителей';
             $data['guests'] = preg_split("/[\n,]+/", str_replace("\r\n", "\n", $data['guests']));
             $data['guests_count'] = count($data['guests']);
