@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('page.title', 'Подать заявку')
 
 @section('content')
     <!-- Модальное окно -->
@@ -30,7 +31,7 @@
     </div>
 
     <!-- Основной контент -->
-    <div class="container">
+    <div class="container mb-3">
         <div class="row justify-content-center">
             <div class="col-md-8">
 
@@ -53,33 +54,33 @@
     </div>
 
 
-    <div class="container py-3">
+    <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
 
-                <div class="card">
+{{--                <div class="card">--}}
 
-                    <div class="card-header">
-                        {{ __('Dashboard') }}
-                    </div>
+{{--                    <div class="card-header">--}}
+{{--                        {{ __('Dashboard') }}--}}
+{{--                    </div>--}}
 
-                    <div class="card-body">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
-                        {{ __('You are logged in!') }}
-                    </div>
+{{--                    <div class="card-body">--}}
+{{--                        @if (session('status'))--}}
+{{--                            <div class="alert alert-success" role="alert">--}}
+{{--                                {{ session('status') }}--}}
+{{--                            </div>--}}
+{{--                        @endif--}}
+{{--                        {{ __('You are logged in!') }}--}}
+{{--                    </div>--}}
 
-                    <div class="ps-4"><h1>
-                            Hello {{__(sprintf('%s %s %s', $user->last_name, $user->name, $user->patronymic))}}</h1>
-                    </div>
+{{--                    <div class="ps-4"><h1>--}}
+{{--                            Hello {{__(sprintf('%s %s %s', $user->last_name, $user->name, $user->patronymic))}}</h1>--}}
+{{--                    </div>--}}
 
-                </div>
+{{--                </div>--}}
 
 
-                <div class="card silver-gradient-form mt-4 ps-4 pe-4">
+                <div class="card silver-gradient-form mt-3 ps-4 pe-4">
 
                     <form class="mt-3" id="car_form" method="POST" style="display: none" action="{{ route('user.app.create') }}">
                         @csrf

@@ -5,7 +5,7 @@
 @import 'icons';
 @import 'custom-modal';
 
-*{
+* {
     box-sizing: border-box;
 }
 
@@ -38,7 +38,6 @@
 .date_range {
     @include input-range-styles;
 }
-
 
 
 //фон body
@@ -131,13 +130,11 @@ body {
             }
         }
 
-        &-search__field{
+        &-search__field {
             display: none;
         }
     }
 }
-
-
 
 
 //красная звездочка после содержимого lable для обязательных полей
@@ -161,7 +158,7 @@ body {
     box-sizing: border-box;
     outline: none;
 
-    &:hover{
+    &:hover {
         box-shadow: 0 0 5px 3px rgba(62, 63, 66, 0.5);
     }
 
@@ -177,8 +174,8 @@ body {
     transition: min-height 0.3s ease !important;
 }
 
-#guests{
-    &:focus{
+#guests {
+    &:focus {
         min-height: 100px;
     }
 }
@@ -200,7 +197,7 @@ body {
 
     &:active {
         color: whitesmoke;
-        background: #7c1d1d ;
+        background: #7c1d1d;
         border-color: #010c0c;
         transform: scale(0.95); /* Уменьшаем размер кнопки при активации (нажатии) */
     }
@@ -215,9 +212,8 @@ body {
     .nav-buttons__button {
         flex: 1; // Делаем кнопки равномерно распределенными по ширине
         text-align: center; // Выравниваем текст внутри кнопок по центру
-        }
     }
-
+}
 
 
 @media (max-width: 768px) {
@@ -228,7 +224,7 @@ body {
         justify-content: center; //по горизонтали
     }
 
-    .nav-buttons{
+    .nav-buttons {
         flex-direction: column;
     }
 
@@ -237,6 +233,63 @@ body {
         margin-bottom: 10px; // Добавляем отступ снизу между кнопками
     }
 }
+
+//карты на странице просмотра карт
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+
+    .card-container__item {
+        flex-grow: 1;
+        flex-basis: calc(33.33% - 15px); /* Отнимаем 15px для учета отступов между элементами */
+        margin-right: 15px; /* Отступ между элементами */
+        margin-bottom: 15px; /* Отступ между элементами */
+        .card-header__link {
+            color: black;
+
+            &:hover {
+                color: #08518c;
+            }
+        }
+    }
+}
+
+
+.empty-state {
+    font-size: 36px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+@media (max-width: 850px) {
+    .card-container__item {
+        flex-basis: calc(50% - 15px); /* Отнимаем 10px для учета отступов между элементами */
+    }
+}
+
+@media (max-width: 680px) {
+    .card-container {
+        flex-direction: column;
+
+        .card-container__item {
+            width: 100%;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .empty-state__text {
+        display: none;
+    }
+}
+
+
+
+
+
 
 
 

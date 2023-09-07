@@ -62,6 +62,7 @@ class GuestAppController extends Controller
     public function store(StoreGuestAppRequest $request)
     {
 
+        //throw new \Exception('Ошибка: превышено ограничение количества запросов');
 
         $token = $request->input('_token');
 
@@ -116,7 +117,14 @@ class GuestAppController extends Controller
     public function show()
     {
         $user = Auth::user();
-        return view('applications.show',compact('user'));
+        $applications = $this->guestAppService->fetchAllApplications();
+        return view('applications.show',compact('user','applications'));
+    }
+
+    public function showApp($id) {
+        $user = Auth::user();
+        $application= $this->guestAppService->fetchApplication($id);
+        return view('applications.showApp', compact('user', 'application'));
     }
 
 

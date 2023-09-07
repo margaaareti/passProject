@@ -7,13 +7,13 @@ use App\Models\Counter;
 use App\Models\Guest;
 use App\Models\PeopleApplication;
 use Couchbase\QueryException;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 
 class GuestAppRepository
 {
-
     protected string $date;
 
     protected PeopleApplication $peopleAppModel;
@@ -35,9 +35,8 @@ class GuestAppRepository
      */
     public function create(array $data)
     {
-        try {
 
-        $lastRecord = $this->peopleAppModel->latest()->first();
+            $lastRecord = $this->peopleAppModel->latest()->first();
 
         //Получаем значение счетчика из базы данных
         $counter = Counter::first();
@@ -75,9 +74,18 @@ class GuestAppRepository
 
             $this->guestAppSheets->create($data);
 
-        } catch (QueryException $error) {
-            // Обработка ошибки базы данных
-            throw new \Exception('Произошла ошибка при создании заявки, обратитесь в УФБ: ' . $error->getMessage());
-        }
+
+    }
+
+    //Получаем коллецию заявок пользователя
+    public function getAllApplications(): Collection {
+        $userId = Auth::id();
+        return $this->peopleAppModel->with('guests')->where('user_id', $userId)->get();
+    }
+
+    //Получаем конкретную заявку
+    public function getApplication($id): PeopleApplication {
+        $userId = Auth::id();
+        return $this->peopleAppModel->where('user_id', $userId)->where('id', $id)->first();
     }
 }
