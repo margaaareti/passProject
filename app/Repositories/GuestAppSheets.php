@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\PeopleApplication;
+use Illuminate\Support\Facades\Log;
 use Revolution\Google\Sheets\Facades\Sheets;
 
 
@@ -26,27 +27,25 @@ class GuestAppSheets
     public function create(array $data)
     {
 
-        $data['guests'] = implode("\n", $data['guests']);
-
         // форматируем номер заявки в строку с нулями в начале
-        $number = sprintf('%03d',$data['counter']);
+        $number = sprintf('%03d', $data['counter']);
         $data['application_number'] = $this->date . '/' . $number;
 
         //Приводим дату к виду день.месяц.год
         $data['start_date'] = date_format(date_create($data['start_date']), 'd.m.Y');
         $data['end_date'] = date_format(date_create($data['end_date']), 'd.m.Y');
-
+        $data['guests'] = implode("\n", $data['guests']);
 
         $array = [
-            $data['application_number'], $data['department'],'',$data['signed_by'],$data['start_date'],$data['end_date'],
-            $data['time_range'],$data['object'],$data['application_type'], $data['purpose'],
-            $data['contract_number'],$data['rooms'],$data['equipment'],$data['guests'],'','','',$data['responsible_person'], $data['phone_number']
+            $data['application_number'], $data['department'], '', $data['signed_by'], $data['start_date'], $data['end_date'],
+            $data['time_range'], $data['object'], $data['application_type'], $data['purpose'],
+            $data['contract_number'], $data['rooms'], $data['equipment'], $data['guests'],'', '', '', $data['responsible_person'], $data['phone_number']
         ];
+
 
         $range_to_fill = 'A2';
         $range_to_paint = 'A:Z';
         $spreadsheetId = '1QSGJj-_sfHAvJcFnPWLOsTDb71Wh_5DmEmpeuPW7iWg';
-
 
 
         $sheet = Sheets::spreadsheet(config('google.post_spreadsheet_id'))->sheetById('google.post_sheet_id')->range($range_to_fill)->append([$array]);
@@ -57,8 +56,7 @@ class GuestAppSheets
         $numRows = count($rows);
 
 
-
-        $startRow = $numRows-1;
+        $startRow = $numRows - 1;
 
         $service = Sheets::spreadsheet($spreadsheetId)->getService();
 

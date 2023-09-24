@@ -10,6 +10,7 @@ use Couchbase\QueryException;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 
 class GuestAppRepository
@@ -72,7 +73,11 @@ class GuestAppRepository
             }
 
 
+        try {
             $this->guestAppSheets->create($data);
+        } catch (\Exception $e) {
+            Log::error('Error sending data to Google Sheets: ' . $e->getMessage());
+        }
 
 
     }
