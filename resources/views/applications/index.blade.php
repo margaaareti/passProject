@@ -16,8 +16,12 @@
                             <label for="exampleSelect" class="form-label">Выберите что-то</label>
                             <select class="form-select" id="exampleSelect">
                                 <option value="" disabled selected>Выберите тип заявки</option>
-                                <option class="form-select__option" value="Guests"{{$selectedForm === 'Guests' ? 'selected' : ''}}>Приглашение посетителей</option>
-                                <option class="form-select__option" value="Car"{{$selectedForm === 'Car' ? 'selected' : ''}}>Въезд автотранспорта</option>
+                                <option class="form-select__option"
+                                        value="Guests"{{$selectedForm === 'Guests' ? 'selected' : ''}}>Приглашение
+                                    посетителей
+                                </option>
+                                <option class="form-select__option" value="Car" selected>Въезд автотранспорта
+                                </option> {{$selectedForm === 'Car' ? 'selected' : ''}}
                             </select>
                         </div>
                     </form>
@@ -31,7 +35,7 @@
     </div>
 
     <!-- Основной контент -->
-    <div class="container mb-3">
+    <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
 
@@ -40,12 +44,14 @@
                         <a class="nav-buttons__link nav-link" href="{{ route('home') }}">Ссылка на главную</a>
                     </button>
 
-                    <button type="button" class="nav-buttons__button btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <button type="button" class="nav-buttons__button btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">
                         Выбрать тип заявки
                     </button>
 
                     <button type="button" class="nav-buttons__button btn btn-primary">
-                        <a class="nav-buttons__link nav-link" href="{{ route('user.app.show') }}">Посмотреть все заявки</a>
+                        <a class="nav-buttons__link nav-link" href="{{ route('user.app.show') }}">Посмотреть все
+                            заявки</a>
                     </button>
                 </div>
 
@@ -53,58 +59,71 @@
         </div>
     </div>
 
+    {{--                <div class="card">--}}
+
+    {{--                    <div class="card-header">--}}
+    {{--                        {{ __('Dashboard') }}--}}
+    {{--                    </div>--}}
+
+    {{--                    <div class="card-body">--}}
+    {{--                        @if (session('status'))--}}
+    {{--                            <div class="alert alert-success" role="alert">--}}
+    {{--                                {{ session('status') }}--}}
+    {{--                            </div>--}}
+    {{--                        @endif--}}
+    {{--                        {{ __('You are logged in!') }}--}}
+    {{--                    </div>--}}
+
+    {{--                    <div class="ps-4"><h1>--}}
+    {{--                            Hello {{__(sprintf('%s %s %s', $user->last_name, $user->name, $user->patronymic))}}</h1>--}}
+    {{--                    </div>--}}
+
+    {{--                </div>--}}
+
 
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
 
-{{--                <div class="card">--}}
+                <x-carCard>
 
-{{--                    <div class="card-header">--}}
-{{--                        {{ __('Dashboard') }}--}}
-{{--                    </div>--}}
+                    <x-card-header>
+                        <x-card-title>{{__('Въезд автотранспорта')}}</x-card-title>
+                    </x-card-header>
 
-{{--                    <div class="card-body">--}}
-{{--                        @if (session('status'))--}}
-{{--                            <div class="alert alert-success" role="alert">--}}
-{{--                                {{ session('status') }}--}}
-{{--                            </div>--}}
-{{--                        @endif--}}
-{{--                        {{ __('You are logged in!') }}--}}
-{{--                    </div>--}}
+                    <x-card-body>
 
-{{--                    <div class="ps-4"><h1>--}}
-{{--                            Hello {{__(sprintf('%s %s %s', $user->last_name, $user->name, $user->patronymic))}}</h1>--}}
-{{--                    </div>--}}
+                        <x-card-form action="{{ route('user.app.create')}}" method="POST">
 
-{{--                </div>--}}
+                            @csrf
+                            <input type="hidden" name="selected_form" value="Car">
 
-
-                <div class="card silver-gradient-form mt-3 ps-4 pe-4">
-
-                    <form class="mt-3" id="car_form" method="POST" style="display: none" action="{{ route('user.app.create') }}">
-                        @csrf
-                        <input type="hidden" name="selected_form" value="Car">
-                        <div class="form-group">
-                            <label for="department" class="required">
-                                {{__('SDFSDFSDF:')}} <span class="tooltip-icon"
-                                                           title="Сокращенное название подразделения"><i
-                                        class="fa-solid fa-circle-exclamation"></i></span>
-                            </label>
-                            <input name="department" id="department"
-                                   class="form-control @error('department') is-invalid @enderror"
-                                   value="{{ old('department', $user->department )}}" required>
-
-                            @error('department')
-                            <span class="invalid-feedback" role="alert">
+                            <x-form-item class="form-group">
+                                <x-label required for="department">
+                                    {{__('Подразделение:')}} <span class="tooltip-icon"
+                                                                   title="Сокращенное название подразделения"><i
+                                            class="fa-solid fa-circle-exclamation"></i></span>
+                                </x-label>
+                                <x-input name="department" class=" @error('department') is-invalid @enderror"
+                                       value="{{ old('department', $user->department )}}" required />
+                                @error('department')
+                                <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                    </form>
+                                </span>
+                                @enderror
+                            </x-form-item>
 
-                    <form class="mt-3" id="guest_form" method="POST" action="{{ route('user.app.create') }}"
-                          style="display:none">
+                        </x-card-form>
+
+                    </x-card-body>
+
+                </x-carCard>
+
+            </div>
+
+            <div class="col-md-8">
+                <div id="guest_card" class="card silver-gradient-form mt-3 ps-4 pe-4" style="display:none">
+                    <form id="guest_form" class="mt-3" method="POST" action="{{ route('user.app.create') }}">
                         @csrf
                         @if ($errors->any())
                             <div class="alert alert-danger pb-0">
@@ -142,10 +161,12 @@
 
                         <div class="form-group">
                             <label for="signed_by" class="required">{{__('Кем одобрена заявка:')}}
-                                <span class="tooltip-icon" title="Руководитель подразделения или лицо его замещающее"><i
+                                <span class="tooltip-icon"
+                                      title="Руководитель подразделения или лицо его замещающее"><i
                                         class="fa-solid fa-circle-exclamation"></i></span>
                             </label>
-                            <input type="text" name="signed_by" value="{{  old('signed_by', 'Иванов Иван Иванович')  }}"
+                            <input type="text" name="signed_by"
+                                   value="{{  old('signed_by', 'Иванов Иван Иванович')  }}"
                                    class="form-control @error('signed_by') is-invalid @enderror " id="signed_by"
                                    placeholder="Иванов Иван Иванович" required>
                             @error('signed_by')
@@ -191,7 +212,8 @@
                             <div class="form-group time_start">
                                 <label for="time_start">{{__('Время c :')}}</label>
                                 <input type="text" name="time_start" value="{{ old('time_start') }}"
-                                       id="time_start" class="form-control @error('time_start') is-invalid @enderror"
+                                       id="time_start"
+                                       class="form-control @error('time_start') is-invalid @enderror"
                                        autocomplete="off">
                                 @error('time_start')
                                 <span class="invalid-feedback" role="alert">
@@ -270,7 +292,6 @@
                         </div>
 
 
-
                         <div class="form-group">
                             <label
                                 for="equipment">{{__('Вносимое или выносимое снаряжение/имущество/оборудование:')}}</label>
@@ -324,7 +345,8 @@
 
                         <div class="form-group">
                             <label for="phone_number" class="required">{{__('Номер телефона ответственного лица:')}}
-                                <span class="tooltip-icon" title="Номер тел. ответственного лица для оперативной связи"><i
+                                <span class="tooltip-icon"
+                                      title="Номер тел. ответственного лица для оперативной связи"><i
                                         class="fa-solid fa-circle-exclamation"></i></span>
                             </label>
                             <input type="text" name="phone_number"
@@ -369,10 +391,10 @@
                             }, 5000);
                         }
                     </script>
-
                 </div>
             </div>
         </div>
+    </div>
 
     </div>
 

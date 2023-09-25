@@ -9,25 +9,25 @@ import 'bootstrap';
 document.addEventListener('DOMContentLoaded', function() {
     var modal = document.getElementById('exampleModal');
     var formSelect = document.getElementById('exampleSelect');
-    var guestForm = document.getElementById('guest_form');
-    var carForm = document.getElementById('car_form');
+    var guestCard = document.getElementById('guest_card');
+    var carCard = document.getElementById('car_card');
 
     if (formSelect.value === 'Guests') {
-        guestForm.style.display = 'block';
-        carForm.style.display = 'none';
+        guestCard.style.display = 'block';
+        carCard.style.display = 'none';
     } else if (formSelect.value === 'Car') {
-        guestForm.style.display = 'none';
-        carForm.style.display = 'block';
+        guestCard.style.display = 'none';
+        carCard.style.display = 'block';
     }
 
 
     formSelect.addEventListener('change', function() {
         if (formSelect.value === 'Guests') {
-            guestForm.style.display = 'block';
-            carForm.style.display = 'none';
+            guestCard.style.display = 'block';
+            carCard.style.display = 'none';
         } else if (formSelect.value === 'Car') {
-            guestForm.style.display = 'none';
-            carForm.style.display = 'block';
+            guestCard.style.display = 'none';
+            carCard.style.display = 'block';
         }
 
     });
