@@ -1,10 +1,7 @@
-<input {{ $attributes->class([
+<input @if($attributes['type'] !=='hidden') class="form-control" @endif
+ @error('department') is-invalid @enderror"
 
-    'form-control',
-
-])->merge([
-
+{{ $attributes->merge([
     'type' => 'text'
-
-]) }}>
+]) }} />
 

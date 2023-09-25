@@ -32,8 +32,4 @@ document.addEventListener('DOMContentLoaded', function() {
 
     });
 
-    var modalSubmit = document.getElementById('modalSubmit');
-    modalSubmit.addEventListener('click', function() {
-        modal.style.display = 'none';
-    });
 });

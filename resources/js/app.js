@@ -8,6 +8,7 @@ import './textAreaResizer';
 import './roomsInput';
 import './iconsTooltip';
 import './modalSelector';
+import './objectSelector';
 
 
 
