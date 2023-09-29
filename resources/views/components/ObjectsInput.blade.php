@@ -1,5 +1,5 @@
 <div class="form-group">
-    <x-label required for="object">{{__('Объекты, на который необходим доступ:')}}
+    <x-label required for="object">{{__('Локация:')}}
         <span class="tooltip-icon"
               title="Указаны объекты, где имеется СКУД. Если нужный объект отсутствует в списке- необходимо подавать заявку на почту"><i
                 class="fa-solid fa-circle-exclamation"></i></span>

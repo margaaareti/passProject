@@ -5,7 +5,7 @@ import './timepicker';
 import './objectSelector';
 import './numberRedactor';
 import './textAreaResizer';
-import './roomsInput';
+//import './roomsInput';
 import './iconsTooltip';
 import './modalSelector';
 import './objectSelector';
