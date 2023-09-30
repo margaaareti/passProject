@@ -2,7 +2,7 @@
 
 
 <button {{$attributes->class([
-    'btn',
+    'btn'
 ])->merge([
 
     'type'=>'button',

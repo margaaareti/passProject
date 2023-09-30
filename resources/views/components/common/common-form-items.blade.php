@@ -1,8 +1,7 @@
 <div>
     <x-form-item>
         <x-label required for="department"> {{__('Подразделение:')}}
-            <x-icon>
-                Сокращенное название подразделения
+            <x-icon title="Сокращенное название подразделения">
             </x-icon>
         </x-label>
         <x-input name="department" class="@error('department') is-invalid @enderror"
@@ -14,8 +13,7 @@
 
     <x-form-item>
         <x-label required for="signed_by">{{__('Кем одобрена заявка:')}}
-            <x-icon>
-                Кем одобрена заявка
+            <x-icon title="Кем одобрена заявка">
             </x-icon>
         </x-label>
         <x-input name="signed_by" class="@error('signed_by') is-invalid @enderror"
@@ -40,8 +38,7 @@
 
     <x-form-item>
         <x-label required for="purpose">{{__('Цель:')}}
-                <x-icon>
-                   Кратко, цель приглашения: стажировка, проведение работ, съемки, участие в мероприятии *название мероприятия* и т.д."
+                <x-icon title="Кратко, цель приглашения: стажировка, проведение работ, съемки, участие в мероприятии *название мероприятия* и т.д.">
                 </x-icon>
         </x-label>
 

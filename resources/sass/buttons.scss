@@ -1,0 +1,51 @@
+.btn {
+    color: whitesmoke;
+    background: #4e555b;
+    border-color: #010c0c;
+    transition: transform 0.2s ease, box-shadow 0.3s ease; /* Добавляем плавные переходы */
+
+    &:hover {
+        color: whitesmoke;
+        background: #505454;
+        border-color: #010c0c;
+        transform: scale(1.01); /* Увеличиваем размер кнопки при наведении */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Добавляем плавную тень при наведении */
+    }
+
+    &:active {
+        background: #7c1d1d;
+        border-color: #010c0c;
+        transform: scale(0.95); /* Уменьшаем размер кнопки при активации (нажатии) */
+    }
+}
+
+.active-link{
+    background: #676d73 !important;
+    border-color: #212020 !important;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Добавляем плавную тень при наведении */
+}
+
+.nav-buttons {
+    display: flex; // Делаем контейнер флекс-контейнером
+    flex-wrap: wrap; // Позволяет элементам оборачиваться на новую строку при нехватке места
+    justify-content: center; // Выравниваем кнопки по центру по горизонтали
+    gap: 10px; // Расстояние между кнопками (можете настроить по вашему желанию)
+
+    .nav-buttons__button {
+        flex: 1; // Делаем кнопки равномерно распределенными по ширине
+        text-align: center; // Выравниваем текст внутри кнопок по центру
+    }
+}
+
+@media (max-width: 768px) {
+
+    .nav-buttons {
+        flex-direction: column;
+    }
+
+    .nav-buttons__button {
+        margin-right: 0; // Убираем правый отступ у кнопок на маленьких экранах
+        margin-bottom: 10px; // Добавляем отступ снизу между кнопками
+    }
+
+};

@@ -1,7 +1,8 @@
 
 //Добавляет дефисы при вводе номера телефона приводя его в формат x-xxx-xxx-xx-xx
 $(document).ready(function () {
-    var $phoneNumberInput = $('#phone_number');
+
+    var $phoneNumberInput = $('.phone-number, #phone_number');
     var maxDigits = 11; // Максимальное количество цифр
 
     $phoneNumberInput.on('input', function (e) {

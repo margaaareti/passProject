@@ -3,29 +3,9 @@
 @section('page.title', 'Мои заявки')
 
 @section('content')
-    <div class="container mb-3">
-        <div class="row justify-content-center">
-            <div class="col-md-12">
+    <x-common.nav-buttons>
 
-                <div class="nav-buttons">
-                    <button type="button" class="nav-buttons__button btn btn-primary">
-                        <a class="nav-buttons__link nav-link" href="{{ route('home') }}">Ссылка на главную</a>
-                    </button>
-
-                    <button type="button" class="nav-buttons__button btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#exampleModal">
-                        <a class="nav-buttons__link nav-link" href="{{ route('user.app') }}">Подать заявку</a>
-                    </button>
-
-                    <button type="button" class="nav-buttons__button btn btn-primary">
-                        <a class="nav-buttons__link nav-link" href="{{ route('user.app.show') }}">Посмотреть все
-                            заявки</a>
-                    </button>
-                </div>
-
-            </div>
-        </div>
-    </div>
+    </x-common.nav-buttons>
 
     <div class="container py-3">
         <div class="card-container">

@@ -1,4 +1,4 @@
-<span class="tooltip-icon" title="{{$slot}}">
-    <i class="fa-solid fa-circle-exclamation"></i>
+<span class="tooltip-icon" title="{{ $attributes['title'] }}">
+    <i class="fa-solid fa-circle-exclamation">{{$slot}}</i>
 </span>
 

@@ -8,29 +8,9 @@
     </x-common.modal-window>
 
     <!-- Основной контент -->
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
+    <x-common.nav-buttons size="8">
 
-                <div class="nav-buttons">
-                    <button type="button" class="nav-buttons__button btn btn-primary">
-                        <a class="nav-buttons__link nav-link" href="{{ route('home') }}">Ссылка на главную</a>
-                    </button>
-
-                    <button type="button" class="nav-buttons__button btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#exampleModal">
-                        Выбрать тип заявки
-                    </button>
-
-                    <button type="button" class="nav-buttons__button btn btn-primary">
-                        <a class="nav-buttons__link nav-link" href="{{ route('user.app.show') }}">Посмотреть все
-                            заявки</a>
-                    </button>
-                </div>
-
-            </div>
-        </div>
-    </div>
+    </x-common.nav-buttons>
 
 
     <div class="container">
@@ -53,8 +33,7 @@
 
                                 <x-form-item class="form-group">
                                     <x-label required for="guests">{{__('Номер автомобиля:')}}
-                                        <x-icon>
-                                            Например: А 123 БВ 178
+                                        <x-icon title="Например: А 123 БВ 178">
                                         </x-icon>
                                     </x-label>
 
@@ -146,8 +125,7 @@
 
                                         <x-form-item>
                                             <x-label required for="guests">{{__('ФИО гостя:')}}
-                                                <x-icon>
-                                                    ФИО каждого гостя с новой строки
+                                                <x-icon title="ФИО каждого гостя с новой строки">
                                                 </x-icon>
                                             </x-label>
 
