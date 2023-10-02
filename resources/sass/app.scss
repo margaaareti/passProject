@@ -18,22 +18,29 @@
     margin-bottom: 10px;
 
     .time_start,
-    .time_end {
-        width: $input-width;
-        margin-right: $input-margin;
-    }
-
+    .time_end,
     .start_date,
     .end_date {
         width: $input-width;
         margin-right: $input-margin;
     }
 
+
     label {
         margin-left: 3px;
     }
 
+    @media (max-width: 390px) {
+        .time_start,
+        .time_end,
+        .start_date,
+        .end_date {
+            width: $little-screen-width;
+            margin-right: 5px;
+        }
+    }
 }
+
 
 //блок с окнами ввода временного промежутка и дат
 .time_range,

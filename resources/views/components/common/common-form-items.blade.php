@@ -7,7 +7,7 @@
         <x-input name="department" class="@error('department') is-invalid @enderror"
                  value="{{ old('department', $user->department )}}" required/>
         @error('department')
-        <x-error></x-error>
+        <x-error :message="$message"></x-error>
         @enderror
     </x-form-item>
 
@@ -19,7 +19,7 @@
         <x-input name="signed_by" class="@error('signed_by') is-invalid @enderror"
                  value="{{ old('signed_by','Иванов Иван Иванович' )}}" required/>
         @error('signed_by')
-        <x-error></x-error>
+        <x-error :message="$message"></x-error>
         @enderror
     </x-form-item>
 
@@ -48,7 +48,7 @@
         </x-textarea>
 
         @error('purpose')
-        <x-error></x-error>
+        <x-error :message="$message"></x-error>
         @enderror
     </x-form-item>
 

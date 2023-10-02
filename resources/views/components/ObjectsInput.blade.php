@@ -16,7 +16,7 @@
 
     @error('object')
 
-    <x-error></x-error>
+    <x-error :message="$message"></x-error>
 
     @enderror
 </div>

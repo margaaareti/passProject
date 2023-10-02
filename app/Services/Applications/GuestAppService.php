@@ -46,10 +46,6 @@ class GuestAppService
                 $data['rooms'] = '';
             };
 
-            if (!isset($data['responsible_person'])) {
-                $data['responsible_person'] = Auth::user()->name;
-            };
-
 
             $this->guestAppRepository->create($data);
 

@@ -57,8 +57,6 @@ class GuestAppRepository
 
         $data['user_id'] = Auth::id();
 
-        $data['responsible_person'] = Auth::user()->name;
-
         $data['object'] = implode("\n", $data['object']);
 
             $newPeopleApplication = $this->peopleAppModel->create($data);

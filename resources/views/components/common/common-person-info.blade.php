@@ -18,12 +18,12 @@
 
         <x-input name="responsible_person" id="responsible_person"
                  value="{{ old('responsible_person')}}"
-                 class="@error('responsible_person') is-invalid @enderror"
+                 class="person-field @error('responsible_person') is-invalid @enderror"
         />
         @error('responsible_person')
 
         @foreach($errors->get('responsible_person') as $error)
-            <x-error></x-error>
+            <x-error :message="$message"></x-error>
         @endforeach
 
         @enderror
@@ -47,15 +47,15 @@
             </div>
         </div>
 
-        <x-input name="phone_number" id="phone_number"
-                 class="@error('phone_number') is-invalid @enderror"
+        <x-input name="phone_number"
+                 class="number-field @error('phone_number') is-invalid @enderror"
                  value="{{ old('phone_number')}}"
         />
 
         @error('phone_number')
         @foreach($errors->get('phone_number') as $error)
             <span class="invalid-feedback" role="alert">
-                <x-error></x-error>
+                <x-error :message="$message"></x-error>
             </span>
         @endforeach
         @enderror
@@ -72,31 +72,45 @@
         </x-textarea>
 
         @error('additional_info')
-        <x-error></x-error>
+        <x-error :message="$message"></x-error>
         @enderror
     </x-form-item>
 
     {{$slot}}
 
     <script>
-        $(document).ready(function () {
-            $('.responsible-checkbox').on('change', function () {
-                if ($(this).is(':checked')) {
-                    $('#responsible_person').val('{{ sprintf("%s %s %s", $user->last_name, $user->name, $user->patronymic) }}');
-                } else {
-                    $('#responsible_person').val('');
-                }
+        document.addEventListener('DOMContentLoaded', function () {
+            var responsibleCheckboxes = document.querySelectorAll('.responsible-checkbox');
+            var phoneCheckboxes = document.querySelectorAll('.phone-checkbox');
+
+            responsibleCheckboxes.forEach(function (checkbox) {
+                checkbox.addEventListener('change', function () {
+                    var responsiblePersonInputs = document.querySelectorAll('.person-field');
+                    for (var i = 0; i < responsiblePersonInputs.length; i++) {
+                        if (this.checked) {
+                            responsiblePersonInputs[i].value = '{{$user->last_name}} {{$user->name}} {{$user->patronymic}}';
+                        } else {
+                            responsiblePersonInputs[i].value = '';
+                        }
+                    }
+                });
             });
 
-            $('.phone-checkbox').on('change', function () {
-                if ($(this).is(':checked')) {
-                    $('#phone_number').val('{{ $user->phone_number }}');
-                } else {
-                    $('#phone_number').val('');
-                }
+            phoneCheckboxes.forEach(function (checkbox) {
+                checkbox.addEventListener('change', function () {
+                    var phoneNumberInputs = document.querySelectorAll('.number-field');
+                    for (var i = 0; i < phoneNumberInputs.length; i++) {
+                        if (this.checked) {
+                            phoneNumberInputs[i].value = '{{$user->phone_number}}';
+                        } else {
+                            phoneNumberInputs[i].value = '';
+                        }
+                    }
+                });
             });
         });
     </script>
+
 </div>
 
 

@@ -9,6 +9,7 @@ import './textAreaResizer';
 import './iconsTooltip';
 import './modalSelector';
 import './objectSelector';
+import './pasteCheckbox';
 
 
 

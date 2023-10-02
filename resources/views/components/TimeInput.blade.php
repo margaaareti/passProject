@@ -12,7 +12,7 @@
         <x-label for="time_end"> {{__('До :')}}</x-label>
         <x-input type="text" name="time_end" id="time_end" value="{{ old('time_end') }} "/>
         @error('time_end')
-        <x-error></x-error>
+        <x-error :message="$message"></x-error>
         @enderror
     </div>
 </div>

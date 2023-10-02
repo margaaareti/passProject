@@ -43,7 +43,7 @@
                                     </x-input>
                                     <div>
                                         @error('cars')
-                                        <x-error></x-error>
+                                        <x-error :message="$message"></x-error>
                                         @enderror
                                     </div>
                                 </x-form-item>
@@ -57,7 +57,7 @@
                                         {{ old('equipment') }}
                                     </x-textarea>
                                     @error('equipment')
-                                    <x-error></x-error>
+                                    <x-error :message="$message"></x-error>
                                     @enderror
                                 </x-form-item>
 
@@ -135,7 +135,7 @@
                                                         required>{!! old('guests') !!}
                                             </x-textarea>
                                             @error('guests')
-                                            <x-error></x-error>
+                                            <x-error :message="$message"></x-error>
                                             @enderror
                                         </x-form-item>
 
@@ -168,6 +168,7 @@
                                 }, 5000);
                             }
                         </script>
+
                     </div>
                 </div>
             </div>

@@ -61,7 +61,6 @@ class GuestAppController extends Controller
 
     public function store(StoreGuestAppRequest $request)
     {
-
         //throw new \Exception('Ошибка: превышено ограничение количества запросов');
 
         $token = $request->input('_token');
@@ -73,7 +72,6 @@ class GuestAppController extends Controller
         $currentTime = time();
 
         if ($currentTime - $lastRequestTime < 5) {
-
             $request->session()->flashInput($request->input());
             return redirect()->back()->withErrors('Ошибка: превышено ограничение количества запросов');
         }

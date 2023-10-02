@@ -36,6 +36,7 @@ class GuestAppSheets
         $data['end_date'] = date_format(date_create($data['end_date']), 'd.m.Y');
         $data['guests'] = implode("\n", $data['guests']);
 
+
         $array = [
             $data['application_number'], $data['department'], '', $data['signed_by'], $data['start_date'], $data['end_date'],
             $data['time_range'], $data['object'], $data['application_type'], $data['purpose'],
