@@ -17,7 +17,12 @@ document.querySelectorAll('form').forEach(form => {
                 const label = document.querySelector(`label[for="${key}"]`);
                 if (label) {
                     const labelText = label.textContent.trim();
-                    dataItem.innerText = `${labelText} ${value}`;
+                    const labelElement = document.createElement('span');
+                    labelElement.textContent = labelText;
+                    labelElement.style.fontWeight = 'bold';
+                    // Добавляем значение
+                    dataItem.appendChild(labelElement);
+                    dataItem.innerHTML += ` ${value}`;
                     modalData.appendChild(dataItem);
                 }
             }
@@ -29,7 +34,7 @@ document.querySelectorAll('form').forEach(form => {
 
         const selectedTypeElement = document.getElementById('exampleSelect');
         const selectedText = selectedTypeElement.options[selectedTypeElement.selectedIndex].text;
-        document.getElementById('applicationType').innerText = `Тип заявки: ${selectedText}`;
+        document.getElementById('applicationType').innerText = `${selectedText}`;
 
 
         myModal.show();

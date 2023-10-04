@@ -90,16 +90,15 @@
                                 <h4 class="modal-title" id="exampleModalLabel">Проверьте правильность введенных данных</h4>
                             </div>
                             <div>
-                                <h5 class="modal-title" id="applicationType">Тип заявки</h5>
+                                <h5 class="modal-title" id="applicationType"></h5>
                             </div>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div id="modalData"></div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                            <button type="button" class="btn btn-primary" id="confirmButton">Подтвердить</button>
+                            <x-button data-bs-dismiss="modal">Закрыть</x-button>
+                            <x-button id="confirmButton">Подтвердить</x-button>
                         </div>
                     </div>
                 </div>

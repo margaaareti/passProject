@@ -89,7 +89,9 @@ class GuestAppController extends Controller
 
         try {
             $this->guestAppService->create($request->all());
-
+        } catch (\Exception $error) {
+            return redirect()->back()->withErrors($error->getMessage());
+        }
             //очищаем поля после успешной отправки
             $clearedFields = [
                 'time_start',
@@ -106,9 +108,7 @@ class GuestAppController extends Controller
                 'selected_form'=> $selectedForm
             ]);
 
-        } catch (\Exception $error) {
-            return redirect()->back()->withErrors($error->getMessage());
-        }
+
     }
 
 

@@ -1,6 +1,3 @@
-
-
-
 <button {{$attributes->class([
     'btn'
 ])->merge([
