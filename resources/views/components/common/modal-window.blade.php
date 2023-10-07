@@ -15,8 +15,8 @@
                                     value="Guests"{{$selectedForm === 'Guests' ? 'selected' : ''}}>Приглашение
                                 посетителей
                             </option>
-                            <option class="form-select__option" value="Car" selected>Въезд автотранспорта
-                            </option> {{$selectedForm === 'Car' ? 'selected' : ''}}
+                            <option class="form-select__option" value="Car" {{$selectedForm === 'Car' ? 'selected' : ''}}>Въезд автотранспорта
+                            </option>
                         </select>
                     </div>
                 </form>

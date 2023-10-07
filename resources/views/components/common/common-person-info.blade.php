@@ -80,6 +80,31 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            var formSelector = document.getElementById('exampleSelect'); // Замените 'form-selector' на ваш собственный id
+
+            formSelector.addEventListener('change', function () {
+                var responsibleCheckboxes = document.querySelectorAll('.responsible-checkbox');
+                var phoneCheckboxes = document.querySelectorAll('.phone-checkbox');
+                var responsiblePersonInputs = document.querySelectorAll('.person-field');
+                var phoneNumberInputs = document.querySelectorAll('.number-field');
+
+                responsibleCheckboxes.forEach(function (checkbox) {
+                    checkbox.checked = false;
+                });
+
+                phoneCheckboxes.forEach(function (checkbox) {
+                    checkbox.checked = false;
+                });
+
+                responsiblePersonInputs.forEach(function (input) {
+                    input.value = '';
+                });
+
+                phoneNumberInputs.forEach(function (input) {
+                    input.value = '';
+                });
+            });
+
             var responsibleCheckboxes = document.querySelectorAll('.responsible-checkbox');
             var phoneCheckboxes = document.querySelectorAll('.phone-checkbox');
 

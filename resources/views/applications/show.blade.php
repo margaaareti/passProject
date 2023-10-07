@@ -18,7 +18,7 @@
                     </div>
 
                     <div class="card__body card-body">
-                        <p class="card-body__text">Отправлено: {{$application->created_at}}</p>
+                        <p class="card-body__text">Отправлено: {{$application->created_at->format('H:i:s d.m.Y')}}</p>
                         <p class="card-body__text">Дата: c {{$application->start_date}} по {{$application->end_date}} </p>
                         <p class="card-body__text">Локация: {{$application->object}}</p>
                         <p class="card-body__text">Цель: {{$application->purpose}}</p>
