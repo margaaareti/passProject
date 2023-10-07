@@ -186,15 +186,15 @@
                         </x-typeCard>
 
 
-                        <script>
-                            const successMessage = document.getElementById('success-message');
-                            if (successMessage) {
-                                successMessage.style.display = 'block';
-                                setTimeout(function () {
-                                    successMessage.style.display = 'none';
-                                }, 5000);
-                            }
-                        </script>
+{{--                        <script>--}}
+{{--                            const successMessage = document.getElementById('success-message');--}}
+{{--                            if (successMessage) {--}}
+{{--                                successMessage.style.display = 'block';--}}
+{{--                                setTimeout(function () {--}}
+{{--                                    successMessage.style.display = 'none';--}}
+{{--                                }, 10000);--}}
+{{--                            }--}}
+{{--                        </script>--}}
 
                     </div>
                 </div>

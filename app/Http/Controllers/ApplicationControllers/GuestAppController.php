@@ -48,7 +48,7 @@ class GuestAppController extends Controller
 
             $selectedForm = 'Guests';
 
-            return view('applications.index', compact('user', 'objects', 'selectedForm'));
+            return view('user.applications.index', compact('user', 'objects', 'selectedForm'));
         }
     }
 
@@ -61,11 +61,9 @@ class GuestAppController extends Controller
 
     public function store(StoreGuestAppRequest $request)
     {
-        //throw new \Exception('Ошибка: превышено ограничение количества запросов');
-
+        // Получаем время последнего отправленного запроса, связанного с CSRF токеном, из сессии сервера
         $token = $request->input('_token');
 
-        // Получаем время последнего отправленного запроса, связанного с CSRF токеном, из сессии сервера
         $lastRequestTime = $request->session()->get('lastRequestTime_' . $token, 0);
 
         //Получаем текущее время
@@ -79,12 +77,14 @@ class GuestAppController extends Controller
         // Сохраняем время текущего запроса для CSRF токена в сессии сервера
         $request->session()->put('lastRequestTime_' . $token, $currentTime);
 
+
+        //Проверяем запрос
         $request->validated($request->all());
 
         $selectedForm = $request->input('selected_form');
 
-        if(!$selectedForm) {
-            $selectedForm='';
+        if (!$selectedForm) {
+            $selectedForm = '';
         }
 
         try {
@@ -92,37 +92,50 @@ class GuestAppController extends Controller
         } catch (\Exception $error) {
             return redirect()->back()->withErrors($error->getMessage());
         }
-            //очищаем поля после успешной отправки
-            $clearedFields = [
-                'time_start',
-                'time_end'
-            ];
 
-            //Задаем значения по умолчанию для очищаемых полей
-            foreach ($clearedFields as $field) {
-                $request->merge([$field => null]);
-            }
+        //очищаем поля после успешной отправки
+        $clearedFields = [
+            'time_start',
+            'time_end'
+        ];
 
-            return redirect()->back()->with([
-                'success' => 'Форма отправлено успешно',
-                'selected_form'=> $selectedForm
+        if($request->hasAny(['Checkbox1', 'Checkbox2'])) {
+            // Если есть чекбоксы, добавляем состояния во входные данные
+            $request->merge([
+                'Checkbox1' => $request->has('Checkbox1'),
+                'Checkbox2' => $request->has('Checkbox2')
             ]);
+        }
 
+        if($request->session()->has('errors')) {
+            return redirect()->back()->withErrors(session('errors'));
+        }
+
+        //Задаем значения по умолчанию для очищаемых полей
+        foreach ($clearedFields as $field) {
+            $request->merge([$field => null]);
+        }
+
+        return redirect()->back()->with([
+            'success' => 'Форма отправлено успешно',
+            'selected_form' => $selectedForm
+        ]);
 
     }
 
 
-    public function show()
+    public function showAllApp()
     {
         $user = Auth::user();
         $applications = $this->guestAppService->fetchAllApplications();
-        return view('applications.show',compact('user','applications'));
+        return view('user.applications.showAllApp', compact('user', 'applications'));
     }
 
-    public function showApp($id) {
+    public function showApp($id)
+    {
         $user = Auth::user();
-        $application= $this->guestAppService->fetchApplication($id);
-        return view('applications.showApp', compact('user', 'application'));
+        $application = $this->guestAppService->fetchApplication($id);
+        return view('user.applications.showApp', compact('user', 'application'));
     }
 
 

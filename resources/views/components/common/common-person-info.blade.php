@@ -11,7 +11,8 @@
             </div>
 
             <div>
-                <input type="checkbox" name="Checkbox1" class="responsible-checkbox paste-checkbox">
+                <input type="checkbox" name="Checkbox1" class="responsible-checkbox paste-checkbox" @if($errors->any()) checked @endif>
+                <input type="hidden" name="Checkbox1" value="0">
                 <x-label class="ms-1" for="Checkbox1">Указать свои данные</x-label>
             </div>
         </div>
@@ -42,7 +43,8 @@
             </div>
 
             <div>
-                <input type="checkbox" name="Checkbox2" class="phone-checkbox paste-checkbox">
+                <input type="checkbox" name="Checkbox2" class="phone-checkbox paste-checkbox" @if($errors->any()) checked @endif>
+                <input type="hidden" name="Checkbox2" value="0">
                 <x-label class="ms-1" for="Checkbox2">Указать свой номер</x-label>
             </div>
         </div>
@@ -134,6 +136,7 @@
                 });
             });
         });
+
     </script>
 
 </div>

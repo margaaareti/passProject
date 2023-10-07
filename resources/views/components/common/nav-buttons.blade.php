@@ -13,7 +13,7 @@
                     <a class="nav-buttons__link nav-link" href="{{ route('home') }}">На главную</a>
                 </x-button>
 
-                @if(Route::is('user.app.show'))
+                @if(Route::is('user.app.showAllApp') || Route::is('user.app.showApp'))
                     <x-button class="nav-buttons__button btn btn-light">
                         <a class="nav-buttons__link nav-link" href="{{ route('user.app') }}">Подать заявку</a>
                     </x-button>
@@ -24,9 +24,10 @@
                     </x-button>
                 @endif
 
-                <x-button class="nav-buttons__button btn btn-light {{Route::is('user.app.show') ? 'active-link' : ''}}">
-                    <a class="nav-buttons__link nav-link" href="{{ route('user.app.show') }}">Статус
-                        заявок</a>
+                <x-button class="nav-buttons__button btn btn-light {{active_link('user.app.showAllApp')}}">
+                    <a href="{{ route('user.app.showAllApp') }}" class="nav-buttons__link nav-link">Статус
+                        заявок
+                    </a>
                 </x-button>
             </div>
         </div>
