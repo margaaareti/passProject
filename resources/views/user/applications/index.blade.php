@@ -30,7 +30,7 @@
 
                             <x-input type="hidden" name="selected_form" value="Car"/>
 
-                            <x-common.common-form-items :user="$user" :objects="$objects">
+                            <x-common.common-form-items :user="$user" :objects="$objectsForParking">
 
                                 <x-form-item class="form-group">
                                     <x-label required for="cars">{{__('Номер автомобиля:')}}
@@ -87,7 +87,8 @@
                     <div class="modal-content">
                         <div class="d-flex flex-column">
                             <div class="modal-header mb-1">
-                                <h4 class="modal-title" id="exampleModalLabel">Проверьте правильность введенных данных</h4>
+                                <h4 class="modal-title" id="exampleModalLabel">Проверьте правильность введенных
+                                    данных</h4>
                             </div>
                             <div>
                                 <h5 class="modal-title" id="applicationType"></h5>
@@ -122,7 +123,7 @@
 
                                     <input type="hidden" name="selected_form" value="Guests">
 
-                                    <x-common.common-form-items :user="$user" :objects="$objects">
+                                    <x-common.common-form-items :user="$user" :objects="$objectsForInvitation">
 
                                         {{--                                        <x-form-item>--}}
                                         {{--                                            <label for="rooms">{{__('Номера помещений:')}}--}}
@@ -159,7 +160,7 @@
                                             <x-textarea name="guests" id="guests"
                                                         placeholder="Иванов Иван Иванович&#10Сергеев Сергей Сергеевич&#10Андреев Андрей Андреевич&#10и т.д."
                                                         class="@error('guests') is-invalid @enderror"
-                                                        required>{!! old('guests') !!}
+                                                        required>{{ old('guests') }}
                                             </x-textarea>
                                             @error('guests')
                                             <x-error :message="$message"></x-error>
@@ -185,24 +186,20 @@
 
                         </x-typeCard>
 
-
-{{--                        <script>--}}
-{{--                            const successMessage = document.getElementById('success-message');--}}
-{{--                            if (successMessage) {--}}
-{{--                                successMessage.style.display = 'block';--}}
-{{--                                setTimeout(function () {--}}
-{{--                                    successMessage.style.display = 'none';--}}
-{{--                                }, 10000);--}}
-{{--                            }--}}
-{{--                        </script>--}}
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
 
-    </div>
+    <script>
+        const successMessage = document.getElementById('success-message');
+        if (successMessage) {
+            successMessage.style.display = 'block';
+            setTimeout(function () {
+                successMessage.style.display = 'none';
+            }, 10000);
+        }
+    </script>
 
 @endsection

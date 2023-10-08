@@ -26,7 +26,7 @@ class GuestAppController extends Controller
         {
             $user = Auth::user();
 
-            $objects = [
+            $objectsForInvitation = [
                 'К49' => 'Кронверский,49',
                 'Л9' => 'Ломоносова,9',
                 'Л9 лит.М' => 'Ломоносова,9 (здание бывш. церкви)',
@@ -46,9 +46,18 @@ class GuestAppController extends Controller
 //            'Ягодное' => 'Ягодное',
             ];
 
+            $objectsForParking = [
+                'К49' => 'Кронверский,49',
+                'Л9_1' => 'Ломоносова, 9- Въезд через ворота (главная стоянка, 4 въезд)',
+                'Л9_2' => 'Ломоносова, 9- Въезд с Банного переулка (парковка за столовой, 6 въезд)',
+                'Л9_3' => 'Ломоносова, 9- Въезд за шлагбаум  (парковка руководства, 5 въезд)',
+                'Гривцова, 14' => 'Гривцова, 14',
+                'Чайковского, 14' => 'Чайковского, 11',
+            ];
+
             $selectedForm = 'Guests';
 
-            return view('user.applications.index', compact('user', 'objects', 'selectedForm'));
+            return view('user.applications.index', compact('user', 'objectsForParking','objectsForInvitation', 'selectedForm'));
         }
     }
 
