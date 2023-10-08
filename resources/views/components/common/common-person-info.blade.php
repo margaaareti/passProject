@@ -11,8 +11,7 @@
             </div>
 
             <div>
-                <input type="checkbox" name="Checkbox1" class="responsible-checkbox paste-checkbox" @if($errors->any()) checked @endif>
-                <input type="hidden" name="Checkbox1" value="0">
+                <input type="checkbox" name="Checkbox1" class="responsible-checkbox paste-checkbox" {{ session('checkbox1') ? 'checked' : '' }}>
                 <x-label class="ms-1" for="Checkbox1">Указать свои данные</x-label>
             </div>
         </div>
@@ -43,13 +42,12 @@
             </div>
 
             <div>
-                <input type="checkbox" name="Checkbox2" class="phone-checkbox paste-checkbox" @if($errors->any()) checked @endif>
-                <input type="hidden" name="Checkbox2" value="0">
+                <input type="checkbox" name="Checkbox2" class="phone-checkbox paste-checkbox" {{ session('checkbox2') ? 'checked' : '' }}>
                 <x-label class="ms-1" for="Checkbox2">Указать свой номер</x-label>
             </div>
         </div>
 
-        <x-input name="phone_number"
+        <x-input name="phone_number" id="phone_number"
                  class="number-field @error('phone_number') is-invalid @enderror"
                  value="{{ old('phone_number')}}"
         />
@@ -82,7 +80,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            var formSelector = document.getElementById('exampleSelect'); // Замените 'form-selector' на ваш собственный id
+            var formSelector = document.getElementById('exampleSelect');
 
             formSelector.addEventListener('change', function () {
                 var responsibleCheckboxes = document.querySelectorAll('.responsible-checkbox');
@@ -111,6 +109,29 @@
             var phoneCheckboxes = document.querySelectorAll('.phone-checkbox');
 
             responsibleCheckboxes.forEach(function (checkbox) {
+                var responsiblePersonInputs = document.querySelectorAll('.person-field');
+                for (var i = 0; i < responsiblePersonInputs.length; i++) {
+                    if (checkbox.checked) {
+                        responsiblePersonInputs[i].value = '{{$user->last_name}} {{$user->name}} {{$user->patronymic}}';
+                    } else {
+                        responsiblePersonInputs[i].value = '';
+                    }
+                }
+            });
+
+            phoneCheckboxes.forEach(function (checkbox) {
+                var phoneNumberInputs = document.querySelectorAll('.number-field');
+                for (var i = 0; i < phoneNumberInputs.length; i++) {
+                    if (checkbox.checked) {
+                        phoneNumberInputs[i].value = '{{$user->phone_number}}';
+                    } else {
+                        phoneNumberInputs[i].value = '';
+                    }
+                }
+            });
+
+
+            responsibleCheckboxes.forEach(function (checkbox) {
                 checkbox.addEventListener('change', function () {
                     var responsiblePersonInputs = document.querySelectorAll('.person-field');
                     for (var i = 0; i < responsiblePersonInputs.length; i++) {
@@ -134,6 +155,27 @@
                         }
                     }
                 });
+            });
+        });
+
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+            checkboxes.forEach(function(checkbox) {
+                checkbox.addEventListener('change', function() {
+                    var checkboxName = this.name;
+                    var isChecked = this.checked;
+                    sessionStorage.setItem('checkbox_' + checkboxName, isChecked);
+                });
+
+                var storedValue = sessionStorage.getItem('checkbox_' + checkbox.name);
+
+                if (storedValue !== null) {
+                    checkbox.checked = storedValue === 'true';
+                }
             });
         });
 

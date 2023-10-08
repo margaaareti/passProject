@@ -24,6 +24,12 @@ class AppServiceProvider extends ServiceProvider
             Validator::extend('itmo_email', function ($attribute, $value, $parameters, $validator) {
                 return preg_match('/@(ifmo|itmo|metalab.ifmo|kronbars|scamt-itmo|oi.ifmo|itz.vuztz|infochemistry|)\.ru$/i', $value);
             });
+
+            Validator::extend('car_number', function ($attribute, $value, $parameters, $validator) {
+                return preg_match('/^[А-Я]\s\d{3}\s[А-Я]{2}\s\d{2,3}$/', $value);
+            });
+
+
         }
     }
 }

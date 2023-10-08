@@ -87,6 +87,9 @@ class GuestAppController extends Controller
             $selectedForm = '';
         }
 
+        session()->flash('checkbox1', $request->has('Checkbox1'));
+        session()->flash('checkbox2', $request->has('Checkbox2'));
+
         try {
             $this->guestAppService->create($request->all());
         } catch (\Exception $error) {
@@ -99,22 +102,11 @@ class GuestAppController extends Controller
             'time_end'
         ];
 
-        if($request->hasAny(['Checkbox1', 'Checkbox2'])) {
-            // Если есть чекбоксы, добавляем состояния во входные данные
-            $request->merge([
-                'Checkbox1' => $request->has('Checkbox1'),
-                'Checkbox2' => $request->has('Checkbox2')
-            ]);
-        }
-
-        if($request->session()->has('errors')) {
-            return redirect()->back()->withErrors(session('errors'));
-        }
-
         //Задаем значения по умолчанию для очищаемых полей
         foreach ($clearedFields as $field) {
             $request->merge([$field => null]);
         }
+
 
         return redirect()->back()->with([
             'success' => 'Форма отправлено успешно',
