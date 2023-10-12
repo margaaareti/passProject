@@ -21,8 +21,7 @@ class GuestAppRepository
     protected GuestAppSheets $guestAppSheets;
 
 
-
-    public function __construct(PeopleApplication $peopleAppModel, GuestAppSheets $guestAppSheets )
+    public function __construct(PeopleApplication $peopleAppModel, GuestAppSheets $guestAppSheets)
     {
         $this->date = date('d.m.Y');
         $this->peopleAppModel = $peopleAppModel;
@@ -37,7 +36,7 @@ class GuestAppRepository
     public function create(array $data)
     {
 
-            $lastRecord = $this->peopleAppModel->latest()->first();
+        $lastRecord = $this->peopleAppModel->latest()->first();
 
         //Получаем значение счетчика из базы данных
         $counter = Counter::first();
@@ -59,6 +58,7 @@ class GuestAppRepository
 
         $data['object'] = implode("\n", $data['object']);
 
+        try {
             $newPeopleApplication = $this->peopleAppModel->create($data);
 
             foreach ($data['guests'] as $guest_name) {
@@ -70,6 +70,9 @@ class GuestAppRepository
                 $newPeopleApplication->guests()->attach($guest->id);
             }
 
+        } catch (\Exception $e) {
+            Log::error('Error sending data to Database: ' . $e->getMessage());
+        }
 
         try {
             $this->guestAppSheets->create($data);
@@ -77,17 +80,20 @@ class GuestAppRepository
             Log::error('Error sending data to Google Sheets: ' . $e->getMessage());
         }
 
+        return $newPeopleApplication->id;
 
     }
 
     //Получаем коллецию заявок пользователя
-    public function getAllApplications(): Collection {
+    public function getAllApplications(): Collection
+    {
         $userId = Auth::id();
         return $this->peopleAppModel->with('guests')->where('user_id', $userId)->get();
     }
 
     //Получаем конкретную заявку
-    public function getApplication($id): PeopleApplication {
+    public function getApplication($id): PeopleApplication
+    {
         $userId = Auth::id();
         return $this->peopleAppModel->where('user_id', $userId)->where('id', $id)->first();
     }

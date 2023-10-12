@@ -100,28 +100,32 @@ class GuestAppController extends Controller
         session()->flash('checkbox2', $request->has('Checkbox2'));
 
         try {
-            $this->guestAppService->create($request->all());
+           $applicationId = $this->guestAppService->create($request->all());
         } catch (\Exception $error) {
             return redirect()->back()->withErrors($error->getMessage());
         }
 
-        //очищаем поля после успешной отправки
-        $clearedFields = [
-            'time_start',
-            'time_end'
-        ];
+        if($applicationId !== null) {
 
-        //Задаем значения по умолчанию для очищаемых полей
-        foreach ($clearedFields as $field) {
-            $request->merge([$field => null]);
+            //очищаем поля после успешной отправки
+            $clearedFields = [
+                'time_start',
+                'time_end'
+            ];
+
+            //Задаем значения по умолчанию для очищаемых полей
+            foreach ($clearedFields as $field) {
+                $request->merge([$field => null]);
+            }
+
+            return redirect()->route('user.app.showApp', $applicationId)->with([
+                'success' => 'Форма отправлено успешно',
+                'selected_form' => $selectedForm
+            ]);
+
+        } else {
+            return redirect()->back()->withErrors('Форма не была отправлена по неизвестным причинам. Просьбма обратиться к администратора');
         }
-
-
-        return redirect()->back()->with([
-            'success' => 'Форма отправлено успешно',
-            'selected_form' => $selectedForm
-        ]);
-
     }
 
 

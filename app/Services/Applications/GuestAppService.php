@@ -46,8 +46,7 @@ class GuestAppService
                 $data['rooms'] = '';
             };
 
-
-            $this->guestAppRepository->create($data);
+            return $this->guestAppRepository->create($data);
 
         } catch (\Exception $error) {
             return $error->getMessage();

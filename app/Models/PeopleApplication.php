@@ -13,6 +13,7 @@ class PeopleApplication extends Model
 
     protected $fillable = [
 
+        'name',
         'user_id',
         'signed_by',
         'start_date', 'end_date',

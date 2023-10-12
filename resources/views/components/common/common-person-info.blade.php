@@ -47,7 +47,7 @@
             </div>
         </div>
 
-        <x-input name="phone_number" id="phone_number"
+        <x-input name="phone_number"
                  class="number-field @error('phone_number') is-invalid @enderror"
                  value="{{ old('phone_number')}}"
         />

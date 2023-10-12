@@ -1,4 +1,4 @@
 <textarea {{$attributes->merge([
     'type' => 'text',
     'class'=>'form-control'
-    ])}}></textarea>
+    ])}}>{{old($attributes->get('name'))}}</textarea>
