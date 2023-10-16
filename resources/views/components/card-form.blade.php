@@ -1,7 +1,5 @@
 <form {{ $attributes}}>
 
-    @csrf
-
     @if ($errors->any())
         <div class="alert alert-danger pb-0">
             <ul>

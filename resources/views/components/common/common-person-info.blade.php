@@ -12,18 +12,17 @@
 
             <div>
                 <input type="checkbox" name="Checkbox1" class="responsible-checkbox paste-checkbox" {{ session('checkbox1') ? 'checked' : '' }}>
-                <x-label class="ms-1" for="Checkbox1">Указать свои данные</x-label>
+                <x-label class="ms-1" for="Checkbox1">{{__('Указать свои данные')}}</x-label>
             </div>
         </div>
 
         <x-input name="responsible_person" id="responsible_person"
-                 value="{{ old('responsible_person')}}"
                  class="person-field @error('responsible_person') is-invalid @enderror"
         />
         @error('responsible_person')
 
         @foreach($errors->get('responsible_person') as $error)
-            <x-error :message="$message"></x-error>
+            <x-error :message="$error"></x-error>
         @endforeach
 
         @enderror
@@ -43,20 +42,15 @@
 
             <div>
                 <input type="checkbox" name="Checkbox2" class="phone-checkbox paste-checkbox" {{ session('checkbox2') ? 'checked' : '' }}>
-                <x-label class="ms-1" for="Checkbox2">Указать свой номер</x-label>
+                <x-label class="ms-1" for="Checkbox2">{{__('Указать свой номер:')}}</x-label>
             </div>
         </div>
-
         <x-input name="phone_number"
                  class="number-field @error('phone_number') is-invalid @enderror"
-                 value="{{ old('phone_number')}}"
         />
-
         @error('phone_number')
         @foreach($errors->get('phone_number') as $error)
-            <span class="invalid-feedback" role="alert">
-                <x-error :message="$message"></x-error>
-            </span>
+                <x-error :message="$error"></x-error>
         @endforeach
         @enderror
 
@@ -113,22 +107,25 @@
                 for (var i = 0; i < responsiblePersonInputs.length; i++) {
                     if (checkbox.checked) {
                         responsiblePersonInputs[i].value = '{{$user->last_name}} {{$user->name}} {{$user->patronymic}}';
-                    } else {
-                        responsiblePersonInputs[i].value = '';
                     }
                 }
             });
+
+        // else {
+        //         responsiblePersonInputs[i].value = '';
 
             phoneCheckboxes.forEach(function (checkbox) {
                 var phoneNumberInputs = document.querySelectorAll('.number-field');
                 for (var i = 0; i < phoneNumberInputs.length; i++) {
                     if (checkbox.checked) {
                         phoneNumberInputs[i].value = '{{$user->phone_number}}';
-                    } else {
-                        phoneNumberInputs[i].value = '';
                     }
                 }
             });
+
+        // else {
+        //         phoneNumberInputs[i].value = '';
+        //     }
 
 
             responsibleCheckboxes.forEach(function (checkbox) {

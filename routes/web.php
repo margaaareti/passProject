@@ -1,13 +1,11 @@
 <?php
 
+use App\Http\Controllers\ApplicationControllers\CarAppController;
 use App\Http\Controllers\ApplicationControllers\GuestAppController;
-use App\Http\Controllers\FormControllers\PeopleController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\TestController;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\RateLimiter;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,7 +35,11 @@ Route::prefix('/home')->middleware(['auth', 'verified'])->group(function () {
     Route::get("/guest-applications", [GuestAppController::class, 'showAllApp'])->name('user.app.showAllApp');
     Route::get("/guest-applications/{id}", [GuestAppController::class, 'showApp'])->name('user.app.showApp');
 
+
 });
+
+Route::get("/application", [CarAppController::class, 'index'])->name('carPage');
+Route::post("/car-application", [CarAppController::class, 'store'])->name('carCreate');
 
 
 

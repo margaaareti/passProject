@@ -55,7 +55,7 @@ class GuestAppController extends Controller
                 'Чайковского, 14' => 'Чайковского, 11',
             ];
 
-            $selectedForm = 'Guests';
+            $selectedForm = '';
 
             return view('user.applications.index', compact('user', 'objectsForParking','objectsForInvitation', 'selectedForm'));
         }
@@ -70,28 +70,16 @@ class GuestAppController extends Controller
 
     public function store(StoreGuestAppRequest $request)
     {
-        // Получаем время последнего отправленного запроса, связанного с CSRF токеном, из сессии сервера
-        $token = $request->input('_token');
 
-        $lastRequestTime = $request->session()->get('lastRequestTime_' . $token, 0);
-
-        //Получаем текущее время
-        $currentTime = time();
-
-        if ($currentTime - $lastRequestTime < 5) {
-            $request->session()->flashInput($request->input());
-            return redirect()->back()->withErrors('Ошибка: превышено ограничение количества запросов');
+        $limitExceeded = checkRequestLimit($request,5);
+        if ($limitExceeded) {
+            return $limitExceeded;
         }
-
-        // Сохраняем время текущего запроса для CSRF токена в сессии сервера
-        $request->session()->put('lastRequestTime_' . $token, $currentTime);
-
 
         //Проверяем запрос
         $request->validated($request->all());
 
         $selectedForm = $request->input('selected_form');
-
         if (!$selectedForm) {
             $selectedForm = '';
         }
@@ -100,12 +88,12 @@ class GuestAppController extends Controller
         session()->flash('checkbox2', $request->has('Checkbox2'));
 
         try {
-           $applicationId = $this->guestAppService->create($request->all());
+           $guestApplicationId = $this->guestAppService->create($request->all());
         } catch (\Exception $error) {
             return redirect()->back()->withErrors($error->getMessage());
         }
 
-        if($applicationId !== null) {
+        if($guestApplicationId !== null) {
 
             //очищаем поля после успешной отправки
             $clearedFields = [
@@ -118,7 +106,7 @@ class GuestAppController extends Controller
                 $request->merge([$field => null]);
             }
 
-            return redirect()->route('user.app.showApp', $applicationId)->with([
+            return redirect()->route('user.app.showApp', $guestApplicationId)->with([
                 'success' => 'Форма отправлено успешно',
                 'selected_form' => $selectedForm
             ]);

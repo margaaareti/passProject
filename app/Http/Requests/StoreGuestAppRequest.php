@@ -35,7 +35,7 @@ class StoreGuestAppRequest extends FormRequest
             'equipment' => ['string', 'max:250', 'nullable'],
             'guests' => ['required', 'string', 'max:1000','regex:/^[^0-9]+$/'],
             'responsible_person' => [],
-            'phone_number' => [['required', 'string', 'regex:/^8-[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}$/','starts_with:8', 'unique:users']],
+            'phone_number' => ['required', 'string', 'regex:/^8-[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}$/','starts_with:8'],
             'additional_info' => ['max:300'],
         ];
     }

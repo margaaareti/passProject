@@ -39,7 +39,7 @@
                                     </x-label>
 
                                     <x-input name="cars" id="cars"
-                                             class="@error('guests') is-invalid @enderror"
+                                             class="@error('cars') is-invalid @enderror"
                                              required>{{ old('cars') }}
                                     </x-input>
                                     <div>

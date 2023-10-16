@@ -4,7 +4,7 @@
             <x-icon title="Сокращенное название подразделения">
             </x-icon>
         </x-label>
-        <x-input name="department" class="@error('department') is-invalid @enderror"
+        <x-input name="department"
                  value="{{ old('department', $user->department )}}" required/>
         @error('department')
         <x-error :message="$message"></x-error>
