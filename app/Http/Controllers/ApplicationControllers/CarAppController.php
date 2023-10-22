@@ -42,6 +42,7 @@ class CarAppController extends Controller
     public function store(StoreCarAppRequest $request)
     {
 
+
         $limitExceeded = checkRequestLimit($request, 5);
         if ($limitExceeded) {
             return $limitExceeded;
@@ -54,10 +55,15 @@ class CarAppController extends Controller
         }
 
 
+        session()->flash('checkbox1', $request->has('Checkbox1'));
+        session()->flash('checkbox2', $request->has('Checkbox2'));
+
+
         try {
             $this->carAppService->create($request->all());
-            return redirect('carPage')->with([
+            return redirect()->route('user.app')->with([
                 'success' => 'Форма отправлено успешно',
+                'selected_form' => $selectedForm
             ]);
 
         } catch (\Exception $error) {

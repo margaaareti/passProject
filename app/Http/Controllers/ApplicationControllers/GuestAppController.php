@@ -7,6 +7,7 @@ use App\Http\Requests\StoreGuestAppRequest;
 use App\Services\Applications\GuestAppService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class GuestAppController extends Controller
 {
@@ -24,6 +25,8 @@ class GuestAppController extends Controller
     public function index()
     {
         {
+            $selectedForm = '';
+
             $user = Auth::user();
 
             $objectsForInvitation = [
@@ -55,8 +58,6 @@ class GuestAppController extends Controller
                 'Чайковского, 14' => 'Чайковского, 11',
             ];
 
-            $selectedForm = '';
-
             return view('user.applications.index', compact('user', 'objectsForParking','objectsForInvitation', 'selectedForm'));
         }
     }
@@ -76,21 +77,20 @@ class GuestAppController extends Controller
             return $limitExceeded;
         }
 
-        //Проверяем запрос
-        $request->validated($request->all());
-
         $selectedForm = $request->input('selected_form');
         if (!$selectedForm) {
             $selectedForm = '';
         }
 
+
+        session(['selected_form'=>$selectedForm]);
         session()->flash('checkbox1', $request->has('Checkbox1'));
         session()->flash('checkbox2', $request->has('Checkbox2'));
 
         try {
            $guestApplicationId = $this->guestAppService->create($request->all());
         } catch (\Exception $error) {
-            return redirect()->back()->withErrors($error->getMessage());
+            return redirect()->back()->withErrors($error->getMessage())->with('selected_form', $selectedForm);
         }
 
         if($guestApplicationId !== null) {

@@ -38,6 +38,10 @@ class CarAppSheets
 
         $data['application_type']= 'Въезд';
 
+        if(str_starts_with($data['object'], 'Л9')){
+            $data['object'] = 'Л9';
+        }
+
         $array = [
             $data['application_number'], $data['department'], '', $data['signed_by'], $data['start_date'], $data['end_date'],
             $data['time_range'], $data['object'], $data['application_type'], $data['purpose'],

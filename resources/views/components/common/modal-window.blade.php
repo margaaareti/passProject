@@ -12,10 +12,11 @@
                         <select class="form-select" id="exampleSelect">
                             <option value="" disabled selected>Выберите тип заявки</option>
                             <option class="form-select__option"
-                                    value="Guests"{{$selectedForm === 'Guests' ? 'selected' : ''}}>Приглашение
+                                    value="Guests" {{old('selected_form') === 'Guests' ? 'selected' : ''}}>Приглашение
                                 посетителей
                             </option>
-                            <option class="form-select__option" value="Car" {{$selectedForm === 'Car' ? 'selected' : ''}}>Въезд автотранспорта
+                            <option class="form-select__option"
+                                    value="Car" {{old('selected_form') === 'Car' ? 'selected' : ''}}>Въезд автотранспорта
                             </option>
                         </select>
                     </div>

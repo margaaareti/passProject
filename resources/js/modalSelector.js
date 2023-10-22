@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     var form = (formSelect.value==='Guests') ? document.getElementById('form1') : document.getElementById('form2');
-    var fieldsToKeep = ['department','start_date','end-date']; // Список полей, которые нужно сохранить
+    var fieldsToKeep = ['department','start_date','end_date','selected_form']; // Список полей, которые нужно сохранить
 
     var inputs = form.getElementsByTagName('input');
     for(var i=0; i<inputs.length; i++) {

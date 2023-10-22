@@ -16,6 +16,12 @@
                     </div>
                 @endif
 
+                <div style="background-color: #1c7430">
+
+                    <p>{{session('foo')}}</p>
+
+                </div>
+
 
                 <x-typeCard carCard>
 

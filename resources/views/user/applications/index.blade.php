@@ -16,11 +16,15 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
+                @if(session()->has('selected_form'))
+                    <div style="background-color: #1c7430">{{session('selected_from')}}</div>
+                @endif
 
                 <x-typeCard carCard>
 
                     <x-card-header>
                         <x-card-title>{{__('Въезд автотранспорта')}}</x-card-title>
+                        <p>{{$selectedForm}}</p>
                     </x-card-header>
 
                     <x-card-body>
@@ -28,7 +32,7 @@
                         <x-card-form id="form1" data-target="confirmationModal" action="{{ route('carCreate')}}"
                                      method="POST">
 
-                            <x-input type="hidden" name="selected_form" value="Car"/>
+                            <input id="1" type="hidden" name="selected_form" value="Car"/>
 
                             <x-common.common-form-items :user="$user" :objects="$objectsForParking">
 
@@ -109,7 +113,9 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
-
+                        @if(session()->has('selected_form'))
+                            <div style="background-color: #1c7430">{{session('selected_from')}}</div>
+                        @endif
                         <x-typeCard guestCard>
 
                             <x-card-header>
@@ -121,35 +127,9 @@
                                 <x-card-form id="form2" method="POST" data-target="confirmationModal"
                                              action="{{ route('user.app.create') }}">
 
-                                    <input type="hidden" name="selected_form" value="Guests">
+                                    <input id='2' type="hidden" name="selected_form" value="Guests"/>
 
                                     <x-common.common-form-items :user="$user" :objects="$objectsForInvitation">
-
-                                        {{--                                        <x-form-item>--}}
-                                        {{--                                            <label for="rooms">{{__('Номера помещений:')}}--}}
-                                        {{--                                                <x-icon>--}}
-                                        {{--                                                    Ввод через пробел. Запятые проставляются автоматически--}}
-                                        {{--                                                </x-icon>--}}
-                                        {{--                                            </label>--}}
-                                        {{--                                            <x-textarea name="rooms" id="rooms"--}}
-                                        {{--                                                        class="@error('rooms') is-invalid @enderror">{{ old('rooms') }}--}}
-                                        {{--                                            </x-textarea>--}}
-                                        {{--                                            @error('rooms')--}}
-                                        {{--                                            <x-error></x-error>--}}
-                                        {{--                                            @enderror--}}
-                                        {{--                                        </x-form-item>--}}
-
-                                        {{--                                        <x-form-item>--}}
-                                        {{--                                            <x-label--}}
-                                        {{--                                                for="equipment">{{__('Вносимое или выносимое снаряжение/имущество/оборудование:')}}--}}
-                                        {{--                                            </x-label>--}}
-                                        {{--                                            <x-textarea name="equipment" id="equipment"--}}
-                                        {{--                                                        class="@error('equipment') is-invalid @enderror"> {{ old('equipment') }}--}}
-                                        {{--                                            </x-textarea>--}}
-                                        {{--                                            @error('equipment')--}}
-                                        {{--                                            <x-error></x-error>--}}
-                                        {{--                                            @enderror--}}
-                                        {{--                                        </x-form-item>--}}
 
                                         <x-form-item>
                                             <x-label required for="guests">{{__('ФИО гостей:')}}
