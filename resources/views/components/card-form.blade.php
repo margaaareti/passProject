@@ -1,5 +1,7 @@
-<form {{ $attributes}}>
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
+<form {{ $attributes}}>
+    @csrf
     @if ($errors->any())
         <div class="alert alert-danger pb-0">
             <ul>
@@ -19,6 +21,8 @@
     {{ $slot }}
 
 </form>
+
+
 
 
 

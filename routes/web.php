@@ -35,6 +35,8 @@ Route::prefix('/home')->middleware(['auth', 'verified'])->group(function () {
     Route::get("/guest-applications", [GuestAppController::class, 'showAllApp'])->name('user.app.showAllApp');
     Route::get("/guest-applications/{id}", [GuestAppController::class, 'showApp'])->name('user.app.showApp');
 
+    Route::post("/car-application", [CarAppController::class, 'store'])->name('carCreate');
+
 
 });
 

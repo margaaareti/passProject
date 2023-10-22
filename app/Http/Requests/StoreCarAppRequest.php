@@ -30,7 +30,7 @@ class StoreCarAppRequest extends FormRequest
             'time_end' => ['required_with:time_start', 'nullable', 'regex:/^\d{2}:\d{2}$/'],
             'purpose' => ['required', 'string', 'max:150'],
             'object' => ['required', 'array'],
-            'car_number' => ['required', 'car_number'],
+            'cars' => ['required'],
             'equipment' => ['string', 'max:250', 'nullable'],
             'responsible_person' => [],
             'phone_number' => [['required', 'string', 'regex:/^8-[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}$/', 'starts_with:8', 'unique:users']],

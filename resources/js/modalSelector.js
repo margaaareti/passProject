@@ -33,7 +33,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-
     toggleCards();
 
     formSelect.addEventListener('change', toggleCards);

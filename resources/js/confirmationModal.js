@@ -1,6 +1,10 @@
 document.querySelectorAll('form').forEach(form => {
-    form.addEventListener('submit', function(event) {
+    form.addEventListener('submit', function (event) {
         event.preventDefault();
+
+        // Обновляем CSRF-токен в каждой форме
+        form.querySelector('input[name="_token"]').value = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
         const modalId = this.getAttribute('data-target');
         const modalData = document.getElementById(modalId).querySelector('#modalData');
         const formData = new FormData(this);
@@ -11,7 +15,7 @@ document.querySelectorAll('form').forEach(form => {
 
         formData.forEach((value, key) => {
             // Проверяем, нужно ли пропустить это поле
-            if (value !=='' && !fieldsToSkip.includes(key)) {
+            if (value !== '' && !fieldsToSkip.includes(key)) {
                 const dataItem = document.createElement('div');
                 // Здесь мы используем labels, чтобы привести поля к нужному виду
                 const label = document.querySelector(`label[for="${key}"]`);
@@ -39,7 +43,7 @@ document.querySelectorAll('form').forEach(form => {
 
         myModal.show();
 
-        document.getElementById('confirmButton').addEventListener('click', function() {
+        document.getElementById('confirmButton').addEventListener('click', function () {
             const targetFormId = this.dataset.targetForm;
             const targetForm = document.getElementById(targetFormId);
             targetForm.submit();

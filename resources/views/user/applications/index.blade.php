@@ -25,7 +25,7 @@
 
                     <x-card-body>
 
-                        <x-card-form id="form1" data-target="confirmationModal" action="{{ route('user.app.create')}}"
+                        <x-card-form id="form1" data-target="confirmationModal" action="{{ route('carCreate')}}"
                                      method="POST">
 
                             <x-input type="hidden" name="selected_form" value="Car"/>

@@ -6,9 +6,8 @@ namespace App\Repositories;
 use App\Models\Car;
 use App\Models\CarApplication;
 use App\Models\Counter;
-use Illuminate\Database\Eloquent\Collection;
+use App\Models\PeopleApplication;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 
@@ -17,14 +16,16 @@ class CarAppRepository
     protected string $date;
 
     protected CarApplication $carAppModel;
-    //protected GuestAppSheets $guestAppSheets;
+    protected PeopleApplication $peopleAppModel;
+    protected CarAppSheets $carAppSheets;
 
 
-    public function __construct(CarApplication $carAppModel,)
+    public function __construct(CarApplication $carAppModel, CarAppSheets $carAppSheets, PeopleApplication $peopleAppModel)
     {
         $this->date = date('d.m.Y');
         $this->carAppModel = $carAppModel;
-        //$this->guestAppSheets = $guestAppSheets;
+        $this->peopleAppModel = $peopleAppModel;
+        $this->carAppSheets = $carAppSheets;
 
     }
 
@@ -35,7 +36,8 @@ class CarAppRepository
     public function create(array $data)
     {
 
-        $lastRecord = $this->carAppModel->latest()->first();
+        $lastCarRecord = $this->carAppModel->latest()->first();
+        $lastPeopleRecord = $this->peopleAppModel->latest()->first();
 
         //Получаем значение счетчика из базы данных
         $counter = Counter::first();
@@ -44,7 +46,7 @@ class CarAppRepository
             $counter->save();
         }
 
-        if ($lastRecord && $lastRecord->created_at->format('d.m.Y') == $this->date) {
+        if (($lastCarRecord && $lastCarRecord->created_at->format('d.m.Y') == $this->date) || ($lastPeopleRecord && $lastPeopleRecord->created_at->format('d.m.Y') == $this->date )){
             $counter->increment('value');
         } else {
             $counter->update(['value' => 1]);
@@ -73,13 +75,13 @@ class CarAppRepository
             Log::error('Error sending data to Database: ' . $e->getMessage());
         }
 
-//        try {
-//            $this->carAppSheets->create($data);
-//        } catch (\Exception $e) {
-//            Log::error('Error sending data to Google Sheets: ' . $e->getMessage());
-//        }
-//
-//        return $newPeopleApplication->id;
+        try {
+            $this->carAppSheets->create($data);
+        } catch (\Exception $e) {
+          Log::error('Error sending data to Google Sheets: ' . $e->getMessage());
+        }
+
+        return $newCarApplication->id;
 
     }
 

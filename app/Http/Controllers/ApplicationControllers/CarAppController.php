@@ -39,7 +39,7 @@ class CarAppController extends Controller
 
 
 
-    public function store(Request $request)
+    public function store(StoreCarAppRequest $request)
     {
 
         $limitExceeded = checkRequestLimit($request, 5);

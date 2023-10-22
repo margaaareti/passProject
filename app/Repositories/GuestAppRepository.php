@@ -3,13 +3,12 @@
 namespace App\Repositories;
 
 
+use App\Models\CarApplication;
 use App\Models\Counter;
 use App\Models\Guest;
 use App\Models\PeopleApplication;
-use Couchbase\QueryException;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 
@@ -18,13 +17,15 @@ class GuestAppRepository
     protected string $date;
 
     protected PeopleApplication $peopleAppModel;
+    protected CarApplication $carAppModel;
     protected GuestAppSheets $guestAppSheets;
 
 
-    public function __construct(PeopleApplication $peopleAppModel, GuestAppSheets $guestAppSheets)
+    public function __construct(PeopleApplication $peopleAppModel, CarApplication $carAppModel, GuestAppSheets $guestAppSheets)
     {
         $this->date = date('d.m.Y');
         $this->peopleAppModel = $peopleAppModel;
+        $this->carAppModel = $carAppModel;
         $this->guestAppSheets = $guestAppSheets;
 
     }
@@ -36,7 +37,8 @@ class GuestAppRepository
     public function create(array $data)
     {
 
-        $lastRecord = $this->peopleAppModel->latest()->first();
+        $lastCarRecord = $this->carAppModel->latest()->first();
+        $lastPeopleRecord = $this->peopleAppModel->latest()->first();
 
         //Получаем значение счетчика из базы данных
         $counter = Counter::first();
@@ -45,7 +47,7 @@ class GuestAppRepository
             $counter->save();
         }
 
-        if ($lastRecord && $lastRecord->created_at->format('d.m.Y') == $this->date) {
+        if (($lastCarRecord && $lastCarRecord->created_at->format('d.m.Y') == $this->date) || ($lastPeopleRecord && $lastPeopleRecord->created_at->format('d.m.Y') == $this->date )){
             $counter->increment('value');
         } else {
             $counter->update(['value' => 1]);
