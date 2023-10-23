@@ -30,7 +30,7 @@ class StoreCarAppRequest extends FormRequest
             'time_end' => ['required_with:time_start', 'nullable', 'regex:/^\d{2}:\d{2}$/'],
             'purpose' => ['required', 'string', 'max:150'],
             'object' => ['required', 'array'],
-            'cars' => ['required'],
+            'cars' => ['required','car_number'],
             'equipment' => ['string', 'max:250', 'nullable'],
             'responsible_person' => [],
             'phone_number' => [['required', 'string', 'regex:/^8-[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}$/', 'starts_with:8', 'unique:users']],
@@ -44,7 +44,7 @@ class StoreCarAppRequest extends FormRequest
             'signed_by.regex' => 'Поле "Кем одобрена заявка" должно содержать только буквы',
             'department' => 'Поле "Подразделение" может содержать только буквы',
             'guests.regex' => 'Поле "ФИО гостя" может содержать только буквы',
-            'car_number' => 'Неверный формат номера автомобиля. Пример: А 123 АА 45'
+            'car_number' => 'Неверный формат номера автомобиля. Пример: А 123 АА 45 (код региона желательно, но не обязательно)'
         ];
     }
 }

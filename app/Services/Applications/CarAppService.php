@@ -2,6 +2,7 @@
 
 namespace App\Services\Applications;
 
+use App\Models\CarApplication;
 use App\Models\PeopleApplication;
 use App\Repositories\CarAppRepository;
 use App\Repositories\GuestAppRepository;
@@ -24,7 +25,7 @@ class CarAppService
     {
 
         $data['application_type'] = 'Въезд автотранспорта';
-        $data['cars'] = preg_split("/[\n,]+/", str_replace("\r\n", "\n", $data['cars']));
+        $data['cars'] = preg_split("/[\n,]+/", str_replace("\r\n", "\n", mb_strtoupper($data['cars'],'UTF-8')));
         $data['cars_count'] = count($data['cars']);
 
 
@@ -50,18 +51,17 @@ class CarAppService
         }
 
     }
-}
 
-//    public function fetchAllApplications(): Collection
-//    {
-//
-//        return $data= $this->guestAppRepository->getAllApplications();
-//
-//    }
-//
-//    public function fetchApplication($id): PeopleApplication
-//    {
-//        $id=(int)$id;
-//       return $this->guestAppRepository->getApplication($id);
-//    }
-//}
+    public function fetchAllCarApplications(): Collection
+    {
+
+        return $data= $this->carAppRepository->getAllCarApplications();
+
+    }
+
+    public function fetchCarApplication($id): CarApplication
+    {
+        $id=(int)$id;
+       return $this->carAppRepository->getCarApplication($id);
+    }
+}

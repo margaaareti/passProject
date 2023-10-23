@@ -29,7 +29,7 @@
 
                     <x-card-body>
 
-                        <x-card-form id="form1" data-target="confirmationModal" action="{{ route('carCreate')}}"
+                        <x-card-form id="form1" type="cars" data-target="confirmationModal" action="{{ route('carCreate')}}"
                                      method="POST">
 
                             <input id="1" type="hidden" name="selected_form" value="Car"/>
@@ -124,7 +124,7 @@
 
                             <x-card-body>
 
-                                <x-card-form id="form2" method="POST" data-target="confirmationModal"
+                                <x-card-form id="form2" type="guests" method="POST" data-target="confirmationModal"
                                              action="{{ route('user.app.create') }}">
 
                                     <input id='2' type="hidden" name="selected_form" value="Guests"/>

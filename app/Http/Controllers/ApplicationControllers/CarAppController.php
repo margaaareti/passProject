@@ -71,4 +71,19 @@ class CarAppController extends Controller
         }
 
     }
+
+//    public function showAllApp()
+//    {
+//        $user = Auth::user();
+//        $applications = $this->carAppService->fetchAllCarApplications();
+//        return view('user.applications.showAllApp', compact('user', 'applications'));
+//    }
+//
+//    public function showApp($id)
+//    {
+//        $user = Auth::user();
+//        $application = $this->carAppService->fetchCarApplication($id);
+//        return view('user.applications.showApp', compact('user', 'application'));
+//    }
+
 }

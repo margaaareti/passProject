@@ -7,6 +7,7 @@ use App\Models\Car;
 use App\Models\CarApplication;
 use App\Models\Counter;
 use App\Models\PeopleApplication;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -85,17 +86,17 @@ class CarAppRepository
 
     }
 
-    //Получаем коллецию заявок пользователя
-//    public function getAllApplications(): Collection
-//    {
-//        $userId = Auth::id();
-//        return $this->peopleAppModel->with('guests')->where('user_id', $userId)->get();
-//    }
-//
-//    //Получаем конкретную заявку
-//    public function getApplication($id): PeopleApplication
-//    {
-//        $userId = Auth::id();
-//        return $this->peopleAppModel->where('user_id', $userId)->where('id', $id)->first();
-//    }
+
+   public function getAllCarApplications(): Collection
+    {
+        $userId = Auth::id();
+        return $this->carAppModel->with('cars')->where('user_id', $userId)->get();
+    }
+
+    //Получаем конкретную заявку
+    public function getCarApplication($id): CarApplication
+    {
+        $userId = Auth::id();
+        return $this->peopleAppModel->where('user_id', $userId)->where('id', $id)->first();
+    }
 }

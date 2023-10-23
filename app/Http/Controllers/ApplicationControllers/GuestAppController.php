@@ -4,7 +4,9 @@ namespace App\Http\Controllers\ApplicationControllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreGuestAppRequest;
+use App\Services\Applications\CarAppService;
 use App\Services\Applications\GuestAppService;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
@@ -13,11 +15,13 @@ class GuestAppController extends Controller
 {
 
     protected GuestAppService $guestAppService;
+    protected CarAppService $carAppService;
 
-    public function __construct(GuestAppService $guestAppService)
+    public function __construct(GuestAppService $guestAppService, CarAppService $carAppService)
     {
         $this->middleware('custom.throttle')->only('store');
         $this->guestAppService = $guestAppService;
+        $this->carAppService = $carAppService;
 
     }
 
@@ -120,7 +124,11 @@ class GuestAppController extends Controller
     public function showAllApp()
     {
         $user = Auth::user();
-        $applications = $this->guestAppService->fetchAllApplications();
+        $guestApplications = $this->guestAppService->fetchAllApplications();
+        $carApplications = $this->carAppService->fetchAllCarApplications();
+
+        $applications = $guestApplications->concat($carApplications)->sortByDesc('created_at');
+
         return view('user.applications.showAllApp', compact('user', 'applications'));
     }
 

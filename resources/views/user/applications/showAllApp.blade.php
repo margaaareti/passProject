@@ -13,9 +13,15 @@
             <div class="card-container__item">
                 <div class="card h-100">
 
+                    @if($application->guests)
                     <div class="card__header card-header text-center">
                         <a class="card-header__link" href="{{route('user.app.showApp', $application->id)}}" >{{ __('Заявка на проход посетителей №')}} {{$application->id}}</a>
                     </div>
+                    @elseif($application->cars)
+                        <div class="card__header card-header text-center">
+                            <a class="card-header__link" href="{{route('user.app.showApp', $application->id)}}" >{{ __('Заявка на въезд автотранспорта №')}} {{$application->id}}</a>
+                        </div>
+                    @endif
 
                     <div class="card__body card-body">
                         <p class="card-body__text">Отправлено: {{$application->created_at->format('H:i:s d.m.Y')}}</p>
@@ -30,6 +36,13 @@
                                 <li class="card-body__text">{{ $guest->name }}</li>
                             @endforeach
                         </ul>
+                            @elseif ($application->cars)
+                            <p class="card-body__text">Количество авто, указанных в заявке: {{$application->cars_count}}</p>
+                            <ul class="card-body__list">
+                                @foreach ($application->cars as $car)
+                                    <li class="card-body__text">{{ $car->number }}</li>
+                                @endforeach
+                            </ul>
                         @endif
                     </div>
                 </div>

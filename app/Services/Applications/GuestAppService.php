@@ -57,7 +57,7 @@ class GuestAppService
     public function fetchAllApplications(): Collection
     {
 
-        return $data= $this->guestAppRepository->getAllApplications();
+        return $this->guestAppRepository->getAllApplications();
 
     }
 

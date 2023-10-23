@@ -1,3 +1,4 @@
+@props(['type'])
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <form {{ $attributes}}>

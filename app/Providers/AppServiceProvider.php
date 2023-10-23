@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
             });
 
             Validator::extend('car_number', function ($attribute, $value, $parameters, $validator) {
-                return preg_match('/^[А-Я]\s\d{3}\s[А-Я]{2}\s\d{2,3}$/', $value);
+                return preg_match('/^[А-Яа-я]\s\d{3}\s[А-Яа-я]{2}\s\d{0,3}$/iu', $value);
             });
 
 
