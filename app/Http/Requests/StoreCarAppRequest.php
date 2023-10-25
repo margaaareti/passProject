@@ -31,8 +31,8 @@ class StoreCarAppRequest extends FormRequest
             'purpose' => ['required', 'string', 'max:150'],
             'object' => ['required', 'array'],
             'cars' => ['required','car_number'],
-            'equipment' => ['string', 'max:250', 'nullable'],
-            'responsible_person' => [],
+            'equipment' => ['nullable','string', 'max:250', ],
+            'responsible_person' => ['required'],
             'phone_number' => [['required', 'string', 'regex:/^8-[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}$/', 'starts_with:8', 'unique:users']],
             'additional_info' => ['max:300'],
         ];

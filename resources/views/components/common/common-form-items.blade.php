@@ -5,7 +5,7 @@
             </x-icon>
         </x-label>
         <x-input name="department"
-                 value="{{ old('department', $user->department )}}" required/>
+                 value="{{ $user->department }}" required/>
         @error('department')
         <x-error :message="$message"></x-error>
         @enderror
@@ -17,7 +17,7 @@
             </x-icon>
         </x-label>
         <x-input name="signed_by" class="@error('signed_by') is-invalid @enderror"
-                 value="{{ old('signed_by','Иванов Иван Иванович' )}}" required/>
+                 value="{{'Иванов Иван Иванович'}}" required/>
         @error('signed_by')
         <x-error :message="$message"></x-error>
         @enderror
