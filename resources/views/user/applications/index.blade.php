@@ -3,7 +3,7 @@
 
 @section('content')
     <!-- Модальное окно -->
-    <x-common.modal-window :selectedForm="$selectedForm">
+    <x-common.modal-window>
 
     </x-common.modal-window>
 
@@ -21,7 +21,6 @@
 
                     <x-card-header>
                         <x-card-title>{{__('Въезд автотранспорта')}}</x-card-title>
-                        <p>{{$selectedForm}}</p>
                     </x-card-header>
 
                     <x-card-body>
@@ -178,5 +177,6 @@
             }, 10000);
         }
     </script>
+
 
 @endsection

@@ -74,12 +74,14 @@ class GuestAppRepository
 
         } catch (\Exception $e) {
             Log::error('Error sending data to Database: ' . $e->getMessage());
+            return $e->getMessage();
         }
 
         try {
             $this->guestAppSheets->create($data);
         } catch (\Exception $e) {
             Log::error('Error sending data to Google Sheets: ' . $e->getMessage());
+            return $e->getMessage();
         }
 
         return $newPeopleApplication->id;

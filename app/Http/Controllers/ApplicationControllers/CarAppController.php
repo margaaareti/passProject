@@ -60,8 +60,8 @@ class CarAppController extends Controller
 
 
         try {
-            $this->carAppService->create($request->all());
-            return redirect()->route('user.app')->with([
+            $carApplicationId = $this->carAppService->create($request->all());
+            return redirect()->route('user.app.showCarApp', $carApplicationId)->with([
                 'success' => 'Форма отправлено успешно',
                 'selected_form' => $selectedForm
             ]);

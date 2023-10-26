@@ -4,10 +4,12 @@ namespace App\Services\Applications;
 
 use App\Models\PeopleApplication;
 use App\Repositories\GuestAppRepository;
+use App\Services\AppService;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Log;
 
 
-class GuestAppService
+class GuestAppService extends AppService
 {
 
     protected GuestAppRepository $guestAppRepository;
@@ -20,35 +22,17 @@ class GuestAppService
     public function create(array $data)
     {
 
+        $data['application_type'] = 'Проход посетителей';
+        $data['guests'] = preg_split("/[\n,]+/", str_replace("\r\n", "\n", $data['guests']));
+        $data['guests_count'] = count($data['guests']);
+
+        $data = $this->processCommonData($data);$data = $this->processCommonData($data);
+
         try {
-
-            $data['application_type'] = 'Проход посетителей';
-            $data['guests'] = preg_split("/[\n,]+/", str_replace("\r\n", "\n", $data['guests']));
-            $data['guests_count'] = count($data['guests']);
-
-
-            if (isset($data['time_start']) && isset($data['time_end'])) {
-                $data['time_range'] = $data['time_start'] . '-' . $data['time_end'];
-            } else {
-                $data['time_range'] = '';
-            }
-
-            if (!isset($data['contract_number'])) {
-                $data['contract_number'] = '';
-            };
-
-            if (!isset($data['equipment'])) {
-                $data['equipment'] = '';
-            };
-
-            if (!isset($data['rooms'])) {
-                $data['rooms'] = '';
-            };
-
             return $this->guestAppRepository->create($data);
-
-        } catch (\Exception $error) {
-            return $error->getMessage();
+        } catch (\Exception $e) {
+            Log::error('Error sending data Repository: ' . $e->getMessage());
+            return $e->getMessage();
         }
 
     }
@@ -62,7 +46,7 @@ class GuestAppService
 
     public function fetchApplication($id): PeopleApplication
     {
-        $id=(int)$id;
-       return $this->guestAppRepository->getApplication($id);
+        $id = (int)$id;
+        return $this->guestAppRepository->getApplication($id);
     }
 }
