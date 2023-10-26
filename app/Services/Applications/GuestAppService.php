@@ -5,7 +5,6 @@ namespace App\Services\Applications;
 use App\Models\PeopleApplication;
 use App\Repositories\GuestAppRepository;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Auth;
 
 
 class GuestAppService

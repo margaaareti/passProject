@@ -97,6 +97,6 @@ class CarAppRepository
     public function getCarApplication($id): CarApplication
     {
         $userId = Auth::id();
-        return $this->peopleAppModel->where('user_id', $userId)->where('id', $id)->first();
+        return $this->carAppModel->where('user_id', $userId)->where('id', $id)->first();
     }
 }

@@ -3,11 +3,8 @@
 namespace App\Services\Applications;
 
 use App\Models\CarApplication;
-use App\Models\PeopleApplication;
 use App\Repositories\CarAppRepository;
-use App\Repositories\GuestAppRepository;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 

@@ -30,9 +30,9 @@ Route::prefix('/home')->middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/', [HomeController::class, 'index'])->name('home');
 
-    Route::get('/applications', [GuestAppController::class, 'index'])->name('user.app');
+    Route::get('/applications', [HomeController::class, 'index'])->name('user.app');
     Route::post("/guest-application", [GuestAppController::class, 'store'])->name('user.app.create');
-    Route::get("/guest-applications", [GuestAppController::class, 'showAllApp'])->name('user.app.showAllApp');
+    Route::get("/show-applications", [HomeController::class, 'showAllApplications'])->name('user.app.showAllApp');
     Route::get("/guest-applications/{id}", [GuestAppController::class, 'showApp'])->name('user.app.showApp');
 
     Route::post("/car-application", [CarAppController::class, 'store'])->name('carCreate');
