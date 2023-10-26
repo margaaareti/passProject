@@ -29,6 +29,7 @@ class GuestAppController extends Controller
     public function index()
     {
         {
+
             $selectedForm = '';
 
             $user = Auth::user();

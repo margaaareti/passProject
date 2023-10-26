@@ -54,7 +54,7 @@ class CarAppController extends Controller
             $selectedForm = '';
         }
 
-
+        session(['selected_form'=>$selectedForm]);
         session()->flash('checkbox1', $request->has('Checkbox1'));
         session()->flash('checkbox2', $request->has('Checkbox2'));
 

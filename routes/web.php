@@ -40,10 +40,6 @@ Route::prefix('/home')->middleware(['auth', 'verified'])->group(function () {
 
 });
 
-//Route::get("/application", [CarAppController::class, 'index'])->name('carPage');
-//Route::post("/car-application", [CarAppController::class, 'store'])->name('carCreate');
-
-
 
 //    Route::get('/test-throttle', function (Request $request) {
 //        $key = $request->ip();

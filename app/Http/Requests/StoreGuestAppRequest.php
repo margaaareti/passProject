@@ -29,14 +29,14 @@ class StoreGuestAppRequest extends FormRequest
             'time_start' => ['required_with:time_end','nullable', 'regex:/^\d{2}:\d{2}$/'],
             'time_end' => ['required_with:time_start','nullable', 'regex:/^\d{2}:\d{2}$/' ],
             'object' => ['required','array'],
-            'rooms' => ['string','nullable'],
+            'rooms' => ['nullable','string'],
             'purpose' => ['required', 'string', 'max:150'],
-            'contract_number' => ['string', 'max:150','nullable'],
-            'equipment' => ['string', 'max:250', 'nullable'],
+            'contract_number' => ['nullable', 'string', 'max:150'],
+            'equipment' => ['nullable','string', 'max:250'],
             'guests' => ['required', 'string', 'max:1000','regex:/^[^0-9]+$/'],
-            'responsible_person' => [],
-            'phone_number' => ['required', 'string', 'regex:/^8-[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}$/','starts_with:8'],
-            'additional_info' => ['max:300'],
+            'responsible_person' => ['required'],
+            'phone_number' => ['required', 'string', 'regex:/^8-[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}$/', 'starts_with:8'],
+            'additional_info' => ['nullable','max:300'],
         ];
     }
 
