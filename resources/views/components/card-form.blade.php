@@ -1,7 +1,7 @@
 @props(['type'])
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
-<form {{ $attributes}}>
+<form {{$attributes}}>
     @csrf
     @if ($errors->any())
         <div class="alert alert-danger pb-0">

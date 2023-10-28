@@ -6,9 +6,7 @@
         </x-label>
         <x-input name="department"
                  value="{{ $user->department }}" required/>
-        @error('department')
-        <x-error :message="$message"></x-error>
-        @enderror
+        <x-error name="department"/>
     </x-form-item>
 
     <x-form-item>
@@ -18,9 +16,7 @@
         </x-label>
         <x-input name="signed_by" class="@error('signed_by') is-invalid @enderror"
                  value="{{'Иванов Иван Иванович'}}" required/>
-        @error('signed_by')
-        <x-error :message="$message"></x-error>
-        @enderror
+        <x-error name="signed_by"/>
     </x-form-item>
 
 
@@ -47,13 +43,11 @@
                     require>{{ old('purpose') }}
         </x-textarea>
 
-        @error('purpose')
-        <x-error :message="$message"></x-error>
-        @enderror
+        <x-error name="purpose"/>
+
     </x-form-item>
 
     {{$slot}}
-
 
 </div>
 

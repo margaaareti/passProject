@@ -3,13 +3,11 @@
 namespace App\Http\Controllers\ApplicationControllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreGuestAppRequest;
+use App\Http\Requests\PostRequests\StoreGuestAppRequest;
 use App\Services\Applications\CarAppService;
 use App\Services\Applications\GuestAppService;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException;
 
 class GuestAppController extends Controller
 {

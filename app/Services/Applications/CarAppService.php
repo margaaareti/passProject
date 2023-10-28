@@ -29,6 +29,7 @@ class CarAppService extends AppService
 
         $data = $this->processCommonData($data);
 
+
         try {
             return $this->carAppRepository->create($data);
         } catch (\Exception $e) {

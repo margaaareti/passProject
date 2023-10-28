@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\PostRequests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -26,8 +26,8 @@ class StoreGuestAppRequest extends FormRequest
             'department' => ['required', 'alpha', 'max:100'],
             'start_date' => ['required', 'date', 'after or equal:today'],
             'end_date' => ['required', 'after or equal: today'],
-            'time_start' => ['required_with:time_end','nullable', 'regex:/^\d{2}:\d{2}$/'],
-            'time_end' => ['required_with:time_start','nullable', 'regex:/^\d{2}:\d{2}$/' ],
+            'time_start' => ['nullable', 'required_with:time_end', 'regex:/^\d{2}:\d{2}$/'],
+            'time_end' => ['nullable', 'required_with:time_start', 'regex:/^\d{2}:\d{2}$/' ],
             'object' => ['required','array'],
             'rooms' => ['nullable','string'],
             'purpose' => ['required', 'string', 'max:150'],
@@ -46,6 +46,7 @@ class StoreGuestAppRequest extends FormRequest
             'signed_by.regex' => 'Поле "Кем одобрена заявка" должно содержать только буквы',
             'department' => 'Поле "Подразделение" может содержать только буквы',
             'guests.regex' => 'Поле "ФИО гостя" может содержать только буквы',
+            'phone_number.regex' => 'Телефон должен быть формата 8-XXX-XXX-XX-XX',
         ];
     }
 }

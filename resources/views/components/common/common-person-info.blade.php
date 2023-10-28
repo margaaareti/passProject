@@ -48,11 +48,8 @@
         <x-input name="phone_number"
                  class="number-field @error('phone_number') is-invalid @enderror"
         />
-        @error('phone_number')
-        @foreach($errors->get('phone_number') as $error)
-                <x-error :message="$error"></x-error>
-        @endforeach
-        @enderror
+
+       <x-error name="phone_number"></x-error>
 
     </x-form-item>
 
@@ -64,10 +61,7 @@
                     cols="40"
                     class="@error('additional_info') is-invalid @enderror">{{old('additional_info')}}
         </x-textarea>
-
-        @error('additional_info')
-        <x-error :message="$message"></x-error>
-        @enderror
+        <x-error name="additional_info"/>
     </x-form-item>
 
     {{$slot}}

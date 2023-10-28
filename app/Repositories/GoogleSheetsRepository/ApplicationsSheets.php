@@ -1,30 +1,30 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\GoogleSheetsRepository;
 
+use App\Models\CarApplication;
 use App\Models\PeopleApplication;
-use Illuminate\Support\Facades\Log;
 use Revolution\Google\Sheets\Facades\Sheets;
 
-
-class GuestAppSheets
+class ApplicationsSheets
 {
 
-
     protected string $date;
-    protected PeopleApplication $appModel;
+    protected CarApplication $carAppModel;
+    protected PeopleApplication $peopleAppModel;
 
 
-    public function __construct(PeopleApplication $appModel)
+    public function __construct(CarApplication $carAppModel,PeopleApplication $peopleAppModel)
     {
 
-        $this->appModel = $appModel;
+        $this->peopleAppModel = $peopleAppModel;
+        $this->carAppModel = $carAppModel;
         $this->date = date('d.m.Y');
 
     }
 
 
-    public function create(array $data)
+    public function addNewRecordToSheet(array $data)
     {
 
         // форматируем номер заявки в строку с нулями в начале
@@ -34,13 +34,25 @@ class GuestAppSheets
         //Приводим дату к виду день.месяц.год
         $data['start_date'] = date_format(date_create($data['start_date']), 'd.m.Y');
         $data['end_date'] = date_format(date_create($data['end_date']), 'd.m.Y');
-        $data['guests'] = implode("\n", $data['guests']);
+
+        if(isset($data['cars'])){
+            $data['guests'] = '';
+            $data['cars'] = implode("\n", $data['cars']);
+            $data['application_type']= 'Въезд';
+            if(str_starts_with($data['object'], 'Л9')){
+                $data['object'] = 'Л9';
+            }
+        } elseif (isset($data['guests'])) {
+            $data['cars'] = '';
+            $data['guests'] = implode("\n", $data['guests']);
+            $data['application_type']= 'Проход';
+        };
 
 
         $array = [
             $data['application_number'], $data['department'], '', $data['signed_by'], $data['start_date'], $data['end_date'],
             $data['time_range'], $data['object'], $data['application_type'], $data['purpose'],
-            $data['contract_number'], $data['rooms'], $data['equipment'], $data['guests'],'', '', '', $data['responsible_person'], $data['phone_number']
+            $data['contract_number'], '', $data['equipment'], $data['guests'],$data['cars'], '', '', $data['responsible_person'], $data['phone_number']
         ];
 
 

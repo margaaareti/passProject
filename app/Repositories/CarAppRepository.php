@@ -7,6 +7,7 @@ use App\Models\Car;
 use App\Models\CarApplication;
 use App\Models\Counter;
 use App\Models\PeopleApplication;
+use App\Repositories\GoogleSheetsRepository\CarAppSheets;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;

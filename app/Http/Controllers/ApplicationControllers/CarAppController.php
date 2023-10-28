@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\ApplicationControllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreCarAppRequest;
+use App\Http\Requests\PostRequests\StoreCarAppRequest;
 use App\Services\Applications\CarAppService;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CarAppController extends Controller
