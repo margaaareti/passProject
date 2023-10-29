@@ -8,8 +8,8 @@
             style="width: 100%"
             required>
 
-        @foreach($objects as $value => $text)
-            <option class="select-option" value="{{$value}}">{{$text}}</option>
+        @foreach($objects as $object => $text)
+            <option class="select-option" value="{{ $object }}" {{ in_array($object, old('object', [])) ? 'selected' : '' }}>{{ $text }}</option>
         @endforeach
 
     </select>

@@ -24,6 +24,10 @@ class CarApplication extends Model
         'responsible_person',
     ];
 
+    protected $casts = [
+        'is_approved' => 'boolean',
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

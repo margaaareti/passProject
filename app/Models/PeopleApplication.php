@@ -15,6 +15,7 @@ class PeopleApplication extends Model
 
         'name',
         'user_id',
+        'is_approved',
         'signed_by',
         'start_date', 'end_date',
         'object', 'purpose',
@@ -25,6 +26,10 @@ class PeopleApplication extends Model
         'phone_number',
         'responsible_person',
 
+    ];
+
+    protected $casts = [
+        'is_approved' => 'boolean',
     ];
 
 

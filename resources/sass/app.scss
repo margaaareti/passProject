@@ -6,6 +6,7 @@
 @import 'custom-modal';
 @import 'label-group';
 @import 'buttons';
+@import 'applications-card';
 
 * {
     box-sizing: border-box;
@@ -198,67 +199,6 @@ body {
         justify-content: center; //по горизонтали
     }
 }
-
-//карты на странице просмотра карт
-.card-container {
-    display: flex;
-    flex-wrap: wrap;
-
-    &__item {
-        flex-grow: 1;
-        flex-basis: calc(33.33% - 15px); /* Отнимаем 15px для учета отступов между элементами */
-        margin-right: 15px; /* Отступ между элементами */
-        margin-bottom: 15px; /* Отступ между элементами */
-        .card-header__link {
-            color: black;
-
-            &:hover {
-                color: #08518c;
-            }
-        }
-    }
-}
-
-
-.empty-state {
-    font-size: 36px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-
-@media (max-width: 990px) {
-    .card-container {
-        &__item {
-            flex-basis: calc(50% - 15px); /* Отнимаем 10px для учета отступов между элементами */
-            width: 50%;
-        }
-    }
-}
-
-@media (max-width: 766px) {
-    .empty-state__text {
-        display: none;
-    }
-}
-
-@media (max-width: 680px) {
-    .card-container {
-        flex-direction: column;
-
-        .card-container__item {
-            width: 100%;
-        }
-    }
-}
-
-.paste-checkbox {
-    transform: scale(1.5);
-    margin-right: 0.5rem;
-    }
-
 
 
 

@@ -13,11 +13,11 @@
                 <div class="card h-100">
                     @if($application->guests)
                         <x-title class="card__header card-header text-center">
-                            <h1 class="card-header__guest-title">{{ __('Заявка на проход посетителей №')}} {{$application->id}}</h1>
+                            <h1 class="card-header__title guest-title">{{ __('Заявка на проход посетителей №')}} {{$application->id}}</h1>
                         </x-title>
                     @elseif($application->cars)
                         <x-title class="card__header card-header text-center">
-                            <h1 class="card-header__car-title">{{ __('Заявка на въезд автотранспорта №')}} {{$application->id}}</h1>
+                            <h1 class="card-header__title car-title">{{ __('Заявка на въезд автотранспорта №')}} {{$application->id}}</h1>
                         </x-title>
                     @endif
                     <x-slot name="right">
@@ -30,20 +30,33 @@
                         <div class="card-body__link mb-2">
                             <a href="{{route('user.app.showAllApp')}}">К списку заявок</a>
                         </div>
+
+                        <div class="approved-info">
+                            @if($application->is_approved === true)
+                                <p class="approved-info__text">Одобрено
+                                    <img class="approved-info__image"
+                                         src={{asset('img/approvedAppIcon.png')}} alt="Картинка"></p>
+                            @else
+                                <p class="approved-info__text">На рассмотрении <img class="approved-info__image"
+                                                                                    width="15px" height="15px"
+                                                                                    src={{asset('img/wwww.svg')}} alt="Картинка">
+                                </p>
+                            @endif
+                        </div>
+
                         <p class="card-body__text">
                             <strong>Отправлено:</strong> {{$application->created_at->format('H:i:s d.m.Y')}}</p>
                         <p class="card-body__text"><strong>Дата:</strong> c {{$application->start_date}}
                             по {{$application->end_date}} </p>
                         <p class="card-body__text"><strong>Локация</strong>: {{$application->object}}</p>
                         <p class="card-body__text"><strong>Цель:</strong> {{$application->purpose}}</p>
-                        <p class="card-body__text">
-                            <strong>Ответственный:</strong> {{$application->responsible_person}}
-                        </p>
+                        <p class="card-body__text"><strong>Ответственный:</strong> {{$application->responsible_person}}</p>
+
                         @if($application->guests)
                             <p class="card-body__text"><strong>Количество лиц, указанных в
                                     заявке:</strong> {{$application->guests_count}}</p>
                             <div class="card-body__guest-block">
-                                <ul class="card-body__list">
+                                <ul class="card-body__list guest-list">
                                     @foreach ($application->guests as $guest)
                                         <li class="card-body__text">{{ $guest->name }}</li>
                                     @endforeach
@@ -55,7 +68,7 @@
                                     <p class="card-body__text"><strong>Количество авто, указанных в
                                             заявке:</strong> {{$application->cars_count}}</p>
                                     <div class="card-body__car-block">
-                                        <ul class="card-body__list">
+                                        <ul class="card-body__list car-list">
                                             @foreach ($application->cars as $car)
                                                 <li class="card-body__text">{{ $car->number }}</li>
                                             @endforeach

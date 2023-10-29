@@ -1,0 +1,107 @@
+//Карты заявок на странице отображения всех заявок
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+
+    &__item {
+        flex-grow: 1;
+        flex-basis: calc(33.33% - 15px); /* Отнимаем 15px для учета отступов между элементами */
+        margin-right: 15px; /* Отступ между элементами */
+        margin-bottom: 15px; /* Отступ между элементами */
+
+        .card-header__link {
+            color: black;
+
+            &:hover {
+                color: #08518c;
+            }
+        }
+    }
+}
+
+
+.empty-state {
+    font-size: 36px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+@media (max-width: 990px) {
+    .card-container {
+        &__item {
+            flex-basis: calc(50% - 15px); /* Отнимаем 10px для учета отступов между элементами */
+        }
+    }
+}
+
+@media (max-width: 766px) {
+    .empty-state__text {
+        display: none;
+    }
+}
+
+@media (max-width: 680px) {
+    .card-container {
+        flex-direction: column;
+
+        .card-container__item {
+            width: 100%;
+        }
+    }
+}
+
+.paste-checkbox {
+    transform: scale(1.5);
+    margin-right: 0.5rem;
+}
+
+
+.approved-info__image{
+    width: 25px;
+    height: 25px;
+}
+
+
+.card-body__list {
+    list-style: none;
+    padding: 0;
+
+    &.car-list,
+    &.guest-list {
+        li {
+            line-height: 1.5;
+            display: flex;
+            align-items: center;
+        }
+        li::before {
+            content: url("../../public/img/rent_a_car.svg");
+            margin-right: 0.5em;
+        }
+    }
+
+    &.guest-list {
+        li::before {
+            content: url("../../public/img/chelovek.png");
+            margin-right: 0.5em;
+        }
+    }
+}
+
+
+.card-body__list li {
+    max-height: 500px;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    &.hidden{
+        display: none;
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease, opacity 0.5s ease;
+    }
+}
+
+

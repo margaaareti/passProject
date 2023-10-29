@@ -16,9 +16,10 @@ return new class extends Migration
             $table->timestamps();
             $table->string('name')->nullable();
             $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->string('signed_by')->nullable(false);
+            $table->boolean('is_approved')->default(false);
             $table->date('start_date')->nullable(false);
             $table->date('end_date')->nullable(false);
+            $table->string('signed_by')->nullable(false);
             $table->string('object')->nullable(false);
             $table->string('rooms')->nullable();
             $table->string('purpose')->nullable(false);
