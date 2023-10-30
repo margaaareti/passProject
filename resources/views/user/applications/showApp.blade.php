@@ -78,6 +78,7 @@
                                         </x-button>
                                         @endif
                                     </div>
+                                    <example-component></example-component>
                             </div>
                     </div>
                 </div>

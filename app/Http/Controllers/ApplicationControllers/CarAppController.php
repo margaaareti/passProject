@@ -58,6 +58,7 @@ class CarAppController extends Controller
         session()->flash('checkbox2', $request->has('Checkbox2'));
 
 
+
         try {
             $carApplicationId = $this->carAppService->create($request->all());
             return redirect()->route('user.app.showCarApp', $carApplicationId)->with([

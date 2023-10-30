@@ -28,7 +28,7 @@
 
 
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js',])
+    @vite(['resources/sass/app.scss'])
 
 </head>
 
@@ -38,7 +38,6 @@
 
         @include('includes.header')
 
-
     <main class="flex-grow-1 py-4">
         @yield('content')
     </main>
@@ -46,6 +45,7 @@
 
         @include('includes.footer')
 </div>
+@vite(['resources/js/app.js',])
 
 </body>
 </html>

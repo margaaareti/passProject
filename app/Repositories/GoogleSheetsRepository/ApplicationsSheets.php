@@ -35,11 +35,12 @@ class ApplicationsSheets
         $data['start_date'] = date_format(date_create($data['start_date']), 'd.m.Y');
         $data['end_date'] = date_format(date_create($data['end_date']), 'd.m.Y');
 
+
         if(isset($data['cars'])){
             $data['guests'] = '';
             $data['cars'] = implode("\n", $data['cars']);
             $data['application_type']= 'Въезд';
-            if(str_starts_with($data['object'], 'Л9')){
+            if(str_starts_with($data['object'], 'Ломоносова,9')){
                 $data['object'] = 'Л9';
             }
         } elseif (isset($data['guests'])) {
@@ -47,6 +48,7 @@ class ApplicationsSheets
             $data['guests'] = implode("\n", $data['guests']);
             $data['application_type']= 'Проход';
         };
+
 
 
         $array = [
