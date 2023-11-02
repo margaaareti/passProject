@@ -168,6 +168,9 @@
         </div>
     </div>
 
+    <script src="{{ asset('js/app.js') }}"></script>
+
+
     <script>
         const successMessage = document.getElementById('success-message');
         if (successMessage) {

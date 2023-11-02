@@ -29,6 +29,7 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss'])
+    @vite(['resources/js/app.js'])
 
 </head>
 
@@ -42,10 +43,7 @@
         @yield('content')
     </main>
 
-
         @include('includes.footer')
 </div>
-@vite(['resources/js/app.js',])
-
 </body>
 </html>

@@ -1,9 +1,9 @@
 import { createApp } from 'vue'
-import ExampleComponent from './components/example-component.vue'
+import App from './components/example-component.vue'
 
 const app = createApp({})
-app.component('example', ExampleComponent)
-app.mount('#app')
+app.component('App', App)
+app.mount('')
 
 //import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle';
@@ -17,7 +17,6 @@ import './modalSelector';
 import './objectSelector';
 import './pasteCheckbox';
 import './confirmationModal';
-
 
 
 

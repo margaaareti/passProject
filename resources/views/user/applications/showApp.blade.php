@@ -6,6 +6,9 @@
     <x-common.nav-buttons>
 
     </x-common.nav-buttons>
+    <div id="appcard">
+
+    </div>
 
     <div class="container py-3">
         <div class="card-container">
@@ -78,11 +81,12 @@
                                         </x-button>
                                         @endif
                                     </div>
-                                    <example-component></example-component>
                             </div>
                     </div>
                 </div>
             </div>
+            <script src="{{ asset('js/app.js') }}"></script>
+
         </div>
 
 @endsection
