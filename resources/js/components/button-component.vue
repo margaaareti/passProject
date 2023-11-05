@@ -9,7 +9,7 @@
 
 <script>
 export default {
-    name: "exampleComponent",
+    name: "App",
     methods: {
         handleClick(){
             alert('Кнопка была нажата')
