@@ -168,8 +168,6 @@
         </div>
     </div>
 
-    <script src="{{ asset('js/app.js') }}"></script>
-
 
     <script>
         const successMessage = document.getElementById('success-message');
@@ -180,6 +178,7 @@
             }, 10000);
         }
     </script>
+
 
 
 @endsection

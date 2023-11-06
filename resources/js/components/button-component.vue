@@ -1,8 +1,7 @@
 <template>
     <div id="111">
-        <button class="card-body_button" @click="$emit('click')">
-            dfsgdfgdfgdfgdfgdfgdfgfgd
-            <slot></slot>
+        <button class="card-body_button" @click="handleClick">
+            Кнопка
         </button>
     </div>
 </template>

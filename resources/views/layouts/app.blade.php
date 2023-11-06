@@ -45,5 +45,6 @@
 
         @include('includes.footer')
 </div>
+
 </body>
 </html>

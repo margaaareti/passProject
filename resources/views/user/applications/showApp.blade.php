@@ -67,6 +67,7 @@
                                 <x-button class="card-body__button">
                                     + Добавить гостя
                                 </x-button>
+
                                 @elseif($application->cars)
                                     <p class="card-body__text"><strong>Количество авто, указанных в
                                             заявке:</strong> {{$application->cars_count}}</p>
@@ -79,13 +80,13 @@
                                         <x-button class="card-body__button">
                                             + Добавить автомобиль
                                         </x-button>
+
                                         @endif
                                     </div>
                             </div>
                     </div>
                 </div>
             </div>
-            <script src="{{ asset('js/app.js') }}"></script>
 
         </div>
 
