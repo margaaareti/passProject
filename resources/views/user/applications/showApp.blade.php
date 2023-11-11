@@ -3,12 +3,10 @@
 @section('page.title', 'Заявка №'. $application->id)
 
 @section('content')
+
     <x-common.nav-buttons>
 
     </x-common.nav-buttons>
-    <div id="appcard">
-
-    </div>
 
     <div class="container py-3">
         <div class="card-container">
@@ -45,6 +43,10 @@
                                                                                     src={{asset('img/wwww.svg')}} alt="Картинка">
                                 </p>
                             @endif
+                        </div>
+
+                        <div id="vueApp">
+                            <vue-app></vue-app>
                         </div>
 
                         <p class="card-body__text">

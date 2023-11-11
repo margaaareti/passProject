@@ -25,8 +25,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
-
-
     <!-- Scripts -->
     @vite(['resources/sass/app.scss'])
     @vite(['resources/js/app.js'])
@@ -35,7 +33,8 @@
 
 <body>
 
-<div id="app" class="app d-flex flex-column justify-content-between min-vh-100">
+
+<div class="app d-flex flex-column justify-content-between min-vh-100">
 
         @include('includes.header')
 
@@ -44,6 +43,8 @@
     </main>
 
         @include('includes.footer')
+
+
 </div>
 
 </body>

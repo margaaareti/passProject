@@ -1,10 +1,9 @@
-document.querySelectorAll('form').forEach(form => {
+document.querySelectorAll('form[data-target]').forEach(form => {
     form.addEventListener('submit', function (event) {
         event.preventDefault();
 
         // Обновляем CSRF-токен в каждой форме
         form.querySelector('input[name="_token"]').value = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
         const modalId = this.getAttribute('data-target');
         const modalData = document.getElementById(modalId).querySelector('#modalData');
         const formData = new FormData(this);

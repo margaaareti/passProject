@@ -16,25 +16,27 @@ document.addEventListener('DOMContentLoaded', function() {
         carCard.style.display = (formSelect.value==='Car') ? 'block' : 'none'
     }
 
-    var form = (formSelect.value==='Guests') ? document.getElementById('form1') : document.getElementById('form2');
-    var fieldsToKeep = ['department','signed_by','start_date','end_date','selected_form']; // Список полей, которые нужно сохранить
+    if(formSelect) {
+        var form = (formSelect.value === 'Guests') ? document.getElementById('form1') : document.getElementById('form2');
+        var fieldsToKeep = ['department', 'signed_by', 'start_date', 'end_date', 'selected_form']; // Список полей, которые нужно сохранить
 
-    var inputs = form.getElementsByTagName('input');
-    for(var i=0; i<inputs.length; i++) {
-        if (fieldsToKeep.indexOf(inputs[i].name) === -1) {
-            inputs[i].value = '';
+        var inputs = form.getElementsByTagName('input');
+        for (var i = 0; i < inputs.length; i++) {
+            if (fieldsToKeep.indexOf(inputs[i].name) === -1) {
+                inputs[i].value = '';
+            }
         }
-    }
 
-    var textareas = form.getElementsByTagName('textarea');
-    for(var i=0; i<textareas.length; i++) {
-        if (fieldsToKeep.indexOf(textareas[i].name) === -1) {
-            textareas[i].value = '';
+        var textareas = form.getElementsByTagName('textarea');
+        for (var i = 0; i < textareas.length; i++) {
+            if (fieldsToKeep.indexOf(textareas[i].name) === -1) {
+                textareas[i].value = '';
+            }
         }
+
+        toggleCards();
+
+        formSelect.addEventListener('change', toggleCards);
     }
-
-    toggleCards();
-
-    formSelect.addEventListener('change', toggleCards);
 
 });

@@ -1,9 +1,11 @@
 import { createApp } from 'vue'
-import ButtonComponent from './components/button-component.vue'
+import vueApp from './components/vueApp.vue'
 
 const app = createApp({})
-app.component('button-component', ButtonComponent)
-app.mount('#newapp')
+app.component('vue-app', vueApp)
+app.mount('#vueApp')
+
+
 
 //import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle';
@@ -17,8 +19,6 @@ import './modalSelector';
 import './objectSelector';
 import './pasteCheckbox';
 import './confirmationModal';
-
-console.log(['foo']);
 
 
 
