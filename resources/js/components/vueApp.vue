@@ -1,50 +1,64 @@
 <template>
-    <div class="modalWindow">
-        <form action="#">
-            <input v-bind:value="surname"
-                   @input="surname = $event.target.value"
-                   class="input"
-                   type="text"
-                   placeholder="Фамилия"
-            >
-            <input
-                v-bind:value="name"
-                @input="name = $event.target.value"
-                class="input"
-                type="text"
-                placeholder="Имя"
-            >
-            <input v-bind:value="patronymic"
-                   @input="patronymic= $event.target.value"
-                   class="input"
-                   type="text"
-                   placeholder="Отчество"
-            >
-            <div class="guests" v-for="guest in guests">
-                <div><strong>ФИО: {{guest.surname}} {{guest.name}} {{guest.patronymic}}</strong></div>
-            </div>
-        </form>
+    <div class>
+        <my-dialog v-model:show="dialogVisible">
+            <post-form
+                @createGuest="createGuest"
+            />
+            <my-button @click="closeDialog" class="btn">Закрыть</my-button>
+        </my-dialog>
+
+        <guest-list
+            v-bind:guests="guests"
+            @remove="removeGuest"
+        />
+
+        <my-button
+            class="btn"
+            @click="showDialog"
+        >
+            Создать пользователя
+        </my-button>
+
     </div>
 </template>
 
 <script>
+
+import PostForm from "./UI/GuestForm.vue";
+import GuestList from "./UI/GuestList.vue";
+import MyDialog from "@/components/UiElements/MyDialog.vue";
+import MyButton from "@/components/UiElements/MyButton.vue";
+
 export default {
+    name: "vue-app",
+    components: {
+        MyButton,
+        MyDialog,
+        PostForm, GuestList
+    },
+
     data() {
         return {
-            guests: [{surname: 'Ан', name: 'Владислав', patronymic: 'Вадимович'}],
-            name: '',
-            surname: '',
-            patronymic: '',
+            guests: [
+            ],
+            dialogVisible: false,
         }
     },
 
     methods: {
-        inputName(event) {
+        createGuest(guest) {
+            this.guests.push(guest)
         },
-        inputSurname(event) {
-
+        removeGuest(guest) {
+            this.guests = this.guests.filter(g => g.id !== guest.id)
         },
-        inputPatronymic(event) {
+        showDialog() {
+            this.dialogVisible = true;
+        },
+        closeDialog(){
+            this.dialogVisible = false;
+        },
+        fetchUsers(){
 
         }
     }

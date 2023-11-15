@@ -1,8 +1,11 @@
 import { createApp } from 'vue'
 import vueApp from './components/vueApp.vue'
+import components from "./components/UiElements"
 
 const app = createApp({})
-app.component('vue-app', vueApp)
+components.forEach(component=>{
+    app.component(component.name,component)
+})
 app.mount('#vueApp')
 
 
@@ -20,19 +23,4 @@ import './objectSelector';
 import './pasteCheckbox';
 import './confirmationModal';
 
-
-
-// const vue = createApp()
-//
-// const components = import.meta.glob('./pages/**/*.vue')
-//
-// Object.entries(components).forEach(([ path, module ]) => {
-//     const Array = path.replace(/\.\/pages\//, '').split('/')
-//
-//     const name = Array.join('-').toLowerCase().replace(/\.vue$/, '')
-//
-//     vue.component(name, defineAsyncComponent(module))
-// })
-//
-// vue.mount("#app")
 
