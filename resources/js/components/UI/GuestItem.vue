@@ -1,17 +1,16 @@
 <template>
-    <div class="guests">
-        <div>
-            <div><strong>ФИО: {{ guest.surname }} {{ guest.name }} {{ guest.patronymic }}</strong></div>
-        </div>
-        <div class="post__btns">
-            <my-button
-                class="btn"
-                @click="$emit('remove',guest)"
-            >
-                Удалить
-            </my-button>
-        </div>
-    </div>
+    <li class="guest-list__text">
+        {{ guest.surname }} {{ guest.name }} {{ guest.patronymic }}
+    </li>
+
+<!--    <div class="post__btns mt-3">-->
+<!--        <my-button-->
+<!--            class="btn"-->
+<!--            @click="$emit('remove',guest)"-->
+<!--        >-->
+<!--            Удалить-->
+<!--        </my-button>-->
+<!--    </div>-->
 </template>
 
 <script>
@@ -32,7 +31,7 @@ export default {
     padding: 15px;
     border: 2px solid teal;
     margin-top: 15px;
-    display:flex;
+    display: flex;
     align-items: center;
     justify-content: space-between;
 }

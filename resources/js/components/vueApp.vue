@@ -3,7 +3,7 @@
 
         <my-dialog v-model:show="dialogVisible">
             <post-form
-                @createGuest="createGuest"
+                @addGuest="addGuest"
             />
             <my-button @click="closeDialog" class="btn">Закрыть</my-button>
         </my-dialog>
@@ -20,7 +20,7 @@
             class="btn"
             @click="showDialog"
         >
-            Создать пользователя
+            + Добавить посетителя
         </my-button>
     </div>
 </template>
@@ -44,6 +44,12 @@ export default {
             isPostsLoading: false,
             applicationId: null,
         }
+    },
+
+    mounted() {
+        this.applicationId = this.$el.dataset.applicationId;
+        console.log(this.applicationId)
+        this.fetchGuests();
     },
 
     methods: {
@@ -72,14 +78,37 @@ export default {
             } finally {
 
             }
-        }
+        },
+
+        async addGuest(guest) {
+
+            if(!guest.name || !guest.surname){
+                alert('Пожалуйста, заполните все поля')
+                return
+            }
+
+            const fullName = `${guest.surname} ${guest.name} ${guest.patronymic}`
+
+            try {
+                const response = await axios.post(`/api/test/${this.applicationId}/add-guest`, {
+                    fullName:fullName,
+                });
+                console.log(response)
+                this.guests.push(response.data); // Предполагаем, что сервер вернет нового гостя
+                this.closeDialog();
+
+            } catch (error) {
+                console.error("Ошибка:", error);
+                if (error.response && error.response.status === 500) {
+                    alert('Произошла ошибка на сервере. Пожалуйста, попробуйте позже.');
+                } else {
+                    alert('Ошибка: ' + error.message);
+                }
+            }
+        },
     },
 
-    mounted() {
-        this.applicationId = this.$el.dataset.applicationId;
-        console.log(this.applicationId)
-        this.fetchGuests();
-    }
+
 }
 </script>
 

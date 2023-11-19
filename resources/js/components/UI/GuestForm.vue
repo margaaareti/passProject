@@ -1,16 +1,16 @@
 <template>
     <form @submit.prevent action="#">
         <my-input
-            v-model="guest.surname"
+            v-model.trim="guest.surname"
             type="text"
             placeholder="Фамилия"
         />
         <my-input
-            v-model="guest.name"
+            v-model.trim="guest.name"
             type="text"
             placeholder="Имя"
         />
-        <my-input v-model="guest.patronymic"
+        <my-input v-model.trim="guest.patronymic"
                type="text"
                placeholder="Отчество"
         />
@@ -40,7 +40,7 @@ export default {
     methods: {
         createGuest() {
             this.guest.id = Date.now();
-            this.$emit('createGuest', this.guest)
+            this.$emit('addGuest', this.guest)
             this.guest = {
                 name: "",
                 surname: "",

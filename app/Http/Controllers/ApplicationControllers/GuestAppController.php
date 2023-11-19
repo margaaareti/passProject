@@ -7,8 +7,10 @@ use App\Http\Requests\PostRequests\StoreGuestAppRequest;
 use App\Models\PeopleApplication;
 use App\Services\Applications\CarAppService;
 use App\Services\Applications\GuestAppService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use mysql_xdevapi\Exception;
 
 class GuestAppController extends Controller
 {
@@ -85,9 +87,28 @@ class GuestAppController extends Controller
         return view('user.applications.showApp', compact('user', 'application'));
     }
 
-    public function index($id){
+    public function getGuestsList($id):JsonResponse
+    {
         $application = PeopleApplication::find($id);
         return response()->json($application->guests);
+    }
+
+    public function addGuestToList(Request $request, $id):JsonResponse
+    {
+        $application = PeopleApplication::find($id);
+
+        // Ваши логика и валидация для создания гостя
+        try {
+            $newGuest = $application->guests()->create([
+                'name' => $request->input('fullName'),
+            ]);
+            $application->increment('guests_count');
+
+        } catch (\Exception $error) {
+            return response()->json(['error'=>$error->getMessage(),500]);
+    }
+
+        return response()->json($newGuest);
     }
 
 

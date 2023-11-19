@@ -1,5 +1,4 @@
 import { createApp } from 'vue'
-import vueApp from './components/vueApp.vue'
 import components from "./components/UiElements"
 
 const app = createApp({})
@@ -8,7 +7,6 @@ components.forEach(component=>{
 })
 app.mount('#vueApp')
 
-console.log("ghbdtn")
 
 
 
