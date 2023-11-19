@@ -4,6 +4,7 @@ namespace App\Http\Controllers\ApplicationControllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequests\StoreGuestAppRequest;
+use App\Models\PeopleApplication;
 use App\Services\Applications\CarAppService;
 use App\Services\Applications\GuestAppService;
 use Illuminate\Http\Request;
@@ -84,10 +85,14 @@ class GuestAppController extends Controller
         return view('user.applications.showApp', compact('user', 'application'));
     }
 
+    public function index($id){
+        $application = PeopleApplication::find($id);
+        return response()->json($application->guests);
+    }
 
-    public function edit(string $id)
+
+    public function edit(string $applicationId)
     {
-        //
     }
 
 

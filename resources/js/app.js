@@ -8,6 +8,8 @@ components.forEach(component=>{
 })
 app.mount('#vueApp')
 
+console.log("ghbdtn")
+
 
 
 //import 'bootstrap/dist/css/bootstrap.css';

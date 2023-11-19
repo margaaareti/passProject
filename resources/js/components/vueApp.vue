@@ -1,5 +1,6 @@
 <template>
     <div class>
+
         <my-dialog v-model:show="dialogVisible">
             <post-form
                 @createGuest="createGuest"
@@ -10,7 +11,10 @@
         <guest-list
             v-bind:guests="guests"
             @remove="removeGuest"
+            v-if="!isPostsLoading"
         />
+
+        <div v-else>Загрузка</div>
 
         <my-button
             class="btn"
@@ -18,7 +22,6 @@
         >
             Создать пользователя
         </my-button>
-
     </div>
 </template>
 
@@ -26,22 +29,20 @@
 
 import PostForm from "./UI/GuestForm.vue";
 import GuestList from "./UI/GuestList.vue";
-import MyDialog from "@/components/UiElements/MyDialog.vue";
-import MyButton from "@/components/UiElements/MyButton.vue";
+import axios from "axios";
 
 export default {
     name: "vue-app",
     components: {
-        MyButton,
-        MyDialog,
         PostForm, GuestList
     },
 
     data() {
         return {
-            guests: [
-            ],
+            guests: [],
             dialogVisible: false,
+            isPostsLoading: false,
+            applicationId: null,
         }
     },
 
@@ -55,12 +56,29 @@ export default {
         showDialog() {
             this.dialogVisible = true;
         },
-        closeDialog(){
+        closeDialog() {
             this.dialogVisible = false;
         },
-        fetchUsers(){
+        async fetchGuests() {
+            try {
+                this.isPostsLoading = true
+                const response = await axios.get(`/api/test/${this.applicationId}`);
+                console.log(response)
+                this.guests = response.data.map(guest => (typeof guest === 'string' ? JSON.parse(guest) : guest));
+                this.isPostsLoading = false
+            } catch (e) {
+                console.error("Ошибка:", e)
+                alert('ошибка', e)
+            } finally {
 
+            }
         }
+    },
+
+    mounted() {
+        this.applicationId = this.$el.dataset.applicationId;
+        console.log(this.applicationId)
+        this.fetchGuests();
     }
 }
 </script>

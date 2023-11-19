@@ -46,7 +46,7 @@
                         </div>
 
                         <div id="vueApp">
-                            <vue-app></vue-app>
+                            <vue-app data-application-id="{{$application->id}}"></vue-app>
                         </div>
 
                         <p class="card-body__text">

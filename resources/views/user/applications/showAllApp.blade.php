@@ -13,8 +13,6 @@
 
         </x-common.nav-buttons>
 
-    @vite(['resources/js/app.js'])
-
         <div class="container py-3">
             <div class="card-container">
                 @forelse($applications as $application)
