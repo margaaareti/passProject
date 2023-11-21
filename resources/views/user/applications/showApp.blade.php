@@ -58,7 +58,7 @@
                         @if($application->guests)
 
                             <div id="vueApp">
-                                <vue-app data-application-id="{{$application->id}}"></vue-app>
+                                <vue-app data-application-id="{{$application->id}}" data-application-created="{{ $application->created_at }}"></vue-app>
                             </div>
 
                                 @elseif($application->cars)

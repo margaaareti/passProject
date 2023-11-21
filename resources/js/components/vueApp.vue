@@ -19,6 +19,7 @@
         <my-button
             class="btn"
             @click="showDialog"
+            v-if="buttonVisible"
         >
             + Добавить посетителя
         </my-button>
@@ -41,15 +42,28 @@ export default {
         return {
             guests: [],
             dialogVisible: false,
+            buttonVisible: true,
             isPostsLoading: false,
             applicationId: null,
+            applicationCreated: null,
         }
     },
 
     mounted() {
         this.applicationId = this.$el.dataset.applicationId;
-        console.log(this.applicationId)
+        this.applicationCreated = this.$el.dataset.applicationCreated;
+
+        if (this.applicationCreated) {
+            const nowDate = new Date(Date.now());
+            const createdDate = new Date(this.applicationCreated + ' UTC'); // Добавляем 'UTC' к строке времени
+
+            if ( (nowDate-createdDate) > 12 * 60 * 60 * 1000 ) {
+                this.buttonVisible = false;
+            }
+        }
+
         this.fetchGuests();
+
     },
 
     methods: {
@@ -95,7 +109,7 @@ export default {
                 });
                 console.log(response)
                 this.guests.push(response.data); // Предполагаем, что сервер вернет нового гостя
-                this.closeDialog();
+                // this.closeDialog();
 
             } catch (error) {
                 console.error("Ошибка:", error);

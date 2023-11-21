@@ -21,7 +21,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::get("/test/{id}", [GuestAppController::class, 'getGuestsList']);
-Route::post("/test/{id}/add-guest", [GuestAppController::class, 'addGuestToList']);
+Route::middleware('web')->group(function () {
+    Route::get("/test/{id}", [GuestAppController::class, 'getGuestsList']);
+    Route::post("/test/{id}/add-guest", [GuestAppController::class, 'addGuestToList']);
+});
 
 
