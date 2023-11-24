@@ -109,9 +109,6 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
-                        @if(session()->has('selected_form'))
-                            <div style="background-color: #1c7430">{{session('selected_from')}}</div>
-                        @endif
                         <x-typeCard guestCard>
 
                             <x-card-header>

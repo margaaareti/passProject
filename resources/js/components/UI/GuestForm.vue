@@ -1,3 +1,4 @@
+
 <template>
     <form @submit.prevent action="#">
         <my-input
@@ -24,9 +25,7 @@
 </template>
 
 <script>
-
 export default {
-
     data() {
         return {
             guest: {

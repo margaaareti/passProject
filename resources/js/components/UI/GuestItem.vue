@@ -2,15 +2,6 @@
     <li class="guest-list__text">
         {{ guest.surname }} {{ guest.name }} {{ guest.patronymic }}
     </li>
-
-<!--    <div class="post__btns mt-3">-->
-<!--        <my-button-->
-<!--            class="btn"-->
-<!--            @click="$emit('remove',guest)"-->
-<!--        >-->
-<!--            Удалить-->
-<!--        </my-button>-->
-<!--    </div>-->
 </template>
 
 <script>

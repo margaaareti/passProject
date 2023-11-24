@@ -8,6 +8,5 @@ export default [
     MyButton,
     vueApp,
     MyInput,
-    MyDialog
-
+    MyDialog,
 ]

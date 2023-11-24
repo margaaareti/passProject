@@ -8,11 +8,8 @@ components.forEach(component=>{
 app.mount('#vueApp')
 
 
-
-
 //import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle';
-import './app';
 import './timepicker';
 import './numberRedactor';
 import './textAreaResizer';

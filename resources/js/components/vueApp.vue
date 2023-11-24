@@ -23,6 +23,12 @@
         >
             + Добавить посетителя
         </my-button>
+
+<!--        <my-select-->
+<!--            v-model="selectedSort"-->
+<!--            :options="sortOptions"-->
+<!--        />-->
+
     </div>
 </template>
 
@@ -35,7 +41,8 @@ import axios from "axios";
 export default {
     name: "vue-app",
     components: {
-        PostForm, GuestList
+        PostForm,
+        GuestList
     },
 
     data() {
@@ -46,6 +53,11 @@ export default {
             isPostsLoading: false,
             applicationId: null,
             applicationCreated: null,
+            selectedSort: '',
+            sortOptions: [
+                {value: 'name', name: 'По имени'},
+                {value: 'surname', name: 'По фамилии'}
+            ]
         }
     },
 
@@ -57,7 +69,7 @@ export default {
             const nowDate = new Date(Date.now());
             const createdDate = new Date(this.applicationCreated + ' UTC'); // Добавляем 'UTC' к строке времени
 
-            if ( (nowDate-createdDate) > 12 * 60 * 60 * 1000 ) {
+            if ((nowDate - createdDate) > 12 * 60 * 60 * 1000) {
                 this.buttonVisible = false;
             }
         }
@@ -83,7 +95,6 @@ export default {
             try {
                 this.isPostsLoading = true
                 const response = await axios.get(`/api/test/${this.applicationId}`);
-                console.log(response)
                 this.guests = response.data.map(guest => (typeof guest === 'string' ? JSON.parse(guest) : guest));
                 this.isPostsLoading = false
             } catch (e) {
@@ -93,10 +104,9 @@ export default {
 
             }
         },
-
         async addGuest(guest) {
 
-            if(!guest.name || !guest.surname){
+            if (!guest.name || !guest.surname) {
                 alert('Пожалуйста, заполните все поля')
                 return
             }
@@ -105,7 +115,7 @@ export default {
 
             try {
                 const response = await axios.post(`/api/test/${this.applicationId}/add-guest`, {
-                    fullName:fullName,
+                    fullName: fullName,
                 });
                 console.log(response)
                 this.guests.push(response.data); // Предполагаем, что сервер вернет нового гостя
@@ -122,7 +132,11 @@ export default {
         },
     },
 
-
+    computed: {
+        selectedGuests(newValue) {
+            return [...this.guests].sort((guest1,guest2) => guest1[this.selectedSort]?.localeCompare(guest2[this.selectedSort()]))
+            },
+        },
 }
 </script>
 
