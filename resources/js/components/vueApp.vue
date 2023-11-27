@@ -106,10 +106,10 @@ export default {
         },
         async addGuest(guest) {
 
-            if (!guest.name || !guest.surname) {
-                alert('Пожалуйста, заполните все поля')
-                return
-            }
+            // if (!guest.name || !guest.surname) {
+            //     alert('Пожалуйста, заполните все поля')
+            //     return
+            // }
 
             const fullName = `${guest.surname} ${guest.name} ${guest.patronymic}`
 
