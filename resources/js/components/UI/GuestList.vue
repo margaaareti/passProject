@@ -1,6 +1,6 @@
 <template>
 
-    <div class="card-body__guest-block" v-if="guests.length > 0">
+    <div class="card-body__guest-list" v-if="guests.length > 0">
         <p><strong> Количество лиц, указанных в заявке: {{ guests.length }} </strong></p>
         <ul class="card-body__list guest-list">
             <transition-group name="guest_list">

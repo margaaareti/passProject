@@ -1,5 +1,5 @@
 <template>
-    <div class>
+    <div class="">
 
         <my-dialog v-model:show="dialogVisible">
             <post-form
@@ -8,13 +8,29 @@
             <my-button @click="closeDialog" class="btn">Закрыть</my-button>
         </my-dialog>
 
-        <guest-list
-            v-bind:guests="guests"
-            @remove="removeGuest"
-            v-if="!isPostsLoading"
-        />
+        <div class="guest-block">
+            <div>
+                <guest-list
+                    :guests="searchedGuests"
+                    @remove="removeGuest"
+                    v-if="!isPostsLoading"
+                />
 
-        <div v-else>Загрузка</div>
+                <div v-else>
+                    Загрузка
+                </div>
+
+            </div>
+
+            <div>
+                <input
+                    type="text"
+                    v-model="searchQuery"
+                    class="search-field"
+                >
+            </div>
+
+        </div>
 
         <my-button
             class="btn"
@@ -24,11 +40,6 @@
             + Добавить посетителя
         </my-button>
 
-<!--        <my-select-->
-<!--            v-model="selectedSort"-->
-<!--            :options="sortOptions"-->
-<!--        />-->
-
     </div>
 </template>
 
@@ -37,10 +48,12 @@
 import PostForm from "./UI/GuestForm.vue";
 import GuestList from "./UI/GuestList.vue";
 import axios from "axios";
+import MyInput from "@/components/UiElements/MyInput.vue";
 
 export default {
     name: "vue-app",
     components: {
+        MyInput,
         PostForm,
         GuestList
     },
@@ -54,6 +67,7 @@ export default {
             applicationId: null,
             applicationCreated: null,
             selectedSort: '',
+            searchQuery: '',
             sortOptions: [
                 {value: 'name', name: 'По имени'},
                 {value: 'surname', name: 'По фамилии'}
@@ -79,9 +93,6 @@ export default {
     },
 
     methods: {
-        createGuest(guest) {
-            this.guests.push(guest)
-        },
         removeGuest(guest) {
             this.guests = this.guests.filter(g => g.id !== guest.id)
         },
@@ -91,6 +102,7 @@ export default {
         closeDialog() {
             this.dialogVisible = false;
         },
+
         async fetchGuests() {
             try {
                 this.isPostsLoading = true
@@ -104,6 +116,7 @@ export default {
 
             }
         },
+
         async addGuest(guest) {
 
             // if (!guest.name || !guest.surname) {
@@ -133,10 +146,14 @@ export default {
     },
 
     computed: {
-        selectedGuests(newValue) {
-            return [...this.guests].sort((guest1,guest2) => guest1[this.selectedSort]?.localeCompare(guest2[this.selectedSort()]))
-            },
+        selectedGuests() {
+            return [...this.guests].sort((guest1, guest2) => guest1[this.selectedSort]?.localeCompare(guest2[this.selectedSort()]))
         },
+        searchedGuests() {
+            return this.selectedGuests.filter(guest => guest.name && guest.name.includes(this.searchQuery))
+        }
+    },
+
 }
 </script>
 
@@ -146,6 +163,17 @@ export default {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+.guest-block {
+    display: flex;
+
+    .search-field {
+        max-width: 200px;
+        max-height: 200px;
+        padding: 0;
+        margin-left: 20px ;
+    }
 }
 
 </style>
