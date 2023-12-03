@@ -112,6 +112,12 @@ return [
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 
+
+    'to' => [
+        'address' => env('SECURITY_EMAIL', 'pass@itmo.ru'), // Здесь указываете адрес службы безопасности
+        'name' => env('SECURITY_NAME', 'Security Team'),
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Markdown Mail Settings

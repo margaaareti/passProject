@@ -26,7 +26,7 @@ class GuestAppService extends AppService
         $data['guests'] = preg_split("/[\n,]+/", str_replace("\r\n", "\n", $data['guests']));
         $data['guests_count'] = count($data['guests']);
 
-        $data = $this->processCommonData($data);$data = $this->processCommonData($data);
+        $data = $this->processCommonData($data);
 
         try {
             return $this->guestAppRepository->create($data);

@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 
+use App\Jobs\SendNewApplicationNotification;
 use App\Models\CarApplication;
 use App\Models\Counter;
 use App\Models\Guest;
@@ -80,6 +81,14 @@ class GuestAppRepository
 
         try {
             $this->guestAppSheets->create($data);
+
+            try {
+                dispatch(new SendNewApplicationNotification($data));
+            } catch (\Exception $e) {
+                Log::error('Error sending email: ' . $e->getMessage());
+                return $e->getMessage();
+            }
+
         } catch (\Exception $e) {
             Log::error('Error sending data to Google Sheets: ' . $e->getMessage());
             return $e->getMessage();

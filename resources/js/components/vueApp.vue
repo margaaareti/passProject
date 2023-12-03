@@ -150,10 +150,14 @@ export default {
             return [...this.guests].sort((guest1, guest2) => guest1[this.selectedSort]?.localeCompare(guest2[this.selectedSort()]))
         },
         searchedGuests() {
-            return this.selectedGuests.filter(guest => guest.name && guest.name.includes(this.searchQuery))
-        }
-    },
+            const searchQueryLowerCase = this.searchQuery.toLowerCase();
+            return this.selectedGuests.filter(guest =>
+                (guest.name && guest.name.toLowerCase().startsWith(searchQueryLowerCase)) ||
+                (guest.surname && guest.surname.toLowerCase().startsWith(searchQueryLowerCase))
+            );
+        },
 
+    }
 }
 </script>
 
@@ -172,7 +176,7 @@ export default {
         max-width: 200px;
         max-height: 200px;
         padding: 0;
-        margin-left: 20px ;
+        margin-left: 20px;
     }
 }
 
