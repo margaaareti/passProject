@@ -13,10 +13,12 @@
             :class="{ 'error': !v$.guest.surname.$pending && v$.guest.surname.$error && !v$.guest.surname.$error.minLength }"
         />
 
-        <span
-            v-if="!v$.guest.surname.$pending && v$.guest.surname.$error && (!v$.guest.surname.$error.minLength || !v$.guest.patronymic.forbidNumber)"
-              class="error-message">Фамилия должна состоять из 2 и более символов, не содержать цифр и включать в себя тольк русские символы </span>
-
+        <p
+            v-for="error of v$.guest.surname.$errors"
+            :key="error.$uid"
+        >
+            <strong>{{ error.$message }}</strong>
+        </p>
 
         <my-input
             v-model.trim="guest.name"
@@ -69,15 +71,20 @@ export default {
                 surname: "",
                 patronymic: "",
             },
-            inputValue: '',
-            isInputFocused: false,
         }
     },
 
 
     validations() {
-        const forbidNumber = (value) => /^[^0-9]+$/.test(value);
-        const allowOnlyRussianLetters = (value) => /^[а-яА-Я]+$/.test(value);
+        const forbidNumber = (value) => ({
+            forbidNumber: /^[^0-9]+$/.test(value),
+            message: 'Поле должно содержать только буквы',
+        });
+
+        const allowOnlyRussianLetters = (value) => ({
+            allowOnlyRussianLetters: /^[а-яА-Я]+$/.test(value),
+            message: 'Поле должно содержать только русские буквы',
+        });
 
         return {
             guest: {
@@ -87,8 +94,18 @@ export default {
                     forbidNumber,
                     allowOnlyRussianLetters,
                 },
-                surname: {required, minLength: minLength(2), forbidNumber,allowOnlyRussianLetters},
-                patronymic: {required, minLength: minLength(2), forbidNumber,allowOnlyRussianLetters},
+                surname: {
+                    required,
+                    minLength: minLength(2),
+                    forbidNumber,
+                    allowOnlyRussianLetters,
+                },
+                patronymic: {
+                    required,
+                    minLength: minLength(2),
+                    forbidNumber,
+                    allowOnlyRussianLetters,
+                },
             },
         };
     },
