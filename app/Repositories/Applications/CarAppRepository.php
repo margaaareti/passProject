@@ -1,36 +1,21 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Applications;
 
 
 use App\Models\Car;
 use App\Models\CarApplication;
 use App\Models\Counter;
 use App\Models\PeopleApplication;
+use App\Repositories\AppRepository;
 use App\Repositories\GoogleSheetsRepository\CarAppSheets;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 
-class CarAppRepository
+class CarAppRepository extends AppRepository
 {
-    protected string $date;
-
-    protected CarApplication $carAppModel;
-    protected PeopleApplication $peopleAppModel;
-    protected CarAppSheets $carAppSheets;
-
-
-    public function __construct(CarApplication $carAppModel, CarAppSheets $carAppSheets, PeopleApplication $peopleAppModel)
-    {
-        $this->date = date('d.m.Y');
-        $this->carAppModel = $carAppModel;
-        $this->peopleAppModel = $peopleAppModel;
-        $this->carAppSheets = $carAppSheets;
-
-    }
-
 
     /**
      * @throws \Exception
@@ -38,28 +23,7 @@ class CarAppRepository
     public function create(array $data)
     {
 
-        $lastCarRecord = $this->carAppModel->latest()->first();
-        $lastPeopleRecord = $this->peopleAppModel->latest()->first();
-
-        //Получаем значение счетчика из базы данных
-        $counter = Counter::first();
-        if (!$counter) {
-            $counter = new Counter(['value' => 0]);
-            $counter->save();
-        }
-
-        if (($lastCarRecord && $lastCarRecord->created_at->format('d.m.Y') == $this->date) || ($lastPeopleRecord && $lastPeopleRecord->created_at->format('d.m.Y') == $this->date )){
-            $counter->increment('value');
-        } else {
-            $counter->update(['value' => 1]);
-        }
-        $counter->save();
-
-        $data['counter'] = $counter->value;
-
-        $data['user_id'] = Auth::id();
-
-        $data['object'] = implode("\n", $data['object']);
+        $data = $this->GetApplicationCommonData($data);
 
         try {
             $newCarApplication = $this->carAppModel->create($data);

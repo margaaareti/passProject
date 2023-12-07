@@ -8,13 +8,15 @@
             placeholder="Фамилия"
             @input="handleInput('surname')"
             @blur="handleBlur('surname')"
+            @focus="onInputFocus"
             :value="capitalizeFirstLetter(guest.surname)"
             :class="{ 'error': !v$.guest.surname.$pending && v$.guest.surname.$error && !v$.guest.surname.$error.minLength }"
         />
 
         <span
-            v-if="!v$.guest.surname.$pending && v$.guest.surname.$error && (v$.guest.surname.$error.minLength ||v$.guest.patronymic.forbidNumber)"
-              class="error-message">Фамилия должна состоять из более 2 и более символов и не содержать цифр </span>
+            v-if="!v$.guest.surname.$pending && v$.guest.surname.$error && (!v$.guest.surname.$error.minLength || !v$.guest.patronymic.forbidNumber)"
+              class="error-message">Фамилия должна состоять из 2 и более символов, не содержать цифр и включать в себя тольк русские символы </span>
+
 
         <my-input
             v-model.trim="guest.name"
@@ -26,9 +28,10 @@
             :value="capitalizeFirstLetter(guest.name)"
             :class="{ 'error': !v$.guest.name.$pending && v$.guest.name.$error && !v$.guest.name.$error.minLength }"
         />
+
         <span
-            v-if="!v$.guest.name.$pending && v$.guest.name.$error && !v$.guest.name.$error.minLength"
-            class="error-message">Имя должно состоять из 2 и более символов и не содержать цифр</span>
+            v-if="!v$.guest.surname.$pending && v$.guest.surname.$error && (!v$.guest.surname.$error.minLength || !v$.guest.patronymic.forbidNumber)"
+            class="error-message">Фамилия должна состоять из 2 и более символов, не содержать цифр и включать в себя тольк русские символы </span>
 
         <my-input
             v-model.trim="guest.patronymic"
@@ -41,8 +44,8 @@
             :class="{ 'error': !v$.guest.patronymic.$pending && v$.guest.patronymic.$error && !v$.guest.patronymic.$error.minLength }"
         />
         <span
-            v-if="!v$.guest.patronymic.$pending && v$.guest.patronymic.$error && !v$.guest.patronymic.$error.minLength"
-            class="error-message">Имя должно состоять из 2 и более символов и не содержать цифр</span>
+            v-if="!v$.guest.surname.$pending && v$.guest.surname.$error && (!v$.guest.surname.$error.minLength || !v$.guest.patronymic.forbidNumber)"
+            class="error-message">Фамилия должна состоять из 2 и более символов, не содержать цифр и включать в себя тольк русские символы </span>
 
         <my-button class="btn add_guest" @click="createGuest">
             Добавить гостя
@@ -65,18 +68,27 @@ export default {
                 name: "",
                 surname: "",
                 patronymic: "",
-            }
+            },
+            inputValue: '',
+            isInputFocused: false,
         }
     },
 
 
     validations() {
         const forbidNumber = (value) => /^[^0-9]+$/.test(value);
+        const allowOnlyRussianLetters = (value) => /^[а-яА-Я]+$/.test(value);
+
         return {
             guest: {
-                name: {required, minLength: minLength(2), forbidNumber},
-                surname: {required, minLength: minLength(2), forbidNumber},
-                patronymic: {required, minLength: minLength(2), forbidNumber},
+                name: {
+                    required,
+                    minLength: minLength(2),
+                    forbidNumber,
+                    allowOnlyRussianLetters,
+                },
+                surname: {required, minLength: minLength(2), forbidNumber,allowOnlyRussianLetters},
+                patronymic: {required, minLength: minLength(2), forbidNumber,allowOnlyRussianLetters},
             },
         };
     },
@@ -115,12 +127,17 @@ export default {
                 // Сбросить ошибку при вводе
                 this.v$[field].$reset();
             }
+            this.isInputFocused = false;
         },
         handleInput(field) {
             if (this.v$[field]) {
                 this.v$[field].$touch();
             }
-        }
+        },
+        onInputFocus() {
+            this.isInputFocused = true;
+        },
+
     }
 }
 </script>
@@ -161,6 +178,24 @@ form {
     margin-top: 5px;
     font-size: 12px;
 }
+
+label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    transition: 0.2s ease all;
+}
+
+input {
+    padding: 20px; /* или любая другая высота */
+}
+
+.active {
+    transform: translateY(-20px); /* или любая другая высота */
+    font-size: 14px; /* или любой другой размер шрифта */
+}
+
 </style>
 
 

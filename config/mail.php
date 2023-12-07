@@ -114,7 +114,7 @@ return [
 
 
     'to' => [
-        'address' => env('SECURITY_EMAIL', 'pass@itmo.ru'), // Здесь указываете адрес службы безопасности
+        'address' => env('SECURITY_EMAIL', 'vvan@itmo.ru'), // Здесь указываете адрес службы безопасности
         'name' => env('SECURITY_NAME', 'Security Team'),
     ],
 

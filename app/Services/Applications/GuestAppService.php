@@ -3,7 +3,7 @@
 namespace App\Services\Applications;
 
 use App\Models\PeopleApplication;
-use App\Repositories\GuestAppRepository;
+use App\Repositories\Applications\GuestAppRepository;
 use App\Services\AppService;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Log;
@@ -25,6 +25,9 @@ class GuestAppService extends AppService
         $data['application_type'] = 'Проход посетителей';
         $data['guests'] = preg_split("/[\n,]+/", str_replace("\r\n", "\n", $data['guests']));
         $data['guests_count'] = count($data['guests']);
+
+        $data['start_date'] = date_format(date_create($data['start_date']), 'd.m.Y');
+        $data['end_date'] = date_format(date_create($data['end_date']), 'd.m.Y');
 
         $data = $this->processCommonData($data);
 

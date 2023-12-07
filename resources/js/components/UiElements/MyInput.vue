@@ -1,5 +1,4 @@
 <template>
-    <label :class="{ 'active': isInputActive }">Имя</label>
     <input :value="modelValue" @focus="setInputActive(true)" @input="updateInput" class="input" type="text">
 </template>
 

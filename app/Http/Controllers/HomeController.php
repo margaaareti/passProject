@@ -69,4 +69,10 @@ class HomeController extends Controller
         return view('user.applications.showAllApp', compact('user', 'applications'));
     }
 
+    public function email()
+    {
+        return view('emails.NewApplication_notification');
+    }
+
+
 }

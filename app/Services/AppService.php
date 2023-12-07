@@ -5,13 +5,6 @@ namespace App\Services;
 class AppService
 {
 
-//    protected AppRepository $appRepository;
-//
-//    public function __construct(AppRepository $appRepository)
-//    {
-//        $this->appRepository = $appRepository;
-//    }
-
     protected function processCommonData(array $data): array
     {
         $keysToCheck = ['time_start', 'time_end', 'contract_number', 'equipment','rooms'];

@@ -26,7 +26,10 @@ Route::get('/', function () {
 Auth::routes(['verify' => true]);
 
 
+
 Route::prefix('/home')->middleware(['auth', 'verified'])->group(function () {
+
+    Route::get('/card', [HomeController::class, 'email']);
 
     Route::get('/', [HomeController::class, 'index'])->name('home');
 

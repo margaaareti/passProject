@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Applications;
 
 
 use App\Jobs\SendNewApplicationNotification;
@@ -8,59 +8,25 @@ use App\Models\CarApplication;
 use App\Models\Counter;
 use App\Models\Guest;
 use App\Models\PeopleApplication;
+use App\Repositories\AppRepository;
 use App\Repositories\GoogleSheetsRepository\GuestAppSheets;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 
-class GuestAppRepository
+class GuestAppRepository extends AppRepository
 {
-    protected string $date;
 
-    protected PeopleApplication $peopleAppModel;
-    protected CarApplication $carAppModel;
-    protected GuestAppSheets $guestAppSheets;
-
-
-    public function __construct(PeopleApplication $peopleAppModel, CarApplication $carAppModel, GuestAppSheets $guestAppSheets)
-    {
-        $this->date = date('d.m.Y');
-        $this->peopleAppModel = $peopleAppModel;
-        $this->carAppModel = $carAppModel;
-        $this->guestAppSheets = $guestAppSheets;
-
-    }
-
-
-    /**
-     * @throws \Exception
-     */
     public function create(array $data)
     {
+        $data = $this->GetApplicationCommonData($data);
 
-        $lastCarRecord = $this->carAppModel->latest()->first();
-        $lastPeopleRecord = $this->peopleAppModel->latest()->first();
+        $data['user_email'] = auth()->user()->email;
 
-        //Получаем значение счетчика из базы данных
-        $counter = Counter::first();
-        if (!$counter) {
-            $counter = new Counter(['value' => 0]);
-            $counter->save();
-        }
+        $data['user_isu'] = auth()->user()->isu_number;
 
-        if (($lastCarRecord && $lastCarRecord->created_at->format('d.m.Y') == $this->date) || ($lastPeopleRecord && $lastPeopleRecord->created_at->format('d.m.Y') == $this->date )){
-            $counter->increment('value');
-        } else {
-            $counter->update(['value' => 1]);
-        }
-        $counter->save();
-
-        $data['counter'] = $counter->value;
-
-        $data['user_id'] = Auth::id();
-
-        $data['object'] = implode("\n", $data['object']);
+        $data['user_fullname'] = optional(auth()->user())->last_name . ' ' . optional(auth()->user())->name . ' ' . optional(auth()->user())->patronymic;
 
         try {
             $newPeopleApplication = $this->peopleAppModel->create($data);
@@ -78,6 +44,7 @@ class GuestAppRepository
             Log::error('Error sending data to Database: ' . $e->getMessage());
             return $e->getMessage();
         }
+
 
         try {
             $this->guestAppSheets->create($data);
