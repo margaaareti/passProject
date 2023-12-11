@@ -56,7 +56,13 @@ class AppRepository
 
         $data['user_id'] = Auth::id();
 
+        $data['user_fullname'] = optional(auth()->user())->last_name . ' ' . optional(auth()->user())->name . ' ' . optional(auth()->user())->patronymic;
+
         $data['object'] = implode("\n", $data['object']);
+
+        $data['user_email'] = auth()->user()->email;
+
+        $data['user_isu'] = auth()->user()->isu_number;
 
         return $data;
     }

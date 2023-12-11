@@ -4,13 +4,14 @@ namespace App\Http\Controllers\ApplicationControllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequests\StoreGuestAppRequest;
+use App\Jobs\EmailNotificationsJobs\Guests\SendAddNewGuestNotification;
 use App\Models\PeopleApplication;
 use App\Services\Applications\CarAppService;
 use App\Services\Applications\GuestAppService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use mysql_xdevapi\Exception;
+use Illuminate\Support\Facades\Log;
 
 class GuestAppController extends Controller
 {
@@ -36,7 +37,7 @@ class GuestAppController extends Controller
     public function store(StoreGuestAppRequest $request)
     {
 
-        $limitExceeded = checkRequestLimit($request,5);
+        $limitExceeded = checkRequestLimit($request, 5);
         if ($limitExceeded) {
             return $limitExceeded;
         }
@@ -46,11 +47,11 @@ class GuestAppController extends Controller
             $selectedForm = '';
         }
 
-        session(['selected_form'=>$selectedForm]);
+        session(['selected_form' => $selectedForm]);
         session()->flash('checkbox1', $request->has('Checkbox1'));
         session()->flash('checkbox2', $request->has('Checkbox2'));
 
-        for($i=0;$i <= 2; $i++){
+        for ($i = 0; $i <= 1; $i++) {
             try {
                 $guestApplicationId = $this->guestAppService->create($request->all());
             } catch (\Exception $error) {
@@ -58,9 +59,7 @@ class GuestAppController extends Controller
             }
         }
 
-
-
-        if($guestApplicationId !== null) {
+        if ($guestApplicationId !== null) {
 
             //очищаем поля после успешной отправки
             $clearedFields = [
@@ -91,26 +90,44 @@ class GuestAppController extends Controller
         return view('user.applications.showApp', compact('user', 'application'));
     }
 
-    public function getGuestsList($id):JsonResponse
+    public function getGuestsList($id): JsonResponse
     {
         $application = PeopleApplication::find($id);
         return response()->json($application->guests);
     }
 
-    public function addGuestToList(Request $request, $id):JsonResponse
+    public function addGuestToList(Request $request, $id): JsonResponse
     {
-        $application = PeopleApplication::find($id);
 
-        // Ваши логика и валидация для создания гостя
         try {
+            $application = PeopleApplication::with('guests')->find($id);
+
+            if (!$application) {
+                return response()->json(['error' => 'Application not found'], 404);
+            }
+
+            $user = auth()->user();
+
+            $data = [
+                'application_number' => $application->application_number,
+                'guest_name' => $request->input('fullName'),
+                'user_name'=> optional(auth()->user())->last_name . ' ' . optional(auth()->user())->name . ' ' . optional(auth()->user())->patronymic,
+                'user_department' => optional($user)->department,
+            ];
+
+            // Кладем нового гостя в бд и увеличиваем счетчик
             $newGuest = $application->guests()->create([
-                'name' => $request->input('fullName'),
+                'name' => $data['guest_name'],
             ]);
+
             $application->increment('guests_count');
 
+            // Передайте данные в задачу
+            dispatch(new SendAddNewGuestNotification($data));
         } catch (\Exception $error) {
-            return response()->json(['error'=>$error->getMessage(),500]);
-    }
+            Log::error('Ошибка добавления нового гостя в заявку: ' . $error->getMessage());
+            return response()->json(['error' => $error->getMessage()], 500);
+        }
 
         return response()->json($newGuest);
     }

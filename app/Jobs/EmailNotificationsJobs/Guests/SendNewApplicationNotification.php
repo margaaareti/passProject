@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Jobs;
+namespace App\Jobs\EmailNotificationsJobs\Guests;
 
-use App\Mail\ApplicationNotification;
+use App\Mail\Notifications\Guests\NewGuestApplicationNotification;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -15,7 +14,7 @@ class SendNewApplicationNotification implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $guestApplicationData;
+    protected array $guestApplicationData;
     public function __construct(array $guestApplicationData)
     {
         $this->guestApplicationData = $guestApplicationData;
@@ -23,6 +22,6 @@ class SendNewApplicationNotification implements ShouldQueue
 
     public function handle(): void
     {
-        Mail::to('security@example.com')->send(new ApplicationNotification($this->guestApplicationData));
+        Mail::to('security@example.com')->send(new NewGuestApplicationNotification($this->guestApplicationData));
     }
 }

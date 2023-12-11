@@ -1,19 +1,16 @@
 <?php
 
-namespace App\Mail;
+namespace App\Mail\Notifications\Guests;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class ApplicationNotification extends Mailable
+class NewGuestApplicationNotification extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $guestApplicationData;
+    public array $guestApplicationData;
 
     public function __construct(array $guestApplicationData)
     {

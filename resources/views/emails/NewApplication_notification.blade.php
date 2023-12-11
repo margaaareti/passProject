@@ -36,9 +36,9 @@
         {{--<p><strong>Кол-во гостей: </strong>{{$guestApplicationData['guests_count']}}</p>--}}
         <p class="application_info"><strong>Ответственный: </strong>{{$guestApplicationData['responsible_person']}}</p>
         <p class="application_info"><strong>Телефон: </strong>{{$guestApplicationData['phone_number']}}</p>
-        {{--@unless(empty($guestApplicationData['additional_info']))--}}
-        {{--    <p><strong>Доп.информация: </strong>{{$guestApplicationData['additional_info']}}</p>--}}
-        {{--@endunless--}}
+        @unless(empty($guestApplicationData['additional_info']))--}}
+            <p><strong>Доп.информация: </strong>{{$guestApplicationData['additional_info']}}</p>--}}
+        @endunless
 
         {{--<p><strong>Приглашенные лица в зявке:</strong></p>--}}
         {{--@foreach($guestApplicationData['guests'] as $guest_name)--}}
