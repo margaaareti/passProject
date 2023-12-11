@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name')->nullable();
+            $table->string('application_number')->nullable(false);
             $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
             $table->boolean('is_approved')->default(false);
             $table->date('start_date')->nullable(false);

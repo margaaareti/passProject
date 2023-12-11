@@ -15,6 +15,7 @@ class CarApplication extends Model
         'name',
         'user_id',
         'signed_by',
+        'application_number',
         'start_date', 'end_date',
         'object', 'purpose',
         'cars_count',

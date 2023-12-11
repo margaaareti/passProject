@@ -40,6 +40,7 @@ class AppRepository
             $counter->save();
         }
 
+
         if (($lastCarRecord && $lastCarRecord->created_at->format('d.m.Y') == $this->date) || ($lastPeopleRecord && $lastPeopleRecord->created_at->format('d.m.Y') == $this->date )){
             $counter->increment('value');
         } else {
@@ -48,6 +49,10 @@ class AppRepository
         $counter->save();
 
         $data['counter'] = $counter->value;
+
+        // форматируем номер заявки в строку с нулями в начале
+        $number = sprintf('%03d', $data['counter']);
+        $data['application_number'] = $this->date . '/' . $number;
 
         $data['user_id'] = Auth::id();
 

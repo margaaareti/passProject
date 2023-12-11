@@ -26,8 +26,8 @@ class GuestAppService extends AppService
         $data['guests'] = preg_split("/[\n,]+/", str_replace("\r\n", "\n", $data['guests']));
         $data['guests_count'] = count($data['guests']);
 
-        $data['start_date'] = date_format(date_create($data['start_date']), 'd.m.Y');
-        $data['end_date'] = date_format(date_create($data['end_date']), 'd.m.Y');
+//        $data['start_date'] = date_format(date_create($data['start_date']), 'd.m.Y');
+//        $data['end_date'] = date_format(date_create($data['end_date']), 'd.m.Y');
 
         $data = $this->processCommonData($data);
 

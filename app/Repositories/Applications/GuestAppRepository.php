@@ -28,6 +28,7 @@ class GuestAppRepository extends AppRepository
 
         $data['user_fullname'] = optional(auth()->user())->last_name . ' ' . optional(auth()->user())->name . ' ' . optional(auth()->user())->patronymic;
 
+
         try {
             $newPeopleApplication = $this->peopleAppModel->create($data);
 
@@ -48,6 +49,9 @@ class GuestAppRepository extends AppRepository
 
         try {
             $this->guestAppSheets->create($data);
+
+            $data['start_date'] = date_format(date_create($data['start_date']), 'd.m.Y');
+            $data['end_date'] = date_format(date_create($data['end_date']), 'd.m.Y');
 
             try {
                 dispatch(new SendNewApplicationNotification($data));

@@ -27,10 +27,8 @@ class ApplicationsSheets
     public function addNewRecordToSheet(array $data)
     {
 
-        // форматируем номер заявки в строку с нулями в начале
-        $number = sprintf('%03d', $data['counter']);
-        $data['application_number'] = $this->date . '/' . $number;
-
+        $data['start_date'] = date_format(date_create($data['start_date']), 'd.m.Y');
+        $data['end_date'] = date_format(date_create($data['end_date']), 'd.m.Y');
 
         if(isset($data['cars'])){
             $data['guests'] = '';
