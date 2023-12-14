@@ -21,6 +21,6 @@ class NewCarApplicationNotification extends Mailable
      * Get the message envelope.
      */
     public function build() {
-        return $this->view('emails.NewApplication_notification');
+        return $this->view('emails.NewCarApplication_notification');
     }
 }

@@ -18,10 +18,10 @@
 
 <body>
 <div class="application-notification">
-    <h1>Новая заявка</h1>
+    <h1>Новая заявка: проход в корпус</h1>
     <div class="card" style="text-align: left;">
 
-        <h1 class="application_header">Новая заявка от сотрудника: {{$guestApplicationData['user_fullname']}}</h1>
+        <h1 class="application_header">От сотрудника: {{$guestApplicationData['user_fullname']}}</h1>
         <h2 class="application_header">ИСУ: {{$guestApplicationData['user_isu']}}</h2>
         <h3 class="application_header">Почта: {{$guestApplicationData['user_email']}}</h3>
         <h4 class="application_header">Заголовок HQ: {{$guestApplicationData['object']}}, {{$guestApplicationData['department']}},

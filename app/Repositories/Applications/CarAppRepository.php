@@ -3,12 +3,10 @@
 namespace App\Repositories\Applications;
 
 
+use App\Jobs\EmailNotificationsJobs\Cars\SendNewApplicationNotification;
 use App\Models\Car;
 use App\Models\CarApplication;
-use App\Models\Counter;
-use App\Models\PeopleApplication;
 use App\Repositories\AppRepository;
-use App\Repositories\GoogleSheetsRepository\CarAppSheets;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -43,6 +41,12 @@ class CarAppRepository extends AppRepository
 
         try {
             $this->carAppSheets->create($data);
+            try {
+                dispatch(new SendNewApplicationNotification($data));
+            } catch (\Exception $e) {
+                Log::error('Error sending email: ' . $e->getMessage());
+                return $e->getMessage();
+            }
         } catch (\Exception $e) {
           Log::error('Error sending data to Google Sheets: ' . $e->getMessage());
         }
