@@ -47,8 +47,8 @@
 
                                 <p class="card-body__text">
                                     Отправлено: {{$application->created_at->format('H:i:s d.m.Y')}}</p>
-                                <p class="card-body__text">Дата: c {{$application->start_date}}
-                                    по {{$application->end_date}} </p>
+                                <p class="card-body__text">Дата: c {{date_format(date_create($application->start_date),'d.m.Y')}}
+                                    по {{date_format(date_create($application->end_date),'d.m.Y')}} </p>
                                 <p class="card-body__text">Локация: {{$application->object}}</p>
                                 <p class="card-body__text">Цель: {{$application->purpose}}</p>
                                 <p class="card-body__text">Ответственный: {{$application->responsible_person}}</p>

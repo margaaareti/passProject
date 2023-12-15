@@ -37,10 +37,10 @@ class GuestAppRepository extends AppRepository
         }
 
         try {
-            $this->guestAppSheets->create($data);
-
             $data['start_date'] = date_format(date_create($data['start_date']), 'd.m.Y');
             $data['end_date'] = date_format(date_create($data['end_date']), 'd.m.Y');
+
+            $this->guestAppSheets->create($data);
 
             try {
                 dispatch(new SendNewApplicationNotification($data));
