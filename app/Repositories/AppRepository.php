@@ -2,20 +2,27 @@
 
 namespace App\Repositories;
 
+use App\Jobs\EmailNotificationsJobs\Cars\SendNewCarApplicationNotification;
+use App\Jobs\EmailNotificationsJobs\Guests\SendAddNewGuestNotification;
 use App\Models\CarApplication;
 use App\Models\Counter;
 use App\Models\PeopleApplication;
+use App\Repositories\GoogleSheetsRepository\ApplicationsSheets;
 use App\Repositories\GoogleSheetsRepository\CarAppSheets;
 use App\Repositories\GoogleSheetsRepository\GuestAppSheets;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Revolution\Google\Sheets\Traits\GoogleSheets;
 
 class AppRepository
 {
     protected string $date;
+
     protected PeopleApplication $peopleAppModel;
-    protected GuestAppSheets $guestAppSheets;
     protected CarApplication $carAppModel;
 
+    protected GuestAppSheets $guestAppSheets;
     protected CarAppSheets $carAppSheets;
 
 
@@ -26,6 +33,57 @@ class AppRepository
         $this->carAppModel = $carAppModel;
         $this->guestAppSheets = $guestAppSheets;
         $this->carAppSheets = $carAppSheets;
+    }
+
+    protected function createApplication(array $data, Model $appModel, string $relationshipKey, string $relationshipModel)
+    {
+
+        $newApplication = $appModel->create($data);
+
+        foreach ($data[$relationshipKey] as $car_number) {
+
+            $modelClass = 'App\Models\\' . $relationshipModel;
+            $model = new $modelClass(['number' => $car_number]);
+
+            $model->save();
+
+            $newApplication->{$relationshipKey}()->attach($model->id);
+        }
+
+        return $newApplication;
+    }
+
+    protected function createAdditionalData(array $data, ApplicationsSheets $appSheets)
+    {
+        $data = $this->formatDates($data);
+
+        $appSheets->create($data);
+
+        try {
+            // Импорт правильного класса уведомлений в зависимости от типа заявки
+            if ($data['selected_form'] === 'Guests') {
+                dispatch(new SendAddNewGuestNotification($data));
+            } elseif ($data['selected_form'] === 'Car') {
+                dispatch(new SendNewCarApplicationNotification($data));
+            }
+
+        } catch (\Exception $e) {
+            Log::error('Error sending email: ' . $e->getMessage());
+            return $e->getMessage();
+        }
+    }
+
+    public function formatDate($date, $outputFormat = 'd.m.Y'): string
+    {
+        return date_format(date_create($date), $outputFormat);
+    }
+
+    protected function formatDates(array $data, $outputFormat = 'd.m.Y'): array
+    {
+        $data['start_date'] = $this->formatDate($data['start_date'], $outputFormat);
+        $data['end_date'] = $this->formatDate($data['end_date'], $outputFormat);
+
+        return $data;
     }
 
     public function GetApplicationCommonData(array $data): array {

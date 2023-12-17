@@ -3,8 +3,6 @@
 namespace App\Repositories\Applications;
 
 
-use App\Jobs\EmailNotificationsJobs\Cars\SendNewApplicationNotification;
-use App\Models\Car;
 use App\Models\CarApplication;
 use App\Repositories\AppRepository;
 use Illuminate\Database\Eloquent\Collection;
@@ -20,42 +18,23 @@ class CarAppRepository extends AppRepository
      */
     public function create(array $data)
     {
-
         $data = $this->GetApplicationCommonData($data);
 
         try {
-            $newCarApplication = $this->carAppModel->create($data);
-
-            foreach ($data['cars'] as $car_number) {
-
-                $car = new Car(['number' => $car_number]);
-
-                $car->save();
-
-                $newCarApplication->cars()->attach($car->id);
-            }
-
+            $newCarApplication = $this->createApplication($data, $this->carAppModel, 'cars', 'Car');
         } catch (\Exception $e) {
             Log::error('Error sending data to Database: ' . $e->getMessage());
+            return $e->getMessage();
         }
 
         try {
-            $data['start_date'] = date_format(date_create($data['start_date']), 'd.m.Y');
-            $data['end_date'] = date_format(date_create($data['end_date']), 'd.m.Y');
-
-            $this->carAppSheets->create($data);
-            try {
-                dispatch(new SendNewApplicationNotification($data));
-            } catch (\Exception $e) {
-                Log::error('Error sending email: ' . $e->getMessage());
-                return $e->getMessage();
-            }
+            $this->createAdditionalData($data, $this->carAppSheets);
         } catch (\Exception $e) {
-          Log::error('Error sending data to Google Sheets: ' . $e->getMessage());
+            Log::error('Error sending data to Google Sheets: ' . $e->getMessage());
+            return $e->getMessage();
         }
 
         return $newCarApplication->id;
-
     }
 
 
