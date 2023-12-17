@@ -49,17 +49,15 @@
                                     </div>
                                 </x-form-item>
 
-                                <x-form-item>
-                                    <x-label
-                                        for="equipment">{{__('Ввозимое/вывозимое имущество (если имеется) :')}}
+                                <x-form-item class="mb-1 mt-1">
+                                    <input type="checkbox" name="carEquipment-show" class="equipment-checkbox" class="equipment-checkbox" {{ old('carEquipment-show') ? 'checked' : '' }}>
+                                    <x-label for="equipment">{{__('Ввоз имущества/оборудования')}}:
                                     </x-label>
-                                    <x-textarea name="equipment" id="equipment"
-                                                class="@error('equipment') is-invalid @enderror ">
-                                        {{ old('equipment') }}
+                                    <x-textarea name="equipment" id="equipment" rows="4"
+                                                cols="40"
+                                                class="equipment-field @error('equipment') is-invalid @enderror">{{old('equipment')}}
                                     </x-textarea>
-                                    @error('equipment')
-                                    <x-error :message="$message"></x-error>
-                                    @enderror
+                                    <x-error name="additional_info"/>
                                 </x-form-item>
 
                                 <x-common.common-person-info :user="$user">
@@ -125,12 +123,12 @@
                                     <x-common.common-form-items :user="$user" :objects="$objectsForInvitation">
 
                                         <x-form-item class="mb-1 mt-1">
-                                            <input type="checkbox" name="guestEquipments-show" class="equipments-checkbox">
-                                            <x-label for="equipments">{{__('Внос-Вынос имущества/оборудования')}}:
+                                            <input type="checkbox" name="guestEquipment-show" class="equipment-checkbox" {{ old('guestEquipment-show') ? 'checked' : '' }}>
+                                            <x-label for="equipment">{{__('Внос имущества/оборудования')}}:
                                             </x-label>
-                                            <x-textarea name="equipments" id="equipments" rows="4"
+                                            <x-textarea name="equipment" id="equipment" rows="4"
                                                         cols="40"
-                                                        class="@error('equipments') is-invalid @enderror">{{old('equipments')}}
+                                                        class="equipment-field @error('equipment') is-invalid @enderror">{{old('equipment')}}
                                             </x-textarea>
                                             <x-error name="additional_info"/>
                                         </x-form-item>
@@ -178,36 +176,37 @@
 
 
     <script>
-        const successMessage = document.getElementById('success-message');
-        if (successMessage) {
-            successMessage.style.display = 'block';
-            setTimeout(function () {
-                successMessage.style.display = 'none';
-            }, 10000);
-        }
-
         document.addEventListener('DOMContentLoaded', function () {
-            // Получаем ссылку на чекбокс и поле ввода
-            var checkbox = document.querySelector('.equipments-checkbox');
-            var equipmentsField = document.getElementById('equipments');
+            // Получаем ссылки на чекбоксы и поля ввода
+            var checkboxes = document.querySelectorAll('.equipment-checkbox');
+            var equipmentFields = document.querySelectorAll('.equipment-field');
 
-            // Скрыть или показать поле при загрузке страницы
-            toggleEquipmentsField();
+            // Скрыть или показать поля при загрузке страницы
+            // Скрыть или показать поля при загрузке страницы
+            toggleEquipmentsFields();
 
-            // Добавляем обработчик изменения состояния чекбокса
-            checkbox.addEventListener('change', function () {
-                toggleEquipmentsField();
+            // Добавляем обработчик изменения состояния каждого чекбокса
+            checkboxes.forEach(function (checkbox, index) {
+                checkbox.addEventListener('change', function () {
+                    toggleEquipmentsField(index);
+                });
             });
 
-            // Функция для скрытия или показа поля в зависимости от состояния чекбокса
-            function toggleEquipmentsField() {
-                if (checkbox.checked) {
-                    equipmentsField.style.display = '';
-                } else {
-                    equipmentsField.style.display = 'none';
-                }
+            // Функция для скрытия или показа полей в зависимости от состояния чекбоксов
+            function toggleEquipmentsFields() {
+                checkboxes.forEach(function (checkbox, index) {
+                    toggleEquipmentsField(index);
+                });
             }
 
+            // Функция для скрытия или показа поля в зависимости от состояния чекбокса
+            function toggleEquipmentsField(index) {
+                if (checkboxes[index].checked) {
+                    equipmentFields[index].style.display = '';
+                } else {
+                    equipmentFields[index].style.display = 'none';
+                }
+            }
         });
     </script>
 

@@ -34,13 +34,6 @@ class AppRepository
         $this->carAppSheets = $carAppSheets;
     }
 
-    protected function createRelatedModel(string $relationshipModel, array $data)
-    {
-        $modelClass = 'App\Models\\' . $relationshipModel;
-
-        return $modelClass::create($data);
-
-    }
     protected function createApplication(array $data, Model $appModel, string $relationshipKey, string $relationshipModel)
     {
 

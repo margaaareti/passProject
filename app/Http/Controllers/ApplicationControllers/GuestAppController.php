@@ -47,17 +47,19 @@ class GuestAppController extends Controller
             $selectedForm = '';
         }
 
+
         session(['selected_form' => $selectedForm]);
         session()->flash('checkbox1', $request->has('Checkbox1'));
         session()->flash('checkbox2', $request->has('Checkbox2'));
 
-        for ($i = 0; $i <= 1; $i++) {
+
+//        for ($i = 0; $i <= 1; $i++) {
             try {
                 $guestApplicationId = $this->guestAppService->create($request->all());
             } catch (\Exception $error) {
                 return redirect()->back()->withErrors($error->getMessage())->with('selected_form', $selectedForm);
             }
-        }
+//        }
 
         if ($guestApplicationId !== null) {
 
