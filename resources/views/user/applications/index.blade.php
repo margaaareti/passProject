@@ -124,6 +124,17 @@
 
                                     <x-common.common-form-items :user="$user" :objects="$objectsForInvitation">
 
+                                        <x-form-item class="mb-1 mt-1">
+                                            <input type="checkbox" name="guestEquipments-show" class="equipments-checkbox">
+                                            <x-label for="equipments">{{__('Внос-Вынос имущества/оборудования')}}:
+                                            </x-label>
+                                            <x-textarea name="equipments" id="equipments" rows="4"
+                                                        cols="40"
+                                                        class="@error('equipments') is-invalid @enderror">{{old('equipments')}}
+                                            </x-textarea>
+                                            <x-error name="additional_info"/>
+                                        </x-form-item>
+
                                         <x-form-item>
                                             <x-label required for="guests">{{__('ФИО гостей:')}}
                                                 <x-icon title="ФИО каждого гостя с новой строки">
@@ -174,6 +185,30 @@
                 successMessage.style.display = 'none';
             }, 10000);
         }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Получаем ссылку на чекбокс и поле ввода
+            var checkbox = document.querySelector('.equipments-checkbox');
+            var equipmentsField = document.getElementById('equipments');
+
+            // Скрыть или показать поле при загрузке страницы
+            toggleEquipmentsField();
+
+            // Добавляем обработчик изменения состояния чекбокса
+            checkbox.addEventListener('change', function () {
+                toggleEquipmentsField();
+            });
+
+            // Функция для скрытия или показа поля в зависимости от состояния чекбокса
+            function toggleEquipmentsField() {
+                if (checkbox.checked) {
+                    equipmentsField.style.display = '';
+                } else {
+                    equipmentsField.style.display = 'none';
+                }
+            }
+
+        });
     </script>
 
 

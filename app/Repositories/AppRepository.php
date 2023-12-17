@@ -13,7 +13,6 @@ use App\Repositories\GoogleSheetsRepository\GuestAppSheets;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Revolution\Google\Sheets\Traits\GoogleSheets;
 
 class AppRepository
 {
@@ -35,6 +34,13 @@ class AppRepository
         $this->carAppSheets = $carAppSheets;
     }
 
+    protected function createRelatedModel(string $relationshipModel, array $data)
+    {
+        $modelClass = 'App\Models\\' . $relationshipModel;
+
+        return $modelClass::create($data);
+
+    }
     protected function createApplication(array $data, Model $appModel, string $relationshipKey, string $relationshipModel)
     {
 

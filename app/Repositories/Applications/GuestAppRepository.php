@@ -17,7 +17,6 @@ class GuestAppRepository extends AppRepository
 
     public function create(array $data)
     {
-        dd($data);
         $data = $this->GetApplicationCommonData($data);
 
         try {
