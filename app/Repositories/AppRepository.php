@@ -36,7 +36,6 @@ class AppRepository
 
     protected function createApplication(array $data, Model $appModel, string $relationshipKey, string $relationshipModel)
     {
-
         $newApplication = $appModel->create($data);
 
         foreach ($data[$relationshipKey] as $car_number) {

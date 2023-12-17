@@ -49,16 +49,16 @@
                                     </div>
                                 </x-form-item>
 
-                                <x-form-item class="mb-1 mt-1">
-                                    <input type="checkbox" name="carEquipment-show" class="equipment-checkbox" class="equipment-checkbox" {{ old('carEquipment-show') ? 'checked' : '' }}>
-                                    <x-label for="equipment">{{__('Ввоз имущества/оборудования')}}:
-                                    </x-label>
-                                    <x-textarea name="equipment" id="equipment" rows="4"
-                                                cols="40"
-                                                class="equipment-field @error('equipment') is-invalid @enderror">{{old('equipment')}}
-                                    </x-textarea>
-                                    <x-error name="additional_info"/>
-                                </x-form-item>
+{{--                                <x-form-item class="mb-1 mt-1">--}}
+{{--                                    <input type="checkbox" name="carEquipment-show" class="equipment-checkbox" class="equipment-checkbox" {{ old('carEquipment-show') ? 'checked' : '' }}>--}}
+{{--                                    <x-label for="equipment">{{__('Ввоз имущества/оборудования')}}:--}}
+{{--                                    </x-label>--}}
+{{--                                    <x-textarea name="equipment" id="equipment" rows="4"--}}
+{{--                                                cols="40"--}}
+{{--                                                class="equipment-field @error('equipment') is-invalid @enderror">{{old('equipment')}}--}}
+{{--                                    </x-textarea>--}}
+{{--                                    <x-error name="additional_info"/>--}}
+{{--                                </x-form-item>--}}
 
                                 <x-common.common-person-info :user="$user">
 
@@ -122,16 +122,16 @@
 
                                     <x-common.common-form-items :user="$user" :objects="$objectsForInvitation">
 
-                                        <x-form-item class="mb-1 mt-1">
-                                            <input type="checkbox" name="guestEquipment-show" class="equipment-checkbox" {{ old('guestEquipment-show') ? 'checked' : '' }}>
-                                            <x-label for="equipment">{{__('Внос имущества/оборудования')}}:
-                                            </x-label>
-                                            <x-textarea name="equipment" id="equipment" rows="4"
-                                                        cols="40"
-                                                        class="equipment-field @error('equipment') is-invalid @enderror">{{old('equipment')}}
-                                            </x-textarea>
-                                            <x-error name="additional_info"/>
-                                        </x-form-item>
+{{--                                        <x-form-item class="mb-1 mt-1">--}}
+{{--                                            <input type="checkbox" name="guestEquipment-show" class="equipment-checkbox" {{ old('guestEquipment-show') ? 'checked' : '' }}>--}}
+{{--                                            <x-label for="equipment">{{__('Внос имущества/оборудования')}}:--}}
+{{--                                            </x-label>--}}
+{{--                                            <x-textarea name="equipment" id="equipment" rows="4"--}}
+{{--                                                        cols="40"--}}
+{{--                                                        class="equipment-field @error('equipment') is-invalid @enderror">{{old('equipment')}}--}}
+{{--                                            </x-textarea>--}}
+{{--                                            <x-error name="additional_info"/>--}}
+{{--                                        </x-form-item>--}}
 
                                         <x-form-item>
                                             <x-label required for="guests">{{__('ФИО гостей:')}}
@@ -176,6 +176,14 @@
 
 
     <script>
+        const successMessage = document.getElementById('success-message');
+        if (successMessage) {
+            successMessage.style.display = 'block';
+            setTimeout(function () {
+                successMessage.style.display = 'none';
+            }, 10000);
+        }
+
         document.addEventListener('DOMContentLoaded', function () {
             // Получаем ссылки на чекбоксы и поля ввода
             var checkboxes = document.querySelectorAll('.equipment-checkbox');
