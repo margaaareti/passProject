@@ -22,7 +22,7 @@ return [
     'redirect_uri' => env('GOOGLE_REDIRECT', ''),
     'post_spreadsheet_id'=>env('POST_SPREADSHEET_ID',''),
     'scopes' => [\Google_Service_Sheets::DRIVE, \Google_Service_Sheets::SPREADSHEETS],
-    'access_type' => 'offline',
+    'access_type' => 'online',
     'approval_prompt' => 'force',
     'prompt' => 'consent',
 
@@ -50,13 +50,13 @@ return [
         /*
         | Enable service account auth or not.
         */
-        'enable' => env('GOOGLE_SERVICE_ENABLED', false),
+        'enable' => env('GOOGLE_SERVICE_ENABLED', true),
 
         /*
          * Path to service account json file. You can also pass the credentials as an array
          * instead of a file path.
          */
-        'file' => env('GOOGLE_SERVICE_ACCOUNT_JSON_LOCATION', ''),
+        'file' => env('GOOGLE_SERVICE_ACCOUNT_JSON_LOCATION', storage_path('C:\open_server\domains\pass\storage\credentials.json')),
     ],
 
     /*
