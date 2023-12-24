@@ -53,14 +53,14 @@ class ApplicationsSheets
         try {
             $spreadsheetId = 'ДИИБР - Общее';
             $newSheetTitle = 'Служебные записки';
-            $range_to_fill = 'A41287';
+            $range_to_fill = 'A41445';
 
             // Создаем новый лист
 //            Sheets::spreadsheetByTitle($spreadsheetId)->addSheet($newSheetTitle);
             // Получаем объект листа по заголовку
             $newSheet = Sheets::spreadsheetByTitle($spreadsheetId)->sheet($newSheetTitle);
             // Вставляем данные в новый лист
-            $newSheet->range($range_to_fill)->append([$array]);
+            $newSheet->append([$array]);
 
 
         } catch (\Exception $e) {
