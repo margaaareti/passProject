@@ -124,6 +124,7 @@ class GuestAppController extends Controller
 
             $application->increment('guests_count');
 
+
             // Передайте данные в задачу
             dispatch(new SendAddNewGuestNotification($data));
         } catch (\Exception $error) {
