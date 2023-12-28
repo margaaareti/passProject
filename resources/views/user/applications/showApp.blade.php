@@ -21,11 +21,6 @@
                             <h1 class="card-header__title car-title">{{ __('Заявка на въезд автотранспорта №')}} {{$application->id}}</h1>
                         </x-title>
                     @endif
-                    <x-slot name="right">
-                        <x-button>
-                            <a class="nav-buttons__link nav-link" href="*">Какая-то кнопка</a>
-                        </x-button>
-                    </x-slot>
 
                     <div class="card__body card-body">
                         <div class="card-body__link mb-2">
