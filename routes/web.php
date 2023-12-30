@@ -42,6 +42,10 @@ Route::prefix('/home')->middleware(['auth', 'verified'])->group(function () {
     Route::post("/car-application", [CarAppController::class, 'store'])->name('carCreate');
 
 
+    Route::get('/hello', function () {
+        return 'Привет';
+    })->middleware(['role:admin']);
+
 });
 
 
