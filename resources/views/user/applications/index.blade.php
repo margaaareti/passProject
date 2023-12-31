@@ -122,16 +122,16 @@
 
                                     <x-common.common-form-items :user="$user" :objects="$objectsForInvitation">
 
-{{--                                        <x-form-item class="mb-1 mt-1">--}}
-{{--                                            <input type="checkbox" name="guestEquipment-show" class="equipment-checkbox" {{ old('guestEquipment-show') ? 'checked' : '' }}>--}}
-{{--                                            <x-label for="equipment">{{__('Внос имущества/оборудования')}}:--}}
-{{--                                            </x-label>--}}
-{{--                                            <x-textarea name="equipment" id="equipment" rows="4"--}}
-{{--                                                        cols="40"--}}
-{{--                                                        class="equipment-field @error('equipment') is-invalid @enderror">{{old('equipment')}}--}}
-{{--                                            </x-textarea>--}}
-{{--                                            <x-error name="additional_info"/>--}}
-{{--                                        </x-form-item>--}}
+                                        <x-form-item class="mb-1 mt-1">
+                                            <input type="checkbox" name="guestEquipment-show" class="equipment-checkbox" {{ old('guestEquipment-show') ? 'checked' : '' }}>
+                                            <x-label for="equipment">{{__('Внос имущества/оборудования')}}:
+                                            </x-label>
+                                            <x-textarea name="equipment" id="equipment" rows="4"
+                                                        cols="40"
+                                                        class="equipment-field @error('equipment') is-invalid @enderror">{{old('equipment')}}
+                                            </x-textarea>
+                                            <x-error name="guestEquipment-show"/>
+                                        </x-form-item>
 
                                         <x-form-item>
                                             <x-label required for="guests">{{__('ФИО гостей:')}}

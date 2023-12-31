@@ -52,13 +52,12 @@ class GuestAppController extends Controller
         session()->flash('checkbox1', $request->has('Checkbox1'));
         session()->flash('checkbox2', $request->has('Checkbox2'));
 
-
 //        for ($i = 0; $i <= 1; $i++) {
-            try {
-                $guestApplicationId = $this->guestAppService->create($request->all());
-            } catch (\Exception $error) {
-                return redirect()->back()->withErrors($error->getMessage())->with('selected_form', $selectedForm);
-            }
+        try {
+            $guestApplicationId = $this->guestAppService->create($request->all());
+        } catch (\Exception $error) {
+            return redirect()->back()->withErrors($error->getMessage())->with('selected_form', $selectedForm);
+        }
 //        }
 
         if ($guestApplicationId !== null) {
@@ -113,7 +112,7 @@ class GuestAppController extends Controller
             $data = [
                 'application_number' => $application->application_number,
                 'guest_name' => $request->input('fullName'),
-                'user_name'=> optional(auth()->user())->last_name . ' ' . optional(auth()->user())->name . ' ' . optional(auth()->user())->patronymic,
+                'user_name' => optional(auth()->user())->last_name . ' ' . optional(auth()->user())->name . ' ' . optional(auth()->user())->patronymic,
                 'user_department' => optional($user)->department,
             ];
 

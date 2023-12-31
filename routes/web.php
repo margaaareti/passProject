@@ -49,25 +49,3 @@ Route::prefix('/home')->middleware(['auth', 'verified'])->group(function () {
 });
 
 
-//    Route::get('/test-throttle', function (Request $request) {
-//        $key = $request->ip();
-//        $allowedAttempts = 1; // максимальное количество попыток
-//        $decaySeconds = 5; // время ожидания (в секундах) после достижения лимита
-//
-//        if (RateLimiter::tooManyAttempts($key, $allowedAttempts, $decaySeconds)) {
-//            $retryAfter = RateLimiter::availableIn($key);
-//
-//            return response()->json([
-//                'error' => 'Too many requests. Please try again after ' . $retryAfter . ' seconds.',
-//            ], Response::HTTP_TOO_MANY_REQUESTS);
-//        }
-//
-//        RateLimiter::hit($key, $decaySeconds);
-//
-//        return response()->json([
-//            'message' => 'Success!',
-//        ]);
-//    });
-//});
-
-

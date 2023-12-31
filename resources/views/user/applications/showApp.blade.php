@@ -48,6 +48,9 @@
                             по {{date_format(date_create($application->end_date),'d.m.Y')}} </p>
                         <p class="card-body__text"><strong>Локация</strong>: {{$application->object}}</p>
                         <p class="card-body__text"><strong>Цель:</strong> {{$application->purpose}}</p>
+                        @if($application->equipment)
+                            <p class="card-body__text"><strong>Вносимое оборудование:</strong> {{$application->purpose}}</p>
+                        @endif
                         <p class="card-body__text"><strong>Ответственный:</strong> {{$application->responsible_person}}</p>
 
                         @if($application->guests)

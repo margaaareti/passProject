@@ -29,6 +29,7 @@ class GuestAppService extends AppService
 
         $data = $this->processCommonData($data);
 
+
         try {
             return $this->guestAppRepository->create($data);
         } catch (\Exception $e) {
