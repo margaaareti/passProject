@@ -10,10 +10,12 @@ document.addEventListener('DOMContentLoaded', function() {
     var formSelect = document.getElementById('exampleSelect');
     var guestCard = document.getElementById('guest_card');
     var carCard = document.getElementById('car_card');
+    var propertyCard = document.getElementById('property_card')
 
     function toggleCards(){
         guestCard.style.display = (formSelect.value==='Guests') ? 'block' : 'none'
         carCard.style.display = (formSelect.value==='Car') ? 'block' : 'none'
+        propertyCard.style.display = (formSelect.value==='Property') ? 'block' : 'none'
     }
 
     if(formSelect) {

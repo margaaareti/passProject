@@ -110,7 +110,7 @@
                     if (button.innerText === 'Скрыть всех') {
                         button.innerText = 'Показать всех';
                     } else {
-                        button.innerText = 'Скрыть всех';
+                        button.innerText = 'Скрыть';
                     }
                 }
             </script>

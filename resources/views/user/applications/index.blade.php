@@ -25,7 +25,8 @@
 
                     <x-card-body>
 
-                        <x-card-form id="form1" type="cars" data-target="confirmationModal" action="{{ route('carCreate')}}"
+                        <x-card-form id="form1" type="cars" data-target="confirmationModal"
+                                     action="{{ route('carCreate')}}"
                                      method="POST">
 
                             <input id="1" type="hidden" name="selected_form" value="Car"/>
@@ -49,16 +50,17 @@
                                     </div>
                                 </x-form-item>
 
-{{--                                <x-form-item class="mb-1 mt-1">--}}
-{{--                                    <input type="checkbox" name="carEquipment-show" class="equipment-checkbox" class="equipment-checkbox" {{ old('carEquipment-show') ? 'checked' : '' }}>--}}
-{{--                                    <x-label for="equipment">{{__('Ввоз имущества/оборудования')}}:--}}
-{{--                                    </x-label>--}}
-{{--                                    <x-textarea name="equipment" id="equipment" rows="4"--}}
-{{--                                                cols="40"--}}
-{{--                                                class="equipment-field @error('equipment') is-invalid @enderror">{{old('equipment')}}--}}
-{{--                                    </x-textarea>--}}
-{{--                                    <x-error name="additional_info"/>--}}
-{{--                                </x-form-item>--}}
+                                <x-form-item class="mb-1 mt-1">
+                                    <input type="checkbox" name="carEquipment-show" class="equipment-checkbox"
+                                           class="equipment-checkbox" {{ old('carEquipment-show') ? 'checked' : '' }}>
+                                    <x-label for="equipment">{{__('Ввоз имущества/оборудования')}}:
+                                    </x-label>
+                                    <x-textarea name="equipment" id="equipment" rows="4"
+                                                cols="40"
+                                                class="equipment-field @error('equipment') is-invalid @enderror">{{old('equipment')}}
+                                    </x-textarea>
+                                    <x-error name="additional_info"/>
+                                </x-form-item>
 
                                 <x-common.common-person-info :user="$user">
 
@@ -123,7 +125,8 @@
                                     <x-common.common-form-items :user="$user" :objects="$objectsForInvitation">
 
                                         <x-form-item class="mb-1 mt-1">
-                                            <input type="checkbox" name="guestEquipment-show" class="equipment-checkbox" {{ old('guestEquipment-show') ? 'checked' : '' }}>
+                                            <input type="checkbox" name="guestEquipment-show"
+                                                   class="equipment-checkbox" {{ old('guestEquipment-show') ? 'checked' : '' }}>
                                             <x-label for="equipment">{{__('Внос имущества/оборудования')}}:
                                             </x-label>
                                             <x-textarea name="equipment" id="equipment" rows="4"
@@ -175,6 +178,139 @@
     </div>
 
 
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <x-typeCard propertyCard>
+
+                    <x-card-header>
+                        <x-card-title>{{__('Внос-Вынос имущества')}}</x-card-title>
+                    </x-card-header>
+
+                    <x-card-body>
+
+                        <x-card-form id="form" type="property" method="POST" data-target="confirmationModal"
+                                     action="{{ route('user.app.create') }}">
+
+                            <input id='3' type="hidden" name="selected_form" value="Property"/>
+
+                            <div>
+                                <input type="checkbox" name="property" value="in" class="type-checkbox property-checkbox" {{ old('property') === 'in' ? 'checked' : '' }}>
+                                <x-label for="equipment">{{__('Только внос')}}</x-label>
+                            </div>
+                            <div>
+                                <input type="checkbox" name="property" value="out" class="type-checkbox property-checkbox" {{ old('property') === 'out' ? 'checked' : '' }}>
+                                <x-label for="equipment">{{__('Только вынос')}}</x-label>
+                            </div>
+                            <div>
+                                <input type="checkbox" name="property" value="in-and-out" class="type-checkbox property-checkbox" {{ old('property') === 'in-and-out' ? 'checked' : '' }}>
+                                <x-label for="equipment">{{__('Внос и вынос')}}</x-label>
+                            </div>
+
+                            <x-form-item>
+                                <x-label required for="department"> {{__('Подразделение:')}}
+                                    <x-icon title="Сокращенное название подразделения">
+                                    </x-icon>
+                                </x-label>
+                                <x-input name="department"
+                                         value="{{ $user->department }}" required/>
+                                <x-error name="department"/>
+                            </x-form-item>
+
+                            <x-form-item>
+
+                                <div class="property-out_group">
+                                    <div class="start_date">
+                                        <x-label required for="start_date">{{__('Дата вноса:')}}</x-label>
+                                        <x-input type="date" name="start_date" id="start_date"
+                                                 value="{{ now()->format('Y-m-d') }}"
+                                                 required/>
+                                        @error('start_date')
+                                        <x-error :message="$message"></x-error>
+                                        @enderror
+
+                                        <x-form-item>
+                                            <x-ObjectsInput :objects="$objectsForInvitation"></x-ObjectsInput>
+                                        </x-form-item>
+                                    </div>
+                                </div>
+
+                                <div class="property-in_group">
+                                    <div class="end_date">
+                                        <x-label required for="end_date">{{__('Дата выноса:')}}</x-label>
+                                        <x-input type="date" name="end_date" id="end_date"
+                                                 value="{{ now()->format('Y-m-d') }}"
+                                                 required/>
+                                        @error('end_date')
+                                        <x-error :message="$message"></x-error>
+                                        @enderror
+                                    </div>
+
+                                    <x-form-item>
+                                        <x-ObjectsInput :objects="$objectsForInvitation"></x-ObjectsInput>
+                                    </x-form-item>
+                                </div>
+
+                            </x-form-item>
+
+
+                            <x-form-item>
+                                <x-label required for="signed_by">{{__('Кем одобрена заявка:')}}
+                                    <x-icon title="Кем одобрена заявка">
+                                    </x-icon>
+                                </x-label>
+                                <x-input name="signed_by" class="@error('signed_by') is-invalid @enderror"
+                                         value="{{'Иванов Иван Иванович'}}" required/>
+                                <x-error name="signed_by"/>
+                            </x-form-item>
+
+
+                            <x-form-item class="mb-1 mt-1">
+                                <x-textarea name="equipment" id="equipment" rows="4"
+                                            cols="40"
+                                            class="equipment-field @error('equipment') is-invalid @enderror">{{old('equipment')}}
+                                </x-textarea>
+                                <x-error name="guestEquipment-show"/>
+                            </x-form-item>
+
+                            <x-form-item>
+                                <x-label required for="purpose">{{__('Цель:')}}
+                                    <x-icon
+                                        title="Цель приглашения: проведение работ, съемки, переезд и т.д ">
+                                    </x-icon>
+                                </x-label>
+
+                                <x-textarea name="purpose" id="purpose"
+                                            class="@error('purpose') is-invalid @enderror"
+                                            require>{{ old('purpose') }}
+                                </x-textarea>
+
+                                <x-error name="purpose"/>
+
+                            </x-form-item>
+
+                            <x-common.common-person-info :user="$user">
+
+                            </x-common.common-person-info>
+
+
+                            <x-form-item class="mt-3 mb-3">
+                                <x-button type="submit">
+                                    {{__('Отправить')}}
+                                </x-button>
+                            </x-form-item>
+
+                        </x-card-form>
+
+                    </x-card-body>
+
+                </x-typeCard>
+
+            </div>
+        </div>
+    </div>
+
+
     <script>
         const successMessage = document.getElementById('success-message');
         if (successMessage) {
@@ -216,8 +352,28 @@
                 }
             }
         });
+
     </script>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Устанавливаем значения по умолчанию только если old('property') возвращает null
+            document.querySelectorAll('.property-checkbox').forEach(function(checkbox) {
+                if (checkbox.checked && !checkbox.hasAttribute('checked')) {
+                    checkbox.checked = false;
+                }
 
+                // Добавляем обработчик события для каждого чекбокса
+                checkbox.addEventListener('change', function() {
+                    // Снимаем отметку с других чекбоксов только в пределах .property-checkbox
+                    document.querySelectorAll('.property-checkbox').forEach(function(otherCheckbox) {
+                        if (otherCheckbox !== checkbox) {
+                            otherCheckbox.checked = false;
+                        }
+                    });
+                });
+            });
+        });
+    </script>
 
 @endsection

@@ -29,7 +29,7 @@
     </x-form-item>
 
     <x-form-item>
-        <x-ObjectsInput :objects="$objects"></x-ObjectsInput>
+        <x-ObjectsInput :objects="$objects" :multiple="true"></x-ObjectsInput>
     </x-form-item>
 
     <x-form-item>

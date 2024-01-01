@@ -18,6 +18,9 @@
                             <option class="form-select__option"
                                     value="Car" {{old('selected_form') === 'Car' ? 'selected' : ''}}>Въезд автотранспорта
                             </option>
+                            <option class="form-select__option"
+                                    value="Property" {{old('selected_form') === 'Property' ? 'selected' : ''}}>Внос-Вынос имущества/оборудования
+                            </option>
                         </select>
                     </div>
                 </form>
