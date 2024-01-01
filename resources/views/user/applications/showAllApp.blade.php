@@ -107,7 +107,7 @@
                         listItems[i].classList.toggle('hidden'); // Переключаем класс "hidden" у всех элементов списка начиная с 2-го элемента
                     }
 
-                    if (button.innerText === 'Скрыть всех') {
+                    if (button.innerText === 'Скрыть') {
                         button.innerText = 'Показать всех';
                     } else {
                         button.innerText = 'Скрыть';
