@@ -189,7 +189,7 @@
 
                     <x-card-body>
 
-                        <x-card-form id="form" type="property" method="POST" data-target="confirmationModal"
+                        <x-card-form id="form3" type="property" method="POST" data-target="confirmationModal"
                                      action="{{ route('user.app.create') }}">
 
                             <input id='3' type="hidden" name="selected_form" value="Property"/>
@@ -219,9 +219,20 @@
 
                             <x-form-item>
 
+                                <div class="property-in_group">
+                                    <div class="end_date">
+                                        <x-label required for="end_date">{{__('Дата вноса:')}}</x-label>
+                                        <x-input type="date" name="end_date" id="end_date"
+                                                 value="{{ now()->format('Y-m-d') }}"
+                                                 required/>
+                                        @error('end_date')
+                                        <x-error :message="$message"></x-error>
+                                        @enderror
+                                    </div>
+
                                 <div class="property-out_group">
                                     <div class="start_date">
-                                        <x-label required for="start_date">{{__('Дата вноса:')}}</x-label>
+                                        <x-label required for="start_date">{{__('Дата выноса:')}}</x-label>
                                         <x-input type="date" name="start_date" id="start_date"
                                                  value="{{ now()->format('Y-m-d') }}"
                                                  required/>
@@ -234,17 +245,6 @@
                                         </x-form-item>
                                     </div>
                                 </div>
-
-                                <div class="property-in_group">
-                                    <div class="end_date">
-                                        <x-label required for="end_date">{{__('Дата выноса:')}}</x-label>
-                                        <x-input type="date" name="end_date" id="end_date"
-                                                 value="{{ now()->format('Y-m-d') }}"
-                                                 required/>
-                                        @error('end_date')
-                                        <x-error :message="$message"></x-error>
-                                        @enderror
-                                    </div>
 
                                     <x-form-item>
                                         <x-ObjectsInput :objects="$objectsForInvitation"></x-ObjectsInput>
@@ -326,7 +326,6 @@
             var equipmentFields = document.querySelectorAll('.equipment-field');
 
             // Скрыть или показать поля при загрузке страницы
-            // Скрыть или показать поля при загрузке страницы
             toggleEquipmentsFields();
 
             // Добавляем обработчик изменения состояния каждого чекбокса
@@ -373,6 +372,53 @@
                     });
                 });
             });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Получаем все чекбоксы с классом "property-checkbox"
+            var propertyCheckboxes = document.querySelectorAll('.property-checkbox');
+
+            // Получаем блоки
+            var propertyInGroup = document.querySelector('.property-in_group');
+            var propertyOutGroup = document.querySelector('.property-out_group');
+
+            // Добавляем обработчик событий для каждого чекбокса
+            propertyCheckboxes.forEach(function(checkbox) {
+                checkbox.addEventListener('change', togglePropertyGroups);
+            });
+
+            // Функция для скрытия/показа блоков в зависимости от состояния чекбоксов
+            function togglePropertyGroups() {
+                var propertyInCheckbox = document.querySelector('input[name="property"][value="in"]');
+                var propertyOutCheckbox = document.querySelector('input[name="property"][value="out"]');
+                var propertyInAndOutCheckbox = document.querySelector('input[name="property"][value="in-and-out"]');
+
+                if (propertyOutCheckbox.checked) {
+                    propertyOutGroup.style.display = 'block';
+                    propertyInGroup.style.display = 'none';
+                } else if (propertyInCheckbox.checked) {
+                    propertyInGroup.style.display = 'block';
+                    propertyOutGroup.style.display = 'none';
+                } else if (propertyInAndOutCheckbox.checked) {
+                    propertyInGroup.style.display = 'block';
+                    propertyOutGroup.style.display = 'block';
+                } else {
+                    // Если ни один чекбокс не отмечен, скрываем оба блока
+                    propertyInGroup.style.display = 'none';
+                    propertyOutGroup.style.display = 'none';
+                }
+
+                // Дополнительная логика, если нужно обрабатывать состояние для propertyInAndOutGroup
+                // ...
+
+                // Дополнительная логика, если нужно обрабатывать состояние для других блоков
+                // ...
+            }
+
+            // Инициализация состояния чекбоксов при загрузке страницы
+            togglePropertyGroups();
         });
     </script>
 
