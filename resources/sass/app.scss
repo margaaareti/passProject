@@ -7,6 +7,7 @@
 @import 'label-group';
 @import 'buttons';
 @import 'applications-card';
+@import "property-data-form";
 
 * {
     box-sizing: border-box;
@@ -173,7 +174,7 @@ body {
     }
 
     &:focus {
-        transform: scale(1.01);
+        //transform: scale(1.01);
         box-shadow: 0 0 5px 3px rgba(62, 63, 66, 0.5) !important;
     }
 }
@@ -197,6 +198,18 @@ body {
         flex-direction: column;
         align-items: center; //по вертикали
         justify-content: center; //по горизонтали
+    }
+}
+
+.paste-checkbox {
+    transform: scale(1.5);
+    margin-right: 0.5rem;
+    outline: none !important;
+    &:focus{
+        outline: none !important;
+    }
+    &:checked{
+        outline: none !important;
     }
 }
 

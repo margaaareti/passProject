@@ -37,6 +37,7 @@ class GuestAppController extends Controller
     public function store(StoreGuestAppRequest $request)
     {
 
+
         $limitExceeded = checkRequestLimit($request, 5);
         if ($limitExceeded) {
             return $limitExceeded;

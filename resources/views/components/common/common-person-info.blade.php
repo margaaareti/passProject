@@ -105,8 +105,6 @@
                 }
             });
 
-        // else {
-        //         responsiblePersonInputs[i].value = '';
 
             phoneCheckboxes.forEach(function (checkbox) {
                 var phoneNumberInputs = document.querySelectorAll('.number-field');
@@ -116,10 +114,6 @@
                     }
                 }
             });
-
-        // else {
-        //         phoneNumberInputs[i].value = '';
-        //     }
 
 
             responsibleCheckboxes.forEach(function (checkbox) {

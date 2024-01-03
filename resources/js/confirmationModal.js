@@ -37,13 +37,6 @@ document.querySelectorAll('form[data-target]').forEach(form => {
             modalData.appendChild(guestsItem);
         }
 
-        // if (carsValue) {
-        //     const carsItem = document.createElement('div');
-        //     carsItem.style.whiteSpace = 'pre-line';
-        //     carsItem.textContent = `Автомобили: ${carsValue.replace(/\n/g, ', ')}`;
-        //     modalData.appendChild(carsItem);
-        // }
-
         const confirmButton = document.getElementById('confirmButton');
         confirmButton.dataset.targetForm = this.id;
         const myModal = new bootstrap.Modal(document.getElementById(modalId));
