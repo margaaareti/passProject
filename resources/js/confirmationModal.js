@@ -29,7 +29,7 @@ document.querySelectorAll('form[data-target]').forEach(form => {
             }
         });
 
-        // Добавляем гостей в отдельном элементе с переносом строки
+        // Добавляем гостей в отдельном элемент, заменяя перенос строки запятой
         if (guestsValue) {
             const guestsItem = document.createElement('div');
             guestsItem.style.whiteSpace = 'pre-line';

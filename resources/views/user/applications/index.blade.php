@@ -52,10 +52,10 @@
 
                                 <x-form-item class="mb-1 mt-1">
                                     <input type="checkbox" name="carEquipment-show" class="equipment-checkbox"
-                                           class="equipment-checkbox" {{ old('carEquipment-show') ? 'checked' : '' }}>
-                                    <x-label for="equipment">{{__('Ввоз имущества/оборудования')}}:
+                                           class="carEquipment-checkbox" {{ old('carEquipment-show') ? 'checked' : '' }}>
+                                    <x-label for="equipment">{{__('Имущество/оборудования')}}:
                                     </x-label>
-                                    <x-textarea name="equipment" id="equipment" rows="4"
+                                    <x-textarea name="equipment" id="CarEquipment" rows="4"
                                                 cols="40"
                                                 class="equipment-field @error('equipment') is-invalid @enderror">{{old('equipment')}}
                                     </x-textarea>
@@ -126,10 +126,10 @@
 
                                         <x-form-item class="mb-1 mt-1">
                                             <input type="checkbox" name="guestEquipment-show"
-                                                   class="equipment-checkbox" {{ old('guestEquipment-show') ? 'checked' : '' }}>
-                                            <x-label for="equipment">{{__('Внос имущества/оборудования')}}:
+                                                   class="questEquipment-checkbox" {{ old('guestEquipment-show') ? 'checked' : '' }}>
+                                            <x-label for="equipment">{{__('Имущество/оборудование')}}:
                                             </x-label>
-                                            <x-textarea name="equipment" id="equipment" rows="4"
+                                            <x-textarea name="equipment" id="guestEquipment" rows="4"
                                                         cols="40"
                                                         class="equipment-field @error('equipment') is-invalid @enderror">{{old('equipment')}}
                                             </x-textarea>
@@ -238,7 +238,8 @@
 
                                         <div class="start_date col-md-5 me-3">
                                             <x-label required for="property-in-date">{{__('Дата вноса:')}}</x-label>
-                                            <x-input class="property-in-date" type="date" name="property-in-date" id="end-date"
+                                            <x-input class="property-in-date" type="date" name="property-in-date"
+                                                     id="end-date"
                                                      value="{{ now()->format('Y-m-d') }}"/>
                                             @error('start_date')
                                             <x-error :message="$message"></x-error>
@@ -247,7 +248,10 @@
 
                                         <x-form-item class="col-md-5">
                                             <x-ObjectsInput
-                                                :objects="$objectsForInvitation"></x-ObjectsInput>
+                                                :objects="$objectsForInvitation"
+                                                inputName="object-out"
+                                            >
+                                            </x-ObjectsInput>
                                         </x-form-item>
                                     </div>
                                 </div>
@@ -256,67 +260,68 @@
                                     <div class="property-out-group-wrap d-flex justify-content-center">
                                         <div class="end_date col-md-5 me-3">
                                             <x-label required for="property-out-date">{{__('Дата выноса:')}}</x-label>
-                                            <x-input  class="property-out-date" type="date" name="property-out-date" id="end_date"
-                                                     value="{{ now()->format('Y-m-d') }}" />
+                                            <x-input class="property-out-date" type="date" name="property-out-date"
+                                                     id="end_date"
+                                                     value="{{ now()->format('Y-m-d') }}"/>
                                             @error('end_date')
                                             <x-error :message="$message"></x-error>
                                             @enderror
                                         </div>
 
-                                    <x-form-item class="col-md-5">
-                                        <x-ObjectsInput :objects="$objectsForInvitation"></x-ObjectsInput>
-                                    </x-form-item>
+                                        <x-form-item class="col-md-5">
+                                            <x-ObjectsInput :objects="$objectsForInvitation" inputName="object-out"></x-ObjectsInput>
+                                        </x-form-item>
+                                    </div>
                                 </div>
+
+                            </x-form-item>
+
+
+                            <x-form-item class="mb-1 mt-1">
+                                <x-label for="equipment">{{__('Имущество/оборудованиe')}}:
+                                </x-label>
+                                <x-textarea name="equipment" id="equipment" rows="4"
+                                            cols="40"
+                                            class="equipment-field @error('equipment') is-invalid @enderror">{{old('equipment')}}
+                                </x-textarea>
+                                <x-error name="guestEquipment-show"/>
+                            </x-form-item>
+
+                            <x-form-item>
+                                <x-label required for="purpose">{{__('Цель:')}}
+                                    <x-icon
+                                        title="Цель приглашения: проведение работ, съемки, переезд и т.д ">
+                                    </x-icon>
+                                </x-label>
+
+                                <x-textarea name="purpose" id="purpose"
+                                            class="@error('purpose') is-invalid @enderror"
+                                            require>{{ old('purpose') }}
+                                </x-textarea>
+
+                                <x-error name="purpose"/>
+
+                            </x-form-item>
+
+                            <x-common.common-person-info :user="$user">
+
+                            </x-common.common-person-info>
+
+
+                            <x-form-item class="mt-3 mb-3">
+                                <x-button type="submit">
+                                    {{__('Отправить')}}
+                                </x-button>
+                            </x-form-item>
+
+                        </x-card-form>
+
+                    </x-card-body>
+
+                </x-typeCard>
+
             </div>
-
-            </x-form-item>
-
-
-            <x-form-item class="mb-1 mt-1">
-                <x-label for="equipment">{{__('Имущество/оборудованиe')}}:
-                </x-label>
-                <x-textarea name="equipment" id="equipment" rows="4"
-                            cols="40"
-                            class="equipment-field @error('equipment') is-invalid @enderror">{{old('equipment')}}
-                </x-textarea>
-                <x-error name="guestEquipment-show"/>
-            </x-form-item>
-
-            <x-form-item>
-                <x-label required for="purpose">{{__('Цель:')}}
-                    <x-icon
-                        title="Цель приглашения: проведение работ, съемки, переезд и т.д ">
-                    </x-icon>
-                </x-label>
-
-                <x-textarea name="purpose" id="purpose"
-                            class="@error('purpose') is-invalid @enderror"
-                            require>{{ old('purpose') }}
-                </x-textarea>
-
-                <x-error name="purpose"/>
-
-            </x-form-item>
-
-            <x-common.common-person-info :user="$user">
-
-            </x-common.common-person-info>
-
-
-            <x-form-item class="mt-3 mb-3">
-                <x-button type="submit">
-                    {{__('Отправить')}}
-                </x-button>
-            </x-form-item>
-
-            </x-card-form>
-
-            </x-card-body>
-
-            </x-typeCard>
-
         </div>
-    </div>
     </div>
 
 
@@ -329,6 +334,31 @@
             }, 10000);
         }
     </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Получаем чекбокс и textarea по id
+            const guestEquipmentCheckbox = document.querySelector('input[name="guestEquipment-show"]');
+            const guestEquipmentTextarea = document.querySelector('textarea#guestEquipment');
+            const carEquipmentCheckbox = document.querySelector('input[name="carEquipment-show"]');
+            const carEquipmentTextarea = document.querySelector('textarea#CarEquipment');
+
+            // Добавляем обработчик события для чекбоксов
+            guestEquipmentCheckbox.addEventListener('change', toggleEquipmentTextarea);
+            carEquipmentCheckbox.addEventListener('change', toggleEquipmentTextarea);
+
+            // Функция для скрытия/показа textarea в зависимости от состояния чекбокса
+            function toggleEquipmentTextarea() {
+                guestEquipmentTextarea.style.display = guestEquipmentCheckbox.checked ? 'block' : 'none';
+                carEquipmentTextarea.style.display = carEquipmentCheckbox.checked ? 'block' : 'none';
+            }
+
+            // Инициализация состояния чекбоксов при загрузке страницы
+            toggleEquipmentTextarea();
+        });
+    </script>
+
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -369,6 +399,7 @@
                 if (checkbox.checked && !checkbox.hasAttribute('checked')) {
                     checkbox.checked = false;
                 }
+                checkbox.addEventListener('change', togglePropertyGroups);
             });
 
             // Установка значения по умолчанию для "in-and-out" чекбокса
@@ -386,54 +417,34 @@
                 const propertyOutCheckbox = document.querySelector('input[name="property"][value="out"]');
                 const propertyInAndOutCheckbox = document.querySelector('input[name="property"][value="in-and-out"]');
 
-                if (!propertyInCheckbox.checked && !propertyOutCheckbox.checked && !propertyInAndOutCheckbox.checked) {
-                    // Если ни один чекбокс не отмечен, ставим "in-and-out" в состояние checked
-                    propertyInAndOutCheckbox.checked = true;
-                }
+                const currentDate = new Date();
+                const formattedDate = currentDate.toISOString().slice(0, 10);
 
-                var currentDate = new Date();
-                var formattedDate = currentDate.toISOString().slice(0, 10);
+                propertyInGroup.style.display = propertyInCheckbox.checked || propertyInAndOutCheckbox.checked ? 'block' : 'none';
+                propertyOutGroup.style.display = propertyOutCheckbox.checked || propertyInAndOutCheckbox.checked ? 'block' : 'none';
 
                 if (propertyOutCheckbox.checked) {
-                    propertyOutGroup.style.display = 'block';
-                    propertyInGroup.style.display = 'none';
                     propertyOutDate.value = formattedDate;
                     propertyInDate.removeAttribute('required');
-                    propertyOutDate.setAttribute('required','true')
+                    propertyOutDate.setAttribute('required', 'true')
                     propertyInDate.value = '';
                 } else if (propertyInCheckbox.checked) {
-                    propertyInGroup.style.display = 'block';
-                    propertyOutGroup.style.display = 'none';
                     propertyInDate.value = formattedDate;
-                    propertyInDate.setAttribute('required','true')
+                    propertyInDate.setAttribute('required', 'true')
                     propertyOutDate.removeAttribute('required');
                     propertyOutDate.value = '';
                 } else if (propertyInAndOutCheckbox.checked) {
-                    propertyInGroup.style.display = 'block';
-                    propertyOutGroup.style.display = 'block';
                     propertyInDate.value = formattedDate;
                     propertyOutDate.value = formattedDate;
-                    propertyInDate.setAttribute('required','true')
-                    propertyOutDate.setAttribute('required','true')
-                } else {
-                    // Если ни один чекбокс не отмечен, скрываем оба блока
-                    propertyInGroup.style.display = 'none';
-                    propertyOutGroup.style.display = 'none';
+                    propertyInDate.setAttribute('required', 'true')
+                    propertyOutDate.setAttribute('required', 'true')
                 }
             }
-
-            // Предотвращаем снятие чекбокса
-            propertyCheckboxes.forEach(function (checkbox) {
-                checkbox.addEventListener('click', function (event) {
-                    if (!event.target.checked) {
-                        event.preventDefault();
-                    }
-                });
-            });
 
             // Инициализация состояния чекбоксов при загрузке страницы
             togglePropertyGroups();
         });
+
     </script>
 
 @endsection
