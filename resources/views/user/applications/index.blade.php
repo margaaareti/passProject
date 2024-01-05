@@ -53,7 +53,7 @@
                                 <x-form-item class="mb-1 mt-1">
                                     <input type="checkbox" name="carEquipment-show" class="equipment-checkbox"
                                            class="carEquipment-checkbox" {{ old('carEquipment-show') ? 'checked' : '' }}>
-                                    <x-label for="equipment">{{__('Имущество/оборудования')}}:
+                                    <x-label for="equipment">{{__('Имущество/оборудованиe')}}:
                                     </x-label>
                                     <x-textarea name="equipment" id="CarEquipment" rows="4"
                                                 cols="40"
@@ -184,30 +184,30 @@
                 <x-typeCard propertyCard>
 
                     <x-card-header>
-                        <x-card-title>{{__('Внос-Вынос имущества')}}</x-card-title>
+                        <x-card-title>{{__('Внос-Вынос имущества/оборудования')}}</x-card-title>
                     </x-card-header>
 
                     <x-card-body>
 
                         <x-card-form id="form3" type="property" method="POST" data-target="confirmationModal"
-                                     action="{{ route('guest.app.create') }}">
+                                     action="{{ route('property.app.create') }}">
 
                             <input id='3' type="hidden" name="selected_form" value="Property"/>
 
                             <div class="check-box-group">
                                 <div class="check-box-group__item">
-                                    <input type="checkbox" name="property" value="in"
-                                           class="property-checkbox" {{ old('property') === 'in' ? 'checked' : '' }}>
+                                    <input type="radio" name="property" value="in"
+                                           class="property-radio" {{ old('property') === 'in' ? 'checked' : '' }}>
                                     <x-label for="equipment">{{__('Только внос')}}</x-label>
                                 </div>
                                 <div class="check-box-group__item">
-                                    <input type="checkbox" name="property" value="out"
-                                           class="property-checkbox" {{ old('property') === 'out' ? 'checked' : '' }}>
+                                    <input type="radio" name="property" value="out"
+                                           class="property-radio" {{ old('property') === 'out' ? 'checked' : '' }}>
                                     <x-label for="equipment">{{__('Только вынос')}}</x-label>
                                 </div>
                                 <div class="check-box-group__item">
-                                    <input type="checkbox" name="property" value="in-and-out" class="property-checkbox"
-                                           checked>
+                                    <input type="radio" name="property" value="in-and-out" class="property-radio"
+                                        {{ old('property') === 'out' ? 'checked' : '' }}>
                                     <x-label for="equipment">{{__('Внос и вынос')}}</x-label>
                                 </div>
                             </div>
@@ -249,7 +249,7 @@
                                         <x-form-item class="col-md-5">
                                             <x-ObjectsInput
                                                 :objects="$objectsForInvitation"
-                                                inputName="object-out"
+                                                inputName="object-in"
                                             >
                                             </x-ObjectsInput>
                                         </x-form-item>
@@ -269,7 +269,8 @@
                                         </div>
 
                                         <x-form-item class="col-md-5">
-                                            <x-ObjectsInput :objects="$objectsForInvitation" inputName="object-out"></x-ObjectsInput>
+                                            <x-ObjectsInput :objects="$objectsForInvitation"
+                                                            inputName="object-out"></x-ObjectsInput>
                                         </x-form-item>
                                     </div>
                                 </div>
@@ -290,7 +291,7 @@
                             <x-form-item>
                                 <x-label required for="purpose">{{__('Цель:')}}
                                     <x-icon
-                                        title="Цель приглашения: проведение работ, съемки, переезд и т.д ">
+                                        title="Цель: проведение работ, съемки, переезд и т.д ">
                                     </x-icon>
                                 </x-label>
 
@@ -335,116 +336,78 @@
         }
     </script>
 
+
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Получаем чекбокс и textarea по id
+            // Скрипт для отображения полей для вноса имущества и оборудования
             const guestEquipmentCheckbox = document.querySelector('input[name="guestEquipment-show"]');
             const guestEquipmentTextarea = document.querySelector('textarea#guestEquipment');
             const carEquipmentCheckbox = document.querySelector('input[name="carEquipment-show"]');
             const carEquipmentTextarea = document.querySelector('textarea#CarEquipment');
 
-            // Добавляем обработчик события для чекбоксов
             guestEquipmentCheckbox.addEventListener('change', toggleEquipmentTextarea);
             carEquipmentCheckbox.addEventListener('change', toggleEquipmentTextarea);
 
-            // Функция для скрытия/показа textarea в зависимости от состояния чекбокса
             function toggleEquipmentTextarea() {
                 guestEquipmentTextarea.style.display = guestEquipmentCheckbox.checked ? 'block' : 'none';
                 carEquipmentTextarea.style.display = carEquipmentCheckbox.checked ? 'block' : 'none';
             }
 
-            // Инициализация состояния чекбоксов при загрузке страницы
             toggleEquipmentTextarea();
-        });
-    </script>
 
+            // Скрипт для отображения полей в зависимости от выбора радиокнопки
+            const propertyRadios = document.querySelectorAll('.property-radio');
+            const propertyInGroup = document.querySelector('.property-in-group');
+            const propertyOutGroup = document.querySelector('.property-out-group');
+            const propertyInDate = document.querySelector('.property-in-date');
+            const propertyOutDate = document.querySelector('.property-out-date');
 
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Устанавливаем значения по умолчанию только если old('property') возвращает null
-            document.querySelectorAll('.property-checkbox').forEach(function (checkbox) {
-                if (checkbox.checked && !checkbox.hasAttribute('checked')) {
-                    checkbox.checked = false;
-                }
-
-                // Добавляем обработчик события для каждого чекбокса
-                checkbox.addEventListener('change', function () {
-                    // Снимаем отметку с других чекбоксов только в пределах .property-checkbox
-                    document.querySelectorAll('.property-checkbox').forEach(function (otherCheckbox) {
-                        if (otherCheckbox !== checkbox) {
-                            otherCheckbox.checked = false;
-                        }
-                    });
-                });
-            });
-        });
-    </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Получаем все чекбоксы с классом "property-checkbox"
-            var propertyCheckboxes = document.querySelectorAll('.property-checkbox');
-
-            // Получаем блоки
-            var propertyInGroup = document.querySelector('.property-in-group');
-            var propertyOutGroup = document.querySelector('.property-out-group');
-
-            //Получаем поля с датами
-            var propertyInDate = document.querySelector('.property-in-date');
-            var propertyOutDate = document.querySelector('.property-out-date');
-
-            // Инициализация состояния чекбоксов при загрузке страницы
-            propertyCheckboxes.forEach(function (checkbox) {
-                if (checkbox.checked && !checkbox.hasAttribute('checked')) {
-                    checkbox.checked = false;
-                }
-                checkbox.addEventListener('change', togglePropertyGroups);
-            });
-
-            // Установка значения по умолчанию для "in-and-out" чекбокса
-            var propertyInAndOutCheckbox = document.querySelector('input[name="property"][value="in-and-out"]');
-            propertyInAndOutCheckbox.checked = true;
-
-            // Добавляем обработчик событий для каждого чекбокса
-            propertyCheckboxes.forEach(function (checkbox) {
-                checkbox.addEventListener('change', togglePropertyGroups);
-            });
-
-            // Функция для скрытия/показа блоков в зависимости от состояния чекбоксов
             function togglePropertyGroups() {
-                const propertyInCheckbox = document.querySelector('input[name="property"][value="in"]');
-                const propertyOutCheckbox = document.querySelector('input[name="property"][value="out"]');
-                const propertyInAndOutCheckbox = document.querySelector('input[name="property"][value="in-and-out"]');
-
+                const inRadio = document.querySelector('input[name="property"][value="in"]');
+                const outRadio = document.querySelector('input[name="property"][value="out"]');
+                const inAndOutRadio = document.querySelector('input[name="property"][value="in-and-out"]');
                 const currentDate = new Date();
                 const formattedDate = currentDate.toISOString().slice(0, 10);
 
-                propertyInGroup.style.display = propertyInCheckbox.checked || propertyInAndOutCheckbox.checked ? 'block' : 'none';
-                propertyOutGroup.style.display = propertyOutCheckbox.checked || propertyInAndOutCheckbox.checked ? 'block' : 'none';
+                propertyInGroup.style.display = inRadio.checked || inAndOutRadio.checked ? 'block' : 'none';
+                propertyOutGroup.style.display = outRadio.checked || inAndOutRadio.checked ? 'block' : 'none';
 
-                if (propertyOutCheckbox.checked) {
+                if (outRadio.checked) {
                     propertyOutDate.value = formattedDate;
-                    propertyInDate.removeAttribute('required');
-                    propertyOutDate.setAttribute('required', 'true')
                     propertyInDate.value = '';
-                } else if (propertyInCheckbox.checked) {
+                    propertyInDate.removeAttribute('required');
+                    propertyOutDate.setAttribute('required', 'true');
+                } else if (inRadio.checked) {
                     propertyInDate.value = formattedDate;
-                    propertyInDate.setAttribute('required', 'true')
-                    propertyOutDate.removeAttribute('required');
                     propertyOutDate.value = '';
-                } else if (propertyInAndOutCheckbox.checked) {
+                    propertyInDate.setAttribute('required', 'true');
+                    propertyOutDate.removeAttribute('required');
+                } else if (inAndOutRadio.checked) {
                     propertyInDate.value = formattedDate;
                     propertyOutDate.value = formattedDate;
-                    propertyInDate.setAttribute('required', 'true')
-                    propertyOutDate.setAttribute('required', 'true')
+                    propertyInDate.setAttribute('required', 'true');
+                    propertyOutDate.setAttribute('required', 'true');
                 }
             }
 
-            // Инициализация состояния чекбоксов при загрузке страницы
-            togglePropertyGroups();
-        });
+            propertyRadios.forEach(function (radio) {
+                radio.addEventListener('change', togglePropertyGroups);
+            });
 
+            // Устанавливаем значения при загрузке страницы
+            const oldProperty = "{{ old('property') }}";
+            const selectedRadio = document.querySelector(`input[name="property"][value="${oldProperty}"]`);
+            if (selectedRadio) {
+                selectedRadio.checked = true;
+                selectedRadio.dispatchEvent(new Event('change'));
+            } else {
+                // Если нет выбранного радио, скрываем оба блока
+                propertyInGroup.style.display = 'none';
+                propertyOutGroup.style.display = 'none';
+            }
+        });
     </script>
+
 
 @endsection

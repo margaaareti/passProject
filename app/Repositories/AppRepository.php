@@ -13,6 +13,7 @@ use App\Repositories\GoogleSheetsRepository\GuestAppSheets;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Laravel\Octane\Exceptions\DdException;
 
 class AppRepository
 {
@@ -34,6 +35,7 @@ class AppRepository
         $this->carAppSheets = $carAppSheets;
     }
 
+
     protected function createApplication(array $data, Model $appModel, string $relationshipKey, string $relationshipModel)
     {
         $newApplication = $appModel->create($data);
@@ -41,6 +43,7 @@ class AppRepository
         foreach ($data[$relationshipKey] as $car_number) {
 
             $modelClass = 'App\Models\\' . $relationshipModel;
+
             $model = new $modelClass(['number' => $car_number]);
 
             $model->save();

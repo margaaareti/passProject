@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\ApplicationControllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\PostRequests\StoreGuestAppRequest;
+use App\Http\Requests\StoreApplicationsRequests\StoreGuestAppRequest;
 use App\Jobs\EmailNotificationsJobs\Guests\SendAddNewGuestNotification;
 use App\Models\PeopleApplication;
 use App\Services\Applications\CarAppService;

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\ApplicationControllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\PostRequests\StoreCarAppRequest;
+use App\Http\Requests\StoreApplicationsRequests\StoreCarAppRequest;
 use App\Services\Applications\CarAppService;
 use Illuminate\Support\Facades\Auth;
 

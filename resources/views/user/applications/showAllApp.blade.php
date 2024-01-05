@@ -22,7 +22,7 @@
                             @if($application->guests)
                                 <div class="card__header card-header text-center">
                                     <a class="card-header__link"
-                                       href="{{route('user.app.showApp', $application->id)}}">{{ __('Заявка на проход посетителей №')}} {{$application->id}}</a>
+                                       href="{{route('user.app.showGuestApp', $application->id)}}">{{ __('Заявка на проход посетителей №')}} {{$application->id}}</a>
                                 </div>
                             @elseif($application->cars)
                                 <div class="card__header card-header text-center">
