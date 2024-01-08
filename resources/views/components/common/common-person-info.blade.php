@@ -66,84 +66,74 @@
 
     {{$slot}}
 
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            var formSelector = document.getElementById('exampleSelect');
+            const formSelector = document.getElementById('exampleSelect');
+            const userLastName = '{{$user->last_name}}';
+            const userName = '{{$user->name}}';
+            const userPatronymic = '{{$user->patronymic}}';
+            const userPhoneNumber = '{{$user->phone_number}}';
 
             formSelector.addEventListener('change', function () {
-                var responsibleCheckboxes = document.querySelectorAll('.responsible-checkbox');
-                var phoneCheckboxes = document.querySelectorAll('.phone-checkbox');
-                var responsiblePersonInputs = document.querySelectorAll('.person-field');
-                var phoneNumberInputs = document.querySelectorAll('.number-field');
+                resetInputs('.responsible-checkbox', '.person-field');
+                resetInputs('.phone-checkbox', '.number-field');
+            });
 
-                responsibleCheckboxes.forEach(function (checkbox) {
+            handleCheckbox('.responsible-checkbox', '.person-field', userLastName + ' ' + userName + ' ' + userPatronymic);
+            handleCheckbox('.phone-checkbox', '.number-field', userPhoneNumber);
+
+            function resetInputs(checkboxSelector, inputSelector) {
+                const checkboxes = document.querySelectorAll(checkboxSelector);
+                const inputs = document.querySelectorAll(inputSelector);
+
+                checkboxes.forEach(function (checkbox) {
                     checkbox.checked = false;
                 });
 
-                phoneCheckboxes.forEach(function (checkbox) {
-                    checkbox.checked = false;
-                });
-
-                responsiblePersonInputs.forEach(function (input) {
+                inputs.forEach(function (input) {
                     input.value = '';
                 });
+            }
 
-                phoneNumberInputs.forEach(function (input) {
-                    input.value = '';
-                });
-            });
+            function handleCheckbox(checkboxSelector, inputSelector, value) {
+                const checkboxes = document.querySelectorAll(checkboxSelector);
+                const inputs = document.querySelectorAll(inputSelector);
 
-            var responsibleCheckboxes = document.querySelectorAll('.responsible-checkbox');
-            var phoneCheckboxes = document.querySelectorAll('.phone-checkbox');
-
-            responsibleCheckboxes.forEach(function (checkbox) {
-                var responsiblePersonInputs = document.querySelectorAll('.person-field');
-                for (var i = 0; i < responsiblePersonInputs.length; i++) {
-                    if (checkbox.checked) {
-                        responsiblePersonInputs[i].value = '{{$user->last_name}} {{$user->name}} {{$user->patronymic}}';
-                    }
-                }
-            });
-
-
-            phoneCheckboxes.forEach(function (checkbox) {
-                var phoneNumberInputs = document.querySelectorAll('.number-field');
-                for (var i = 0; i < phoneNumberInputs.length; i++) {
-                    if (checkbox.checked) {
-                        phoneNumberInputs[i].value = '{{$user->phone_number}}';
-                    }
-                }
-            });
-
-
-            responsibleCheckboxes.forEach(function (checkbox) {
-                checkbox.addEventListener('change', function () {
-                    var responsiblePersonInputs = document.querySelectorAll('.person-field');
-                    for (var i = 0; i < responsiblePersonInputs.length; i++) {
-                        if (this.checked) {
-                            responsiblePersonInputs[i].value = '{{$user->last_name}} {{$user->name}} {{$user->patronymic}}';
-                        } else {
-                            responsiblePersonInputs[i].value = '';
+                checkboxes.forEach(function (checkbox) {
+                    checkbox.addEventListener('change', function () {
+                        for (let i = 0; i < inputs.length; i++) {
+                            inputs[i].value = this.checked ? value : '';
                         }
-                    }
+                    });
                 });
-            });
 
-            phoneCheckboxes.forEach(function (checkbox) {
-                checkbox.addEventListener('change', function () {
-                    var phoneNumberInputs = document.querySelectorAll('.number-field');
-                    for (var i = 0; i < phoneNumberInputs.length; i++) {
-                        if (this.checked) {
-                            phoneNumberInputs[i].value = '{{$user->phone_number}}';
-                        } else {
-                            phoneNumberInputs[i].value = '';
+                // Добавляем обработчик события для очистки чекбоксов при изменении значений полей
+                inputs.forEach(function (input) {
+                    input.addEventListener('input', function () {
+                        {
+                            checkboxes.forEach(function (checkbox) {
+                                checkbox.checked = false;
+                            });
                         }
-                    }
+                    });
                 });
-            });
+
+                inputs.forEach(function (input) {
+                    input.addEventListener('input', function () {
+                        if (input.value === userLastName + ' ' + userName + ' ' + userPatronymic || input.value === userPhoneNumber) {
+                            checkboxes.forEach(function (checkbox) {
+                                checkbox.checked = true;
+                            });
+                        }
+                    });
+                });
+            }
         });
 
     </script>
+
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -166,6 +156,6 @@
 
     </script>
 
-</div>
 
+</div>
 

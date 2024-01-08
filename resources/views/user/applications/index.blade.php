@@ -196,18 +196,18 @@
 
                             <div class="check-box-group">
                                 <div class="check-box-group__item">
-                                    <input type="radio" name="property" value="in"
-                                           class="property-radio" {{ old('property') === 'in' ? 'checked' : '' }}>
+                                    <input type="radio" name="action-type" value="in"
+                                           class="property-radio" {{ old('action-type') === 'in' ? 'checked' : '' }}>
                                     <x-label for="equipment">{{__('Только внос')}}</x-label>
                                 </div>
                                 <div class="check-box-group__item">
-                                    <input type="radio" name="property" value="out"
-                                           class="property-radio" {{ old('property') === 'out' ? 'checked' : '' }}>
+                                    <input type="radio" name="action-type" value="out"
+                                           class="property-radio" {{ old('action-type') === 'out' ? 'checked' : '' }}>
                                     <x-label for="equipment">{{__('Только вынос')}}</x-label>
                                 </div>
                                 <div class="check-box-group__item">
-                                    <input type="radio" name="property" value="in-and-out" class="property-radio"
-                                        {{ old('property') === 'out' ? 'checked' : '' }}>
+                                    <input type="radio" name="action-type" value="in-and-out" class="property-radio"
+                                        {{ old('action-type') === 'in-and-out' ? 'checked' : '' }}>
                                     <x-label for="equipment">{{__('Внос и вынос')}}</x-label>
                                 </div>
                             </div>
@@ -250,6 +250,7 @@
                                             <x-ObjectsInput
                                                 :objects="$objectsForInvitation"
                                                 inputName="object-in"
+                                                selectClass="object-in"
                                             >
                                             </x-ObjectsInput>
                                         </x-form-item>
@@ -270,7 +271,13 @@
 
                                         <x-form-item class="col-md-5">
                                             <x-ObjectsInput :objects="$objectsForInvitation"
-                                                            inputName="object-out"></x-ObjectsInput>
+                                                            inputName="object-out"
+                                                            selectClass="object-out"
+                                            >
+
+                                            </x-ObjectsInput>
+
+
                                         </x-form-item>
                                     </div>
                                 </div>
@@ -285,7 +292,7 @@
                                             cols="40"
                                             class="equipment-field @error('equipment') is-invalid @enderror">{{old('equipment')}}
                                 </x-textarea>
-                                <x-error name="guestEquipment-show"/>
+                                <x-error name="equipment"/>
                             </x-form-item>
 
                             <x-form-item>
@@ -362,11 +369,13 @@
             const propertyOutGroup = document.querySelector('.property-out-group');
             const propertyInDate = document.querySelector('.property-in-date');
             const propertyOutDate = document.querySelector('.property-out-date');
+            const selectObjectIn = document.querySelector('.object-in');
+            const selectObjectOut = document.querySelector('.object-out');
 
             function togglePropertyGroups() {
-                const inRadio = document.querySelector('input[name="property"][value="in"]');
-                const outRadio = document.querySelector('input[name="property"][value="out"]');
-                const inAndOutRadio = document.querySelector('input[name="property"][value="in-and-out"]');
+                const inRadio = document.querySelector('input[name="action-type"][value="in"]');
+                const outRadio = document.querySelector('input[name="action-type"][value="out"]');
+                const inAndOutRadio = document.querySelector('input[name="action-type"][value="in-and-out"]');
                 const currentDate = new Date();
                 const formattedDate = currentDate.toISOString().slice(0, 10);
 
@@ -376,11 +385,17 @@
                 if (outRadio.checked) {
                     propertyOutDate.value = formattedDate;
                     propertyInDate.value = '';
+                    selectObjectIn.value = '';
+                    selectObjectIn.removeAttribute('required');
+                    selectObjectOut.setAttribute('required', 'true');
                     propertyInDate.removeAttribute('required');
                     propertyOutDate.setAttribute('required', 'true');
                 } else if (inRadio.checked) {
                     propertyInDate.value = formattedDate;
                     propertyOutDate.value = '';
+                    selectObjectOut.value = '';
+                    selectObjectOut.removeAttribute('required');
+                    selectObjectIn.setAttribute('required', 'true');
                     propertyInDate.setAttribute('required', 'true');
                     propertyOutDate.removeAttribute('required');
                 } else if (inAndOutRadio.checked) {
@@ -388,6 +403,8 @@
                     propertyOutDate.value = formattedDate;
                     propertyInDate.setAttribute('required', 'true');
                     propertyOutDate.setAttribute('required', 'true');
+                    selectObjectOut.setAttribute('required', 'true');
+                    selectObjectIn.setAttribute('required', 'true');
                 }
             }
 
@@ -396,8 +413,8 @@
             });
 
             // Устанавливаем значения при загрузке страницы
-            const oldProperty = "{{ old('property') }}";
-            const selectedRadio = document.querySelector(`input[name="property"][value="${oldProperty}"]`);
+            const oldProperty = "{{ old('action-type') }}";
+            const selectedRadio = document.querySelector(`input[name="action-type"][value="${oldProperty}"]`);
             if (selectedRadio) {
                 selectedRadio.checked = true;
                 selectedRadio.dispatchEvent(new Event('change'));
@@ -408,6 +425,5 @@
             }
         });
     </script>
-
 
 @endsection

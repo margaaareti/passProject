@@ -74,7 +74,7 @@ class GuestAppController extends Controller
                 $request->merge([$field => null]);
             }
 
-            return redirect()->route('user.app.showApp', $guestApplicationId)->with([
+            return redirect()->route('user.app.showGuestApp', $guestApplicationId)->with([
                 'success' => 'Форма отправлено успешно',
                 'selected_form' => $selectedForm
             ]);

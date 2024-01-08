@@ -6,11 +6,11 @@ import 'bootstrap';
 // })
 
 document.addEventListener('DOMContentLoaded', function() {
-    var modal = document.getElementById('exampleModal');
-    var formSelect = document.getElementById('exampleSelect');
-    var guestCard = document.getElementById('guest_card');
-    var carCard = document.getElementById('car_card');
-    var propertyCard = document.getElementById('property_card')
+    const modal = document.getElementById('exampleModal');
+    const formSelect = document.getElementById('exampleSelect');
+    const guestCard = document.getElementById('guest_card');
+    const carCard = document.getElementById('car_card');
+    const propertyCard = document.getElementById('property_card')
 
     function toggleCards(){
         guestCard.style.display = (formSelect.value==='Guests') ? 'block' : 'none'
@@ -19,8 +19,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     if(formSelect) {
-        var form = (formSelect.value === 'Guests') ? document.getElementById('form1') : document.getElementById('form2');
-        var fieldsToKeep = ['department', 'signed_by', 'start_date', 'end_date', 'selected_form']; // Список полей, которые нужно сохранить
+        const form = (formSelect.value === 'Guests') ? document.getElementById('form1') : document.getElementById('form2');
+        const fieldsToKeep = ['department', 'signed_by', 'start_date', 'end_date', 'selected_form']; // Список полей, которые нужно сохранить
 
         var inputs = form.getElementsByTagName('input');
         for (var i = 0; i < inputs.length; i++) {

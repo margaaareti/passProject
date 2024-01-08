@@ -15,11 +15,12 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name')->nullable();
+            $table->string('type')->nullable('false');
             $table->string('application_number')->nullable("");
             $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
             $table->boolean('is_approved')->default(false);
             $table->date('property-in-date')->nullable();
-            $table->date('property-out-day')->nullable();
+            $table->date('property-out-date')->nullable();
             $table->string('signed_by')->nullable(false);
             $table->string('object_in')->nullable();
             $table->string('object_out')->nullable();

@@ -4,14 +4,20 @@ namespace App\Http\Controllers\ApplicationControllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreApplicationsRequests\StorePropertyAppRequest;
+use App\Services\Applications\PropertyAppService;
 
 class PropertyAppController extends Controller
 {
+
+    protected PropertyAppService $propertyAppService;
+
+    public function __construct(PropertyAppService $propertyAppService)
+    {
+        $this->propertyAppService = $propertyAppService;
+    }
+
     public function store(StorePropertyAppRequest $request)
     {
-
-        dd($request->all());
-
         $limitExceeded = checkRequestLimit($request, 5);
         if ($limitExceeded) {
             return $limitExceeded;
@@ -26,34 +32,23 @@ class PropertyAppController extends Controller
         session()->flash('checkbox1', $request->has('Checkbox1'));
         session()->flash('checkbox2', $request->has('Checkbox2'));
 
-//        for ($i = 0; $i <= 1; $i++) {
-//        try {
-//            $guestApplicationId = $this->guestAppService->create($request->all());
-//        } catch (\Exception $error) {
-//            return redirect()->back()->withErrors($error->getMessage())->with('selected_form', $selectedForm);
-//        }
-////        }
-//
-//        if ($guestApplicationId !== null) {
-//
-//            //очищаем поля после успешной отправки
-//            $clearedFields = [
-//                'time_start',
-//                'time_end'
-//            ];
-//
-//            //Задаем значения по умолчанию для очищаемых полей
-//            foreach ($clearedFields as $field) {
-//                $request->merge([$field => null]);
-//            }
-//
-//            return redirect()->route('user.app.showApp', $guestApplicationId)->with([
+
+        try {
+            $propertyApplicationId = $this->propertyAppService->create($request->all());
+        } catch (\Exception $error) {
+            return redirect()->back()->withErrors($error->getMessage())->with('selected_form', $selectedForm);
+        }
+
+        if ($propertyApplicationId !== null) {
+
+            return redirect()->back()->with(['success' => 'Форма отправлено успешно']);
+//            return redirect()->route('user.app.showPropertyApp', $propertyApplicationId)->with([
 //                'success' => 'Форма отправлено успешно',
 //                'selected_form' => $selectedForm
 //            ]);
-//
-//        } else {
-//            return redirect()->back()->withErrors('Форма не была отправлена по неизвестным причинам. Просьбма обратиться к администратора');
-//        }
+
+        } else {
+            return redirect()->back()->withErrors('Форма не была отправлена по неизвестным причинам. Просьба обратиться к администратора');
+        }
     }
 }
