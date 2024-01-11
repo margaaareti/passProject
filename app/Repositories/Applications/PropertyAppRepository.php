@@ -3,21 +3,22 @@
 namespace App\Repositories\Applications;
 
 use App\Models\PropertyApplication;
+use App\Repositories\AppRepository;
 use App\Services\Applications\PropertyAppService;
 use Illuminate\Support\Facades\Log;
+use Laravel\Octane\Exceptions\DdException;
 
-class PropertyAppRepository
+class PropertyAppRepository extends AppRepository
 {
-    protected PropertyApplication $propertyAppModel;
 
-    public function __construct(PropertyApplication $propertyAppModel)
+    /**
+     * @throws DdException
+     */
+    public function create(array $data)
     {
-        $this->propertyAppModel = $propertyAppModel;
-    }
 
-    public function store(array $data)
-    {
-        $data['application_number'] = '3333';
+        $data = $this->GetApplicationCommonData($data);
+
         try {
             $newPropertyApplication = $this->propertyAppModel->create($data);
         } catch (\Exception $e) {

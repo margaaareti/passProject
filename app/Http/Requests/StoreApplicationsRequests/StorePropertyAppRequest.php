@@ -26,14 +26,14 @@ class StorePropertyAppRequest extends FormRequest
             'signed_by' => ['required', 'regex:/^[a-zA-Zа-яА-Я\s]+$/u', 'max:100'],
             'property-in-date' => ['required_without:property-out-date', 'date', 'after or equal:today', 'nullable'],
             'property-out-date' => ['required_without:property-in-date', 'date', 'after or equal: today', 'nullable'],
-            'object-out' => ['required_without:object-in'],
-            'object-in' => ['required_without:object-out'],
+            'object_out' => ['required_without:object_in'],
+            'object_in' => ['required_without:object_out'],
             'rooms' => ['nullable','string'],
             'purpose' => ['required', 'string', 'max:150'],
             'contract_number' => ['nullable', 'string', 'max:150'],
             'equipment' => ['required','string', 'max:250'],
             'responsible_person' => ['required'],
-            'phone_number' => ['required', 'string', 'regex:/^8-[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}$/', 'starts_with:8'],
+            'phone_number' => ['required', 'string', 'rege/^8-[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}$/', 'starts_with:8'],
             'additional_info' => ['nullable','max:300'],
         ];
     }

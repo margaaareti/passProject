@@ -7,6 +7,7 @@ use App\Jobs\EmailNotificationsJobs\Guests\SendAddNewGuestNotification;
 use App\Models\CarApplication;
 use App\Models\Counter;
 use App\Models\PeopleApplication;
+use App\Models\PropertyApplication;
 use App\Repositories\GoogleSheetsRepository\ApplicationsSheets;
 use App\Repositories\GoogleSheetsRepository\CarAppSheets;
 use App\Repositories\GoogleSheetsRepository\GuestAppSheets;
@@ -21,17 +22,25 @@ class AppRepository
 
     protected PeopleApplication $peopleAppModel;
     protected CarApplication $carAppModel;
+    protected PropertyApplication $propertyAppModel;
 
     protected GuestAppSheets $guestAppSheets;
     protected CarAppSheets $carAppSheets;
 
 
 
-    public function __construct(PeopleApplication $peopleAppModel, CarApplication $carAppModel, GuestAppSheets $guestAppSheets, CarAppSheets $carAppSheets)
-    {
+    public function __construct(
+        PeopleApplication $peopleAppModel,
+        CarApplication $carAppModel,
+        PropertyApplication $propertyAppModel,
+        GuestAppSheets $guestAppSheets,
+        CarAppSheets $carAppSheets
+    ) {
         $this->date = date('d.m.Y');
         $this->peopleAppModel = $peopleAppModel;
         $this->carAppModel = $carAppModel;
+        $this->propertyAppModel=$propertyAppModel;
+
         $this->guestAppSheets = $guestAppSheets;
         $this->carAppSheets = $carAppSheets;
     }
@@ -92,6 +101,7 @@ class AppRepository
 
         $lastCarRecord = $this->carAppModel->latest()->first();
         $lastPeopleRecord = $this->peopleAppModel->latest()->first();
+        $lastPropertyRecord = $this->propertyAppModel->latest()->first();
 
         //Получаем значение счетчика из базы данных
         $counter = Counter::first();
@@ -101,7 +111,11 @@ class AppRepository
         }
 
 
-        if (($lastCarRecord && $lastCarRecord->created_at->format('d.m.Y') == $this->date) || ($lastPeopleRecord && $lastPeopleRecord->created_at->format('d.m.Y') == $this->date )){
+        if (
+            ($lastCarRecord && $lastCarRecord->created_at->format('d.m.Y') == $this->date) ||
+            ($lastPeopleRecord && $lastPeopleRecord->created_at->format('d.m.Y') == $this->date) ||
+            ($lastPropertyRecord && $lastPropertyRecord->created_at->format('d.m.Y') == $this->date)
+        ) {
             $counter->increment('value');
         } else {
             $counter->update(['value' => 1]);
@@ -118,7 +132,9 @@ class AppRepository
 
         $data['user_fullname'] = optional(auth()->user())->last_name . ' ' . optional(auth()->user())->name . ' ' . optional(auth()->user())->patronymic;
 
-        $data['object'] = implode("\n", $data['object']);
+        if (isset($data['object'])) {
+            $data['object'] = implode("\n", $data['object']);
+        }
 
         $data['user_email'] = auth()->user()->email;
 

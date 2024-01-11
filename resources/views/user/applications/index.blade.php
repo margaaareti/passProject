@@ -196,17 +196,17 @@
 
                             <div class="check-box-group">
                                 <div class="check-box-group__item">
-                                    <input type="radio" name="action-type" value="in"
+                                    <input type="radio" name="type" value="Внос"
                                            class="property-radio" {{ old('action-type') === 'in' ? 'checked' : '' }}>
                                     <x-label for="equipment">{{__('Только внос')}}</x-label>
                                 </div>
                                 <div class="check-box-group__item">
-                                    <input type="radio" name="action-type" value="out"
+                                    <input type="radio" name="type" value="Вынос"
                                            class="property-radio" {{ old('action-type') === 'out' ? 'checked' : '' }}>
                                     <x-label for="equipment">{{__('Только вынос')}}</x-label>
                                 </div>
                                 <div class="check-box-group__item">
-                                    <input type="radio" name="action-type" value="in-and-out" class="property-radio"
+                                    <input type="radio" name="type" value="Внос-Вынос" class="property-radio"
                                         {{ old('action-type') === 'in-and-out' ? 'checked' : '' }}>
                                     <x-label for="equipment">{{__('Внос и вынос')}}</x-label>
                                 </div>
@@ -249,7 +249,7 @@
                                         <x-form-item class="col-md-5">
                                             <x-ObjectsInput
                                                 :objects="$objectsForInvitation"
-                                                inputName="object-in"
+                                                inputName="object_in"
                                                 selectClass="object-in"
                                             >
                                             </x-ObjectsInput>
@@ -271,7 +271,7 @@
 
                                         <x-form-item class="col-md-5">
                                             <x-ObjectsInput :objects="$objectsForInvitation"
-                                                            inputName="object-out"
+                                                            inputName="object_out"
                                                             selectClass="object-out"
                                             >
 
@@ -373,9 +373,9 @@
             const selectObjectOut = document.querySelector('.object-out');
 
             function togglePropertyGroups() {
-                const inRadio = document.querySelector('input[name="action-type"][value="in"]');
-                const outRadio = document.querySelector('input[name="action-type"][value="out"]');
-                const inAndOutRadio = document.querySelector('input[name="action-type"][value="in-and-out"]');
+                const inRadio = document.querySelector('input[name="type"][value="Внос"]');
+                const outRadio = document.querySelector('input[name="type"][value="Вынос"]');
+                const inAndOutRadio = document.querySelector('input[name="type"][value="Внос-Вынос"]');
                 const currentDate = new Date();
                 const formattedDate = currentDate.toISOString().slice(0, 10);
 
@@ -413,8 +413,8 @@
             });
 
             // Устанавливаем значения при загрузке страницы
-            const oldProperty = "{{ old('action-type') }}";
-            const selectedRadio = document.querySelector(`input[name="action-type"][value="${oldProperty}"]`);
+            const oldProperty = "{{ old('type') }}";
+            const selectedRadio = document.querySelector(`input[name="type"][value="${oldProperty}"]`);
             if (selectedRadio) {
                 selectedRadio.checked = true;
                 selectedRadio.dispatchEvent(new Event('change'));

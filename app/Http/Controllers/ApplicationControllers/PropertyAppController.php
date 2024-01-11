@@ -16,6 +16,7 @@ class PropertyAppController extends Controller
         $this->propertyAppService = $propertyAppService;
     }
 
+
     public function store(StorePropertyAppRequest $request)
     {
         $limitExceeded = checkRequestLimit($request, 5);
