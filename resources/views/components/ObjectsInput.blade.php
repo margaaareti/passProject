@@ -14,8 +14,9 @@
             class="fa-solid fa-circle-exclamation"></i></span>
 
     <select class="object-select {{$selectClass}}" name="{{$fieldName}}" @if($multiple) multiple="multiple" @endif style="width: 100%" required>
+        <option value=""></option>
         @if(!$multiple)
-            <option value="" disabled>Выберите локацию</option>
+            <option value="" @if(!old($inputName)) selected @endif disabled>Выберите локацию</option>
         @endif
         @foreach($objects as $object => $text)
             <option class="select-option" value="{{ $object }}"

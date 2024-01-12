@@ -2,6 +2,7 @@
 
 namespace App\Services\Applications;
 
+use App\Models\PropertyApplication;
 use App\Repositories\Applications\PropertyAppRepository;
 use App\Services\AppService;
 use Illuminate\Support\Facades\Log;
@@ -33,5 +34,11 @@ class PropertyAppService extends AppService
             Log::error('Error sending data Repository: ' . $e->getMessage());
             return $e->getMessage();
         }
+    }
+
+    public function fetchApplication($id): PropertyApplication
+    {
+        $id = (int)$id;
+        return $this->propertyAppRepository->getApplication($id);
     }
 }

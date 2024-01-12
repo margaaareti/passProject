@@ -2,9 +2,11 @@
 
 namespace App\Repositories\Applications;
 
+use App\Models\PeopleApplication;
 use App\Models\PropertyApplication;
 use App\Repositories\AppRepository;
 use App\Services\Applications\PropertyAppService;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Laravel\Octane\Exceptions\DdException;
 
@@ -25,7 +27,13 @@ class PropertyAppRepository extends AppRepository
             Log::error('Error sending data to Database: ' . $e->getMessage());
             return $e->getMessage();
         }
-        return $newPropertyApplication->id;
 
+        return $newPropertyApplication->id;
+    }
+
+    public function getApplication($id): PropertyApplication
+    {
+        $userId=Auth::id();
+        return $this->propertyAppModel->where('user_id', $userId)->where('id', $id)->first();
     }
 }

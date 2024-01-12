@@ -80,7 +80,7 @@ class GuestAppController extends Controller
             ]);
 
         } else {
-            return redirect()->back()->withErrors('Форма не была отправлена по неизвестным причинам. Просьбма обратиться к администратора');
+            return redirect()->back()->withErrors('Не удалось получить id заявки. Обратитесь к администратору');
         }
     }
 

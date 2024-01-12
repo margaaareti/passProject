@@ -44,7 +44,7 @@ Route::prefix('/home')->middleware(['auth', 'verified'])->group(function () {
     Route::get("/car-applications/{id}", [CarAppController::class, 'showApp'])->name('user.app.showCarApp');
 
     Route::post("/property-application", [PropertyAppController::class,'store'])->name('property.app.create');
-    Route::get("/property-application/id", [PropertyAppController::class,'showApp'])->name('property.app.showPropertyApp');
+    Route::get("/property-application/{id}", [PropertyAppController::class,'showApp'])->name('user.app.showPropertyApp');
 
 
     Route::get('/hello', function () {

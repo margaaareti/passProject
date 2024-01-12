@@ -13,7 +13,7 @@
                     <a class="nav-buttons__link nav-link" href="{{ route('home') }}">На главную</a>
                 </x-button>
 
-                @if(Route::is('user.app.showAllApp') || Route::is('user.app.showApp') || Route::is('user.app.showCarApp'))
+                @if(Route::is('user.app.showAllApp') || Route::is('user.app.showGuestApp') || Route::is('user.app.showCarApp') || Route::is('user.app.showPropertyApp'))
                     <x-button class="nav-buttons__button btn btn-light">
                         <a class="nav-buttons__link nav-link" href="{{ route('user.app') }}">Подать заявку</a>
                     </x-button>
