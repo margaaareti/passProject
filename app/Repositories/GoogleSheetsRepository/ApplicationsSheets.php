@@ -11,17 +11,15 @@ class ApplicationsSheets
     public function addNewRecordToSheet(array $data)
     {
 
-        if (isset($data['cars'])) {
+        if ($data['application_type'] === "Въезд") {
             $data['guests'] = '';
             $data['cars'] = implode("\n", $data['cars']);
-            $data['application_type'] = 'Въезд';
             if (str_starts_with($data['object'], 'Ломоносова,9')) {
                 $data['object'] = 'Л9';
             }
-        } elseif (isset($data['guests'])) {
+        } elseif ($data['application_type'] === "Проход") {
             $data['cars'] = '';
             $data['guests'] = implode("\n", $data['guests']);
-            $data['application_type'] = 'Проход';
         };
 
 

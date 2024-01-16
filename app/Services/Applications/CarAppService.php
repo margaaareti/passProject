@@ -22,7 +22,7 @@ class CarAppService extends AppService
     public function create(array $data)
     {
 
-        $data['application_type'] = 'Въезд автотранспорта';
+        $data['application_type'] = 'Въезд';
         $data['cars'] = preg_split("/[\n,]+/", str_replace("\r\n", "\n", mb_strtoupper($data['cars'], 'UTF-8')));
         $data['cars_count'] = count($data['cars']);
 

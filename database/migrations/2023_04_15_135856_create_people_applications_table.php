@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('people_applications', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('name')->nullable();
+            $table->string('application_type')->nullable();
             $table->string('application_number')->nullable("");
             $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
             $table->boolean('is_approved')->default(false);

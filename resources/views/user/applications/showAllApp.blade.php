@@ -19,15 +19,20 @@
                     <div class="card-container__item">
                         <div class="card h-100">
 
-                            @if($application->guests)
+                            @if($application['application_type'] === 'Проход')
                                 <div class="card__header card-header text-center">
                                     <a class="card-header__link"
                                        href="{{route('user.app.showGuestApp', $application->id)}}">{{ __('Заявка на проход посетителей №')}} {{$application->id}}</a>
                                 </div>
-                            @elseif($application->cars)
+                            @elseif($application['application_type'] === 'Въезд')
                                 <div class="card__header card-header text-center">
                                     <a class="card-header__link"
                                        href="{{route('user.app.showCarApp', $application->id)}}">{{ __('Заявка на въезд автотранспорта №')}} {{$application->id}}</a>
+                                </div>
+                            @elseif($application['application_type'] === 'Внос/Вынос')
+                                <div class="card__header card-header text-center">
+                                    <a class="card-header__link"
+                                       href="{{route('user.app.showPropertyApp', $application->id)}}">{{ __('Заявка на Внос/Вынос имущества №')}} {{$application->id}}</a>
                                 </div>
                             @endif
 
@@ -47,12 +52,29 @@
 
                                 <p class="card-body__text">
                                     Отправлено: {{$application->created_at->format('H:i:s d.m.Y')}}</p>
-                                <p class="card-body__text">Дата: c {{date_format(date_create($application->start_date),'d.m.Y')}}
-                                    по {{date_format(date_create($application->end_date),'d.m.Y')}} </p>
-                                <p class="card-body__text">Локация: {{$application->object}}</p>
-                                <p class="card-body__text">Цель: {{$application->purpose}}</p>
-                                <p class="card-body__text">Ответственный: {{$application->responsible_person}}</p>
-
+                                @if($application['application_type'] === 'Внос/Вынос')
+                                    <p class="card-body__text">Тип действия: {{$application->type}}</p>
+                                    @if($application['property-in-date'] || $application['object_in'] )
+                                        <p class="card-body__text">Дата
+                                            вноса: {{date_format(date_create($application->{'property-in-date'}),'d.m.Y')}}
+                                        <p class="card-body__text">Локация: {{$application->object_in}}</p>
+                                    @endif
+                                    @if($application['property-out-date'] || $application['object_out'])
+                                        <p class="card-body__text">Дата
+                                            выноса: {{date_format(date_create($application->{'property-out-date'}),'d.m.Y')}}
+                                        <p class="card-body__text">Локация: {{$application->object_out}}</p>
+                                    @endif
+                                    <p class="card-body__text">Имущество/оборудование: {{$application->equipment}}</p>
+                                    <p class="card-body__text">Цель: {{$application->purpose}}</p>
+                                    <p class="card-body__text">Ответственный: {{$application->responsible_person}}</p>
+                                @else
+                                    <p class="card-body__text">Дата:
+                                        c {{date_format(date_create($application->start_date),'d.m.Y')}}
+                                        по {{date_format(date_create($application->end_date),'d.m.Y')}} </p>
+                                    <p class="card-body__text">Локация: {{$application->object}}</p>
+                                    <p class="card-body__text">Цель: {{$application->purpose}}</p>
+                                    <p class="card-body__text">Ответственный: {{$application->responsible_person}}</p>
+                                @endif
                                 @if ($application->guests)
                                     <p class="card-body__text">Количество лиц, указанных в
                                         заявке: {{$application->guests_count}}</p>

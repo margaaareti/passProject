@@ -16,6 +16,7 @@ class PeopleApplication extends Model
         'name',
         'user_id',
         'application_number',
+        'application_type',
         'is_approved',
         'signed_by',
         'start_date', 'end_date',

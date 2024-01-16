@@ -20,6 +20,7 @@ class CarAppRepository extends AppRepository
     {
         $data = $this->GetApplicationCommonData($data);
 
+
         try {
             $newCarApplication = $this->createApplication($data, $this->carAppModel, 'cars', 'Car');
         } catch (\Exception $e) {

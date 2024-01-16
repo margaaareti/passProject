@@ -14,6 +14,7 @@ class PropertyApplication extends Model
         'name',
         'user_id',
         'application_number',
+        'application_type',
         'type',
         'is_approved',
         'signed_by',

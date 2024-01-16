@@ -59,7 +59,6 @@ class GuestAppRepository extends AppRepository
     }
 
 
-
     //Получаем коллецию заявок пользователя
     public function getAllApplications(): Collection
     {

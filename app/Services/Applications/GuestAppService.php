@@ -22,7 +22,7 @@ class GuestAppService extends AppService
     public function create(array $data)
     {
 
-        $data['application_type'] = 'Проход посетителей';
+        $data['application_type'] = 'Проход';
         $data['guests'] = preg_split("/[\n,]+/", str_replace("\r\n", "\n", $data['guests']));
         $data['guests_count'] = count($data['guests']);
 

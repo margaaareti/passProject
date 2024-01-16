@@ -5,6 +5,7 @@ namespace App\Services\Applications;
 use App\Models\PropertyApplication;
 use App\Repositories\Applications\PropertyAppRepository;
 use App\Services\AppService;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Log;
 
 class PropertyAppService extends AppService
@@ -35,6 +36,14 @@ class PropertyAppService extends AppService
             return $e->getMessage();
         }
     }
+
+    public function fetchAllApplications(): Collection
+    {
+
+        return $this->propertyAppRepository->getAllApplications();
+
+    }
+
 
     public function fetchApplication($id): PropertyApplication
     {
