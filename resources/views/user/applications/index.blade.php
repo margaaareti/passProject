@@ -2,10 +2,10 @@
 @section('page.title', 'Подать заявку')
 
 @section('content')
-    <!-- Модальное окно -->
-    <x-common.modal-window>
-
-    </x-common.modal-window>
+    <!-- Модальное окно c выбором типа формы-->
+    <x-modals.form-select-modal/>
+    <!-- Модальное окно c подтверждением отправляемых данных-->
+    <x-modals.confirmation-modal/>
 
     <!-- Основной контент -->
     <x-common.nav-buttons size="8">
@@ -81,29 +81,6 @@
             </div>
 
 
-            <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                 aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="d-flex flex-column">
-                            <div class="modal-header mb-1">
-                                <h4 class="modal-title" id="exampleModalLabel">Проверьте правильность введенных
-                                    данных</h4>
-                            </div>
-                            <div>
-                                <h5 class="modal-title" id="applicationType"></h5>
-                            </div>
-                        </div>
-                        <div class="modal-body">
-                            <div id="modalData"></div>
-                        </div>
-                        <div class="modal-footer">
-                            <x-button data-bs-dismiss="modal">Закрыть</x-button>
-                            <x-button id="confirmButton">Подтвердить</x-button>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
 
             <div class="container">
@@ -207,7 +184,7 @@
                                 </div>
                                 <div class="check-box-group__item">
                                     <input type="radio" name="type" value="Внос-Вынос" class="property-radio"
-                                        {{ old('action-type') === 'in-and-out' ? 'checked' : '' }}>
+                                           {{ old('action-type') === 'in-and-out' ? 'checked' : '' }} checked>
                                     <x-label for="equipment">{{__('Внос и вынос')}}</x-label>
                                 </div>
                             </div>
@@ -277,7 +254,6 @@
 
                                             </x-ObjectsInput>
 
-
                                         </x-form-item>
                                     </div>
                                 </div>
@@ -285,15 +261,52 @@
                             </x-form-item>
 
 
+
+
+
                             <x-form-item class="mb-1 mt-1">
                                 <x-label for="equipment">{{__('Имущество/оборудованиe')}}:
                                 </x-label>
                                 <x-textarea name="equipment" id="equipment" rows="4"
                                             cols="40"
-                                            class="equipment-field @error('equipment') is-invalid @enderror">{{old('equipment')}}
+                                            class="equipment-field @error('equipment') is-invalid @enderror" :readonly="true">{{old('equipment')}}
                                 </x-textarea>
                                 <x-error name="equipment"/>
                             </x-form-item>
+
+                            <button type="button" id="addEquipmentBtn" class="btn btn-primary">Добавить</button>
+
+                            <div id="equipmentModal" class="modal fade" tabindex="-1" role="dialog">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Добавить Имущество/оборудование</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form id="equipmentForm">
+                                                <div class="form-group">
+                                                    <label for="equipmentName">Название:</label>
+                                                    <input type="text" class="form-control" id="equipmentName" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="equipmentQuantity">Количество:</label>
+                                                    <input type="number" class="form-control" id="equipmentQuantity" required>
+                                                </div>
+                                                <div id="modalWarning" class="alert alert-danger mt-2" style="display: none;">
+                                                    Пожалуйста, заполните все поля.
+                                                </div>
+                                                <button type="button" class="btn btn-primary" id="addEquipmentModalBtn">Добавить</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
 
                             <x-form-item>
                                 <x-label required for="purpose">{{__('Цель:')}}
@@ -417,13 +430,90 @@
             const selectedRadio = document.querySelector(`input[name="type"][value="${oldProperty}"]`);
             if (selectedRadio) {
                 selectedRadio.checked = true;
-                selectedRadio.dispatchEvent(new Event('change'));
+                togglePropertyGroups(); // Вызываем функцию для обработки изменений
             } else {
                 // Если нет выбранного радио, скрываем оба блока
                 propertyInGroup.style.display = 'none';
                 propertyOutGroup.style.display = 'none';
             }
         });
+
+        // Устанавливаем значения при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function () {
+            const selectedType = "{{ old('type', 'Внос') }}";
+            const selectedRadio = document.querySelector(`input[name="type"][value="${selectedType}"]`);
+            if (selectedRadio) {
+                selectedRadio.checked = true;
+                selectedRadio.dispatchEvent(new Event('change'));
+            }
+        });
+
     </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const equipmentModal = new bootstrap.Modal(document.getElementById('equipmentModal'));
+            const addEquipmentBtn = document.getElementById('addEquipmentBtn');
+            const addEquipmentModalBtn = document.getElementById('addEquipmentModalBtn');
+            const equipmentNameInput = document.getElementById('equipmentName');
+            const equipmentQuantityInput = document.getElementById('equipmentQuantity');
+            const equipmentField = document.getElementById('equipment');
+            const modalWarning = document.getElementById('modalWarning');
+
+            const equipmentList = [];
+
+            addEquipmentBtn.addEventListener('click', function () {
+                equipmentModal.show();
+                hideWarning();
+            });
+
+            addEquipmentModalBtn.addEventListener('click', function () {
+                const name = equipmentNameInput.value;
+                const quantity = equipmentQuantityInput.value;
+
+                if (name && quantity) {
+                    const entry = name + ' - ' + quantity + ' шт.';
+                    equipmentList.push(entry);
+
+                    equipmentField.value = equipmentList.join('\n');
+                    equipmentModal.hide();
+
+                    // Clear input fields
+                    equipmentNameInput.value = '';
+                    equipmentQuantityInput.value = '';
+                } else {
+                    showWarning();
+                }
+            });
+
+            // Allow only numeric input for equipmentQuantityInput
+            equipmentQuantityInput.addEventListener('input', function () {
+                this.value = this.value.replace(/[^0-9]/g, '');
+                hideWarning();
+            });
+
+            // Input event for text field
+            equipmentNameInput.addEventListener('input', function () {
+                hideWarning();
+            });
+
+            // Close modal on button click
+            const closeButton = document.querySelector('.btn-close');
+            closeButton.addEventListener('click', function () {
+                equipmentModal.hide();
+            });
+
+            function showWarning() {
+                modalWarning.style.display = 'block';
+            }
+
+            function hideWarning() {
+                modalWarning.style.display = 'none';
+            }
+        });
+    </script>
+
+
+
 
 @endsection

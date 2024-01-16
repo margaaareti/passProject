@@ -64,7 +64,7 @@
                                             выноса: {{date_format(date_create($application->{'property-out-date'}),'d.m.Y')}}
                                         <p class="card-body__text">Локация: {{$application->object_out}}</p>
                                     @endif
-                                    <p class="card-body__text">Имущество/оборудование: {{$application->equipment}}</p>
+                                    <p class="card-body__text">Имущество: {{$application->equipment}}</p>
                                     <p class="card-body__text">Цель: {{$application->purpose}}</p>
                                     <p class="card-body__text">Ответственный: {{$application->responsible_person}}</p>
                                 @else
