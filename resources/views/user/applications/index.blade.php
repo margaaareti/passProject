@@ -262,14 +262,12 @@
 
 
 
-
-
                             <x-form-item class="mb-1 mt-1">
                                 <x-label for="equipment">{{__('Имущество/оборудованиe')}}:
                                 </x-label>
                                 <x-textarea name="equipment" id="equipment" rows="4"
                                             cols="40"
-                                            class="equipment-field @error('equipment') is-invalid @enderror" :readonly="true">{{old('equipment')}}
+                                            class="equipment-field @error('equipment') is-invalid @enderror" >{{old('equipment')}}
                                 </x-textarea>
                                 <x-error name="equipment"/>
                             </x-form-item>
@@ -284,28 +282,27 @@
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <form id="equipmentForm">
+                                            <div id="equipmentForm">
                                                 <div class="form-group">
                                                     <label for="equipmentName">Название:</label>
-                                                    <input type="text" class="form-control" id="equipmentName" required>
+                                                    <input type="text" class="form-control" id="equipmentName" >
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="equipmentQuantity">Количество:</label>
-                                                    <input type="number" class="form-control" id="equipmentQuantity" required>
+                                                    <input type="number" class="form-control" id="equipmentQuantity" >
                                                 </div>
                                                 <div id="modalWarning" class="alert alert-danger mt-2" style="display: none;">
                                                     Пожалуйста, заполните все поля.
                                                 </div>
                                                 <button type="button" class="btn btn-primary" id="addEquipmentModalBtn">Добавить</button>
-                                            </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-
-
-
+                            <div id="equipmentList"></div>
+                            <input type="hidden" id="hiddenEquipmentData" name="hiddenEquipmentData" value="{{old('hiddenEquipmentData')}}">
 
 
                             <x-form-item>
@@ -457,14 +454,15 @@
             const addEquipmentModalBtn = document.getElementById('addEquipmentModalBtn');
             const equipmentNameInput = document.getElementById('equipmentName');
             const equipmentQuantityInput = document.getElementById('equipmentQuantity');
-            const equipmentField = document.getElementById('equipment');
             const modalWarning = document.getElementById('modalWarning');
+            const equipmentListContainer = document.getElementById('equipmentList');
+            const hiddenInput = document.getElementById('hiddenEquipmentData');
 
-            const equipmentList = [];
+            let equipmentCounter = 1; // Счетчик для уникальных идентификаторов
 
             addEquipmentBtn.addEventListener('click', function () {
-                equipmentModal.show();
                 hideWarning();
+                equipmentModal.show();
             });
 
             addEquipmentModalBtn.addEventListener('click', function () {
@@ -472,35 +470,62 @@
                 const quantity = equipmentQuantityInput.value;
 
                 if (name && quantity) {
-                    const entry = name + ' - ' + quantity + ' шт.';
-                    equipmentList.push(entry);
+                    // Создаем новый блок с имуществом и его количеством
+                    const equipmentBlock = document.createElement('div');
+                    equipmentBlock.classList.add('equipment-block');
+                    const blockId = `equipment_${equipmentCounter++}`;
+                    equipmentBlock.setAttribute('id', blockId);
+                    equipmentBlock.innerHTML = `${name} - ${quantity} шт. <span class="delete-btn" data-block-id="${blockId}">&times;</span>`;
 
-                    equipmentField.value = equipmentList.join('\n');
-                    equipmentModal.hide();
+                    // Добавляем блок в контейнер
+                    equipmentListContainer.appendChild(equipmentBlock);
 
-                    // Clear input fields
+                    // Обновляем скрытый инпут
+                    updateHiddenInput();
+
+                    // Очищаем поля в модальном окне
                     equipmentNameInput.value = '';
                     equipmentQuantityInput.value = '';
+
+                    // Закрываем модальное окно
+                    equipmentModal.hide();
                 } else {
                     showWarning();
                 }
             });
 
-            // Allow only numeric input for equipmentQuantityInput
-            equipmentQuantityInput.addEventListener('input', function () {
-                this.value = this.value.replace(/[^0-9]/g, '');
-                hideWarning();
+            // Событие удаления блока
+            equipmentListContainer.addEventListener('click', function (event) {
+                if (event.target.classList.contains('delete-btn')) {
+                    const blockId = event.target.getAttribute('data-block-id');
+                    const equipmentBlock = document.getElementById(blockId);
+                    if (equipmentBlock) {
+                        equipmentBlock.remove();
+                        updateHiddenInput();
+                    }
+                }
             });
 
-            // Input event for text field
+            // Функция обновления скрытого инпута
+            function updateHiddenInput() {
+                const equipmentBlocks = equipmentListContainer.getElementsByClassName('equipment-block');
+                const equipmentDataArray = [];
+
+                for (const block of equipmentBlocks) {
+                    const blockText = block.textContent.trim();
+                    equipmentDataArray.push(blockText);
+                }
+
+                hiddenInput.value = equipmentDataArray.join(', ');
+            }
+
+            // Событие ввода в инпуты
             equipmentNameInput.addEventListener('input', function () {
                 hideWarning();
             });
 
-            // Close modal on button click
-            const closeButton = document.querySelector('.btn-close');
-            closeButton.addEventListener('click', function () {
-                equipmentModal.hide();
+            equipmentQuantityInput.addEventListener('input', function () {
+                hideWarning();
             });
 
             function showWarning() {
@@ -512,8 +537,6 @@
             }
         });
     </script>
-
-
 
 
 @endsection
