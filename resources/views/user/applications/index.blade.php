@@ -81,8 +81,6 @@
             </div>
 
 
-
-
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
@@ -251,7 +249,6 @@
                                                             inputName="object_out"
                                                             selectClass="object-out"
                                             >
-
                                             </x-ObjectsInput>
 
                                         </x-form-item>
@@ -261,48 +258,76 @@
                             </x-form-item>
 
 
-
                             <x-form-item class="mb-1 mt-1">
                                 <x-label for="equipment">{{__('Имущество/оборудованиe')}}:
                                 </x-label>
                                 <x-textarea name="equipment" id="equipment" rows="4"
                                             cols="40"
-                                            class="equipment-field @error('equipment') is-invalid @enderror" >{{old('equipment')}}
+                                            class="equipment-field @error('equipment') is-invalid @enderror">{{old('equipment')}}
                                 </x-textarea>
                                 <x-error name="equipment"/>
                             </x-form-item>
 
                             <button type="button" id="addEquipmentBtn" class="btn btn-primary">Добавить</button>
 
+                            <input type="hidden" id="equipmentCounter" name="equipmentCounter" value="{{ old('equipmentCounter') ?? 1 }}">
+                            @if(old('equipmentData'))
+                                @foreach(old('equipmentData') as $index => $data)
+                                    <input type="hidden" name="equipmentData[{{$index}}][name]" value="{{ $data['name'] }}">
+                                    <input type="hidden" name="equipmentData[{{$index}}][quantity]" value="{{ $data['quantity'] }}">
+                                @endforeach
+                            @endif
+
                             <div id="equipmentModal" class="modal fade" tabindex="-1" role="dialog">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title">Добавить Имущество/оборудование</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
                                             <div id="equipmentForm">
                                                 <div class="form-group">
                                                     <label for="equipmentName">Название:</label>
-                                                    <input type="text" class="form-control" id="equipmentName" >
+                                                    <input type="text" class="form-control" id="equipmentName">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="equipmentQuantity">Количество:</label>
-                                                    <input type="number" class="form-control" id="equipmentQuantity" >
+                                                    <input type="number" class="form-control" id="equipmentQuantity">
                                                 </div>
-                                                <div id="modalWarning" class="alert alert-danger mt-2" style="display: none;">
+                                                <div id="modalWarning" class="alert alert-danger mt-2"
+                                                     style="display: none;">
                                                     Пожалуйста, заполните все поля.
                                                 </div>
-                                                <button type="button" class="btn btn-primary" id="addEquipmentModalBtn">Добавить</button>
+                                                <button type="button" class="btn btn-primary" id="addEquipmentModalBtn">
+                                                    Добавить
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div id="equipmentList"></div>
-                            <input type="hidden" id="hiddenEquipmentData" name="hiddenEquipmentData" value="{{old('hiddenEquipmentData')}}">
+                            <div id="equipmentList">
+                                @if(old('equipmentData'))
+                                    @foreach(old('equipmentData') as $index => $data)
+                                        <div class="equipment-block">
+                                            <div>
+                                                <label for="equipment_name_{{ $index }}">Название:</label>
+                                                <input type="text" class="form-control" name="equipment_name[]" value="{{ $data['name'] }}" readonly>
+                                            </div>
+                                            <div>
+                                                <label for="equipment_quantity_{{ $index }}">Количество:</label>
+                                                <input type="number" class="form-control" name="equipment_quantity[]" value="{{ $data['quantity'] }}" readonly>
+                                            </div>
+                                            <button type="button" class="delete-btn" data-block-id="{{ $index }}">&times;</button>
+                                        </div>
+                                    @endforeach
+                                @endif
+                            </div>
+                            <input type="hidden" id="hiddenEquipmentData" name="hiddenEquipmentData"
+                                   value="{{old('hiddenEquipmentData')}}">
 
 
                             <x-form-item>
@@ -456,7 +481,7 @@
             const equipmentQuantityInput = document.getElementById('equipmentQuantity');
             const modalWarning = document.getElementById('modalWarning');
             const equipmentListContainer = document.getElementById('equipmentList');
-            const hiddenInput = document.getElementById('hiddenEquipmentData');
+            const form = document.getElementById('form3');
 
             let equipmentCounter = 1; // Счетчик для уникальных идентификаторов
 
@@ -470,18 +495,29 @@
                 const quantity = equipmentQuantityInput.value;
 
                 if (name && quantity) {
-                    // Создаем новый блок с имуществом и его количеством
+                    // Создаем новый блок с информацией об оборудовании
                     const equipmentBlock = document.createElement('div');
                     equipmentBlock.classList.add('equipment-block');
-                    const blockId = `equipment_${equipmentCounter++}`;
-                    equipmentBlock.setAttribute('id', blockId);
-                    equipmentBlock.innerHTML = `${name} - ${quantity} шт. <span class="delete-btn" data-block-id="${blockId}">&times;</span>`;
+                    equipmentBlock.innerHTML = `
+                <div>
+                    <label for="equipment_${equipmentCounter}">Название:</label>
+                    <input type="text" class="form-control" name="equipment_name_${equipmentCounter}" value="${name}" readonly>
+                </div>
+                <div>
+                    <label for="quantity_${equipmentCounter}">Количество:</label>
+                    <input type="number" class="form-control" name="equipment_quantity_${equipmentCounter}" value="${quantity}" readonly>
+                </div>
+                <button type="button" class="delete-btn" data-block-id="${equipmentCounter}">&times;</button>
+            `;
+
+                    // Добавляем обработчик события для кнопки удаления
+                    const deleteBtn = equipmentBlock.querySelector('.delete-btn');
+                    deleteBtn.addEventListener('click', function () {
+                        equipmentBlock.remove();
+                    });
 
                     // Добавляем блок в контейнер
                     equipmentListContainer.appendChild(equipmentBlock);
-
-                    // Обновляем скрытый инпут
-                    updateHiddenInput();
 
                     // Очищаем поля в модальном окне
                     equipmentNameInput.value = '';
@@ -489,43 +525,19 @@
 
                     // Закрываем модальное окно
                     equipmentModal.hide();
+
+                    // Увеличиваем счетчик
+                    equipmentCounter++;
                 } else {
                     showWarning();
                 }
             });
 
-            // Событие удаления блока
-            equipmentListContainer.addEventListener('click', function (event) {
-                if (event.target.classList.contains('delete-btn')) {
-                    const blockId = event.target.getAttribute('data-block-id');
-                    const equipmentBlock = document.getElementById(blockId);
-                    if (equipmentBlock) {
-                        equipmentBlock.remove();
-                        updateHiddenInput();
-                    }
-                }
-            });
-
-            // Функция обновления скрытого инпута
-            function updateHiddenInput() {
-                const equipmentBlocks = equipmentListContainer.getElementsByClassName('equipment-block');
-                const equipmentDataArray = [];
-
-                for (const block of equipmentBlocks) {
-                    const blockText = block.textContent.trim();
-                    equipmentDataArray.push(blockText);
-                }
-
-                hiddenInput.value = equipmentDataArray.join(', ');
-            }
-
-            // Событие ввода в инпуты
-            equipmentNameInput.addEventListener('input', function () {
-                hideWarning();
-            });
-
-            equipmentQuantityInput.addEventListener('input', function () {
-                hideWarning();
+            // Событие закрытия модального окна
+            equipmentModal._element.addEventListener('hidden.bs.modal', function () {
+                // Очищаем поля в модальном окне при его закрытии
+                equipmentNameInput.value = '';
+                equipmentQuantityInput.value = '';
             });
 
             function showWarning() {
@@ -535,8 +547,15 @@
             function hideWarning() {
                 modalWarning.style.display = 'none';
             }
-        });
-    </script>
 
+            // Добавьте следующий код, чтобы блокировать отправку формы при нажатии Enter
+            form.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                }
+            });
+        });
+
+    </script>
 
 @endsection

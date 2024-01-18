@@ -28,7 +28,6 @@ class PropertyAppRepository extends AppRepository
             Log::error('Error sending data to Database: ' . $e->getMessage());
             return $e->getMessage();
         }
-
         return $newPropertyApplication->id;
     }
 

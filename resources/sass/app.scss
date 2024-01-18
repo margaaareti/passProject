@@ -213,6 +213,19 @@ body {
     }
 }
 
+//Блоки при добавлении имущества в форме вноса-выноса имущества
+.equipment-block {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.equipment-block div {
+    flex: 1;
+    margin-right: 10px;
+}
+
 
 
 
