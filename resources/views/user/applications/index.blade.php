@@ -270,13 +270,32 @@
 
                             <button type="button" id="addEquipmentBtn" class="btn btn-primary">Добавить</button>
 
-                            <input type="hidden" id="equipmentCounter" name="equipmentCounter" value="{{ old('equipmentCounter') ?? 1 }}">
-                            @if(old('equipmentData'))
-                                @foreach(old('equipmentData') as $index => $data)
-                                    <input type="hidden" name="equipmentData[{{$index}}][name]" value="{{ $data['name'] }}">
-                                    <input type="hidden" name="equipmentData[{{$index}}][quantity]" value="{{ $data['quantity'] }}">
-                                @endforeach
-                            @endif
+                            <input type="hidden" id="equipmentCounter" name="equipmentCounter"
+                                   value="{{ old('equipmentCounter') ?? 1 }}">
+
+                            <div id="equipmentList">
+                                @if(old('equipment_name_1'))
+                                    @for($i = 1; old('equipment_name_' . $i) !== null; $i++)
+                                        <div class="equipment-block">
+                                            <div>
+                                                <label for="equipment_name_{{ $i }}">Название:</label>
+                                                <input type="text" class="form-control" name="equipment_name[]"
+                                                       value="{{ old('equipment_name_' . $i) }}" readonly>
+                                            </div>
+                                            <div>
+                                                <label for="equipment_quantity_{{ $i }}">Количество:</label>
+                                                <input type="number" class="form-control" name="equipment_quantity[]"
+                                                       value="{{ old('equipment_quantity_' . $i) }}" readonly>
+                                            </div>
+                                            <button type="button" class="delete-btn" data-block-id="{{ $i }}">&times;
+                                            </button>
+                                        </div>
+                                    @endfor
+                                @endif
+                            </div>
+
+                            <input type="hidden" id="hiddenEquipmentData" name="hiddenEquipmentData"
+                                   value="{{old('hiddenEquipmentData')}}">
 
                             <div id="equipmentModal" class="modal fade" tabindex="-1" role="dialog">
                                 <div class="modal-dialog" role="document">
@@ -308,27 +327,6 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div id="equipmentList">
-                                @if(old('equipmentData'))
-                                    @foreach(old('equipmentData') as $index => $data)
-                                        <div class="equipment-block">
-                                            <div>
-                                                <label for="equipment_name_{{ $index }}">Название:</label>
-                                                <input type="text" class="form-control" name="equipment_name[]" value="{{ $data['name'] }}" readonly>
-                                            </div>
-                                            <div>
-                                                <label for="equipment_quantity_{{ $index }}">Количество:</label>
-                                                <input type="number" class="form-control" name="equipment_quantity[]" value="{{ $data['quantity'] }}" readonly>
-                                            </div>
-                                            <button type="button" class="delete-btn" data-block-id="{{ $index }}">&times;</button>
-                                        </div>
-                                    @endforeach
-                                @endif
-                            </div>
-                            <input type="hidden" id="hiddenEquipmentData" name="hiddenEquipmentData"
-                                   value="{{old('hiddenEquipmentData')}}">
-
 
                             <x-form-item>
                                 <x-label required for="purpose">{{__('Цель:')}}
