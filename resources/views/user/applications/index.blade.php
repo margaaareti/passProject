@@ -276,19 +276,24 @@
                             <div id="equipmentList">
                                 @if(old('equipment_name_1'))
                                     @for($i = 1; old('equipment_name_' . $i) !== null; $i++)
-                                        <div class="equipment-block">
-                                            <div>
-                                                <label for="equipment_name_{{ $i }}">Название:</label>
-                                                <input type="text" class="form-control" name="equipment_name[]"
+                                        <div class="equipment-block row">
+                                            <div class="col-md-8">
+                                                <label for="equipment_name_{{ $i }}">Имущество/оборудование:</label>
+                                                <input type="text" class="form-control" name="equipment_name_{{$i}}"
                                                        value="{{ old('equipment_name_' . $i) }}" readonly>
                                             </div>
-                                            <div>
-                                                <label for="equipment_quantity_{{ $i }}">Количество:</label>
-                                                <input type="number" class="form-control" name="equipment_quantity[]"
+                                            <div class="col-md-3">
+                                                <label for="equipment_quantity_{{ $i }}">Количество(шт.):</label>
+                                                <input type="number" class="form-control"
+                                                       name="equipment_quantity_{{$i}}"
                                                        value="{{ old('equipment_quantity_' . $i) }}" readonly>
                                             </div>
-                                            <button type="button" class="delete-btn" data-block-id="{{ $i }}">&times;
-                                            </button>
+                                            <div class="col-md-1 mb-4">
+                                                <button type="button"
+                                                        class="btn btn-danger delete-btn delete-equipment-button"
+                                                        data-block-id="${equipmentCounter}">&times;
+                                                </button>
+                                            </div>
                                         </div>
                                     @endfor
                                 @endif
@@ -319,8 +324,12 @@
                                                      style="display: none;">
                                                     Пожалуйста, заполните все поля.
                                                 </div>
-                                                <button type="button" class="btn btn-primary" id="addEquipmentModalBtn">
+                                                <button type="button" class="btn btn-success"
+                                                        id="addEquipmentModalBtn">
                                                     Добавить
+                                                </button>
+                                                <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal">
+                                                    Закрыть
                                                 </button>
                                             </div>
                                         </div>
@@ -481,7 +490,8 @@
             const equipmentListContainer = document.getElementById('equipmentList');
             const form = document.getElementById('form3');
 
-            let equipmentCounter = 1; // Счетчик для уникальных идентификаторов
+            // Получаем текущее значение equipmentCounter из old данных
+            let equipmentCounter = parseInt("{{ old('equipmentCounter') ?? 1 }}");
 
             addEquipmentBtn.addEventListener('click', function () {
                 hideWarning();
@@ -495,18 +505,21 @@
                 if (name && quantity) {
                     // Создаем новый блок с информацией об оборудовании
                     const equipmentBlock = document.createElement('div');
-                    equipmentBlock.classList.add('equipment-block');
+                    equipmentBlock.classList.add('equipment-block', 'row', 'mb-2'); // Добавлены классы Bootstrap
                     equipmentBlock.innerHTML = `
-                <div>
-                    <label for="equipment_${equipmentCounter}">Название:</label>
-                    <input type="text" class="form-control" name="equipment_name_${equipmentCounter}" value="${name}" readonly>
-                </div>
-                <div>
-                    <label for="quantity_${equipmentCounter}">Количество:</label>
-                    <input type="number" class="form-control" name="equipment_quantity_${equipmentCounter}" value="${quantity}" readonly>
-                </div>
-                <button type="button" class="delete-btn" data-block-id="${equipmentCounter}">&times;</button>
-            `;
+                    <div class="col-md-7">
+                        <label for="equipment_name_${equipmentCounter}">Имущество/оборудование:</label>
+                        <input type="text" class="form-control" name="equipment_name_${equipmentCounter}" value="${name}" readonly>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="equipment_quantity_${equipmentCounter}">Количество(шт.):</label>
+                        <input type="number" class="form-control" name="equipment_quantity_${equipmentCounter}" value="${quantity}" readonly>
+                    </div>
+                    <div class="col-md-1 mt-4">
+                        <button type="button" class="btn btn-danger delete-btn delete-equipment-button" data-block-id="${equipmentCounter}">&times;</button>
+                    </div>
+                `;
+
 
                     // Добавляем обработчик события для кнопки удаления
                     const deleteBtn = equipmentBlock.querySelector('.delete-btn');
@@ -521,11 +534,14 @@
                     equipmentNameInput.value = '';
                     equipmentQuantityInput.value = '';
 
-                    // Закрываем модальное окно
-                    equipmentModal.hide();
+                    // // Закрываем модальное окно
+                    // equipmentModal.hide();
 
                     // Увеличиваем счетчик
                     equipmentCounter++;
+
+                    // Обновляем значение equipmentCounter в скрытом поле
+                    document.getElementById('equipmentCounter').value = equipmentCounter;
                 } else {
                     showWarning();
                 }
@@ -550,6 +566,22 @@
             form.addEventListener('keydown', function (e) {
                 if (e.key === 'Enter') {
                     e.preventDefault();
+                }
+            });
+
+            // Добавляем обработчик события для кнопки удаления внутри каждого блока
+            equipmentListContainer.addEventListener('click', function (event) {
+                const deleteBtn = event.target.closest('.delete-btn');
+                if (deleteBtn) {
+                    const equipmentBlock = deleteBtn.closest('.equipment-block');
+                    if (equipmentBlock) {
+                        equipmentBlock.remove();
+                    }
+
+                    // Обновляем значение equipmentCounter в скрытом поле
+                    const remainingBlocks = equipmentListContainer.querySelectorAll('.equipment-block').length;
+                    equipmentCounter = remainingBlocks + 1; // Увеличиваем на 1, так как счет начинается с 1
+                    document.getElementById('equipmentCounter').value = equipmentCounter;
                 }
             });
         });
