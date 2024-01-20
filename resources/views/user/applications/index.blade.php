@@ -288,7 +288,7 @@
                                                        name="equipment_quantity_{{$i}}"
                                                        value="{{ old('equipment_quantity_' . $i) }}" readonly>
                                             </div>
-                                            <div class="col-md-1 mb-4">
+                                            <div class="col-md-1 mt-4">
                                                 <button type="button"
                                                         class="btn btn-danger delete-btn delete-equipment-button"
                                                         data-block-id="${equipmentCounter}">&times;

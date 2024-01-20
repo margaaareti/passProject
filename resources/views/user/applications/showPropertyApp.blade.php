@@ -54,12 +54,22 @@
                         <p class="card-body__text">
                             <strong>Ответственный:</strong> {{$application->responsible_person}}</p>
 
+                        @if($application->properties)
+                            <p class="card-body__text"><strong>Оборудование:</strong></p>
+                            <ul>
+                                @foreach($application->properties as $property)
+                                    <li>{{ $property->name }} - {{ $property->quantity }} шт.</li>
+                                @endforeach
+                            </ul>
+                        @endif
+
                     </div>
                 </div>
             </div>
         </div>
 
     </div>
+
 
 @endsection
 

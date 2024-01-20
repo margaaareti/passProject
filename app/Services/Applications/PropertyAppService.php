@@ -29,8 +29,25 @@ class PropertyAppService extends AppService
         $data['application_type'] = 'Внос/Вынос';
 //      $data['equipment'] = preg_split("/[\n,]+/", str_replace("\r\n", "\n", $data['equipment']));
 
+        $propertiesList = [];
+        $counter = 1;
+
+        while (isset($data["equipment_name_$counter"])) {
+            $name = $data["equipment_name_$counter"];
+            $quantity = $data["equipment_quantity_$counter"];
+
+            // Добавляем данные в массив
+            $propertiesList[] = [
+                'name' => $name,
+                'quantity' => $quantity,
+            ];
+
+            $counter++;
+        }
+
+
         try {
-            return $this->propertyAppRepository->create($data);
+            return $this->propertyAppRepository->create($data, $propertiesList);
         } catch (\Exception $e) {
             Log::error('Error sending data Repository: ' . $e->getMessage());
             return $e->getMessage();

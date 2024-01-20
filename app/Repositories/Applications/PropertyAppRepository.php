@@ -3,6 +3,7 @@
 namespace App\Repositories\Applications;
 
 use App\Models\PeopleApplication;
+use App\Models\Property;
 use App\Models\PropertyApplication;
 use App\Repositories\AppRepository;
 use App\Services\Applications\PropertyAppService;
@@ -17,13 +18,17 @@ class PropertyAppRepository extends AppRepository
     /**
      * @throws DdException
      */
-    public function create(array $data)
+    public function create(array $data, array $propertiesList)
     {
 
         $data = $this->GetApplicationCommonData($data);
 
+
         try {
             $newPropertyApplication = $this->propertyAppModel->create($data);
+
+            $newPropertyApplication->properties()->createMany($propertiesList);
+
         } catch (\Exception $e) {
             Log::error('Error sending data to Database: ' . $e->getMessage());
             return $e->getMessage();
@@ -41,7 +46,7 @@ class PropertyAppRepository extends AppRepository
     //Получаем конкретную заявку
     public function getApplication($id): PropertyApplication
     {
-        $userId=Auth::id();
+        $userId = Auth::id();
         return $this->propertyAppModel->where('user_id', $userId)->where('id', $id)->first();
     }
 }
