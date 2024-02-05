@@ -23,12 +23,27 @@ class PropertyAppRepository extends AppRepository
 
         $data = $this->GetApplicationCommonData($data);
 
-
         try {
+
             $newPropertyApplication = $this->propertyAppModel->create($data);
 
             $newPropertyApplication->properties()->createMany($propertiesList);
 
+        } catch (\Exception $e) {
+            Log::error('Error sending data to Database: ' . $e->getMessage());
+            return $e->getMessage();
+        }
+
+        try {
+            if (isset($data['property-in-date'])) {
+                $data['property-in-date'] = $this->formatDate($data['property-in-date']);
+            }
+
+            if (isset($data['property-out-date'])) {
+                $data['property-out-date'] = $this->formatDate($data['property-out-date']);
+            }
+
+            $this->propertyAppSheets->create($data);
         } catch (\Exception $e) {
             Log::error('Error sending data to Database: ' . $e->getMessage());
             return $e->getMessage();

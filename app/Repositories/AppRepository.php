@@ -11,6 +11,7 @@ use App\Models\PropertyApplication;
 use App\Repositories\GoogleSheetsRepository\ApplicationsSheets;
 use App\Repositories\GoogleSheetsRepository\CarAppSheets;
 use App\Repositories\GoogleSheetsRepository\GuestAppSheets;
+use App\Repositories\GoogleSheetsRepository\PropertyAppSheets;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -27,6 +28,8 @@ class AppRepository
     protected GuestAppSheets $guestAppSheets;
     protected CarAppSheets $carAppSheets;
 
+    protected PropertyAppSheets $propertyAppSheets;
+
 
 
     public function __construct(
@@ -34,7 +37,8 @@ class AppRepository
         CarApplication $carAppModel,
         PropertyApplication $propertyAppModel,
         GuestAppSheets $guestAppSheets,
-        CarAppSheets $carAppSheets
+        CarAppSheets $carAppSheets,
+        PropertyAppSheets $propertyAppSheets,
     ) {
         $this->date = date('d.m.Y');
         $this->peopleAppModel = $peopleAppModel;
@@ -43,6 +47,7 @@ class AppRepository
 
         $this->guestAppSheets = $guestAppSheets;
         $this->carAppSheets = $carAppSheets;
+        $this->propertyAppSheets = $propertyAppSheets;
     }
 
 

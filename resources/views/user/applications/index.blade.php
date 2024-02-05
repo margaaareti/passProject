@@ -261,14 +261,14 @@
                             <x-form-item class="mb-1 mt-1">
                                 <x-label for="equipment">{{__('Имущество/оборудованиe')}}:
                                 </x-label>
-                                <x-textarea name="equipment" id="equipment" rows="4"
-                                            cols="40"
-                                            class="equipment-field @error('equipment') is-invalid @enderror">{{old('equipment')}}
-                                </x-textarea>
-                                <x-error name="equipment"/>
+{{--                                <x-textarea name="equipment" id="equipment" rows="4"--}}
+{{--                                            cols="40"--}}
+{{--                                            class="equipment-field @error('equipment') is-invalid @enderror">{{old('equipment')}}--}}
+{{--                                </x-textarea>--}}
+{{--                                <x-error name="equipment"/>--}}
                             </x-form-item>
 
-                            <button type="button" id="addEquipmentBtn" class="btn btn-primary">Добавить</button>
+                            <button type="button" id="addEquipmentBtn" class="btn btn-primary mb-2">Добавить +</button>
 
                             <input type="hidden" id="equipmentCounter" name="equipmentCounter"
                                    value="{{ old('equipmentCounter') ?? 1 }}">
@@ -277,12 +277,12 @@
                                 @if(old('equipment_name_1'))
                                     @for($i = 1; old('equipment_name_' . $i) !== null; $i++)
                                         <div class="equipment-block row">
-                                            <div class="col-md-8">
+                                            <div class="col-md-9">
                                                 <label for="equipment_name_{{ $i }}">Имущество/оборудование:</label>
                                                 <input type="text" class="form-control" name="equipment_name_{{$i}}"
                                                        value="{{ old('equipment_name_' . $i) }}" readonly>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-2">
                                                 <label for="equipment_quantity_{{ $i }}">Количество(шт.):</label>
                                                 <input type="number" class="form-control"
                                                        name="equipment_quantity_{{$i}}"
@@ -507,11 +507,11 @@
                     const equipmentBlock = document.createElement('div');
                     equipmentBlock.classList.add('equipment-block', 'row', 'mb-2'); // Добавлены классы Bootstrap
                     equipmentBlock.innerHTML = `
-                    <div class="col-md-7">
+                    <div class="col-md-9">
                         <label for="equipment_name_${equipmentCounter}">Имущество/оборудование:</label>
                         <input type="text" class="form-control" name="equipment_name_${equipmentCounter}" value="${name}" readonly>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-2">
                         <label for="equipment_quantity_${equipmentCounter}">Количество(шт.):</label>
                         <input type="number" class="form-control" name="equipment_quantity_${equipmentCounter}" value="${quantity}" readonly>
                     </div>
@@ -554,6 +554,7 @@
                 equipmentQuantityInput.value = '';
             });
 
+
             function showWarning() {
                 modalWarning.style.display = 'block';
             }
@@ -561,6 +562,15 @@
             function hideWarning() {
                 modalWarning.style.display = 'none';
             }
+
+            equipmentNameInput.addEventListener('input', function () {
+                hideWarning();
+            });
+
+            equipmentQuantityInput.addEventListener('input', function () {
+                hideWarning();
+            });
+
 
             // Добавьте следующий код, чтобы блокировать отправку формы при нажатии Enter
             form.addEventListener('keydown', function (e) {

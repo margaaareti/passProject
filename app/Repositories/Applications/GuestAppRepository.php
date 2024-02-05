@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Log;
 
 class GuestAppRepository extends AppRepository
 {
-
     public function create(array $data)
     {
         $data = $this->GetApplicationCommonData($data);

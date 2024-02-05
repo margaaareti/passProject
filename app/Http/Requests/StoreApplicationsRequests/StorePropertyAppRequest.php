@@ -31,7 +31,6 @@ class StorePropertyAppRequest extends FormRequest
             'rooms' => ['nullable','string'],
             'purpose' => ['required', 'string', 'max:150'],
             'contract_number' => ['nullable', 'string', 'max:150'],
-            'equipment' => ['required','string', 'max:250'],
             'responsible_person' => ['required'],
             'phone_number' => ['required', 'string', 'regex:/^8-[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}$/', 'starts_with:8'],
             'additional_info' => ['nullable','max:300'],

@@ -11,12 +11,7 @@ use Illuminate\Support\Facades\Log;
 class PropertyAppService extends AppService
 {
 
-    protected PropertyAppRepository $propertyAppRepository;
-
-    public function __construct(PropertyAppRepository $propertyAppRepository)
-    {
-        $this->propertyAppRepository = $propertyAppRepository;
-    }
+    public function __construct(protected PropertyAppRepository $propertyAppRepository){}
 
     public function create(array $data)
     {
@@ -52,6 +47,8 @@ class PropertyAppService extends AppService
             Log::error('Error sending data Repository: ' . $e->getMessage());
             return $e->getMessage();
         }
+
+
     }
 
     public function fetchAllApplications(): Collection
@@ -60,7 +57,6 @@ class PropertyAppService extends AppService
         return $this->propertyAppRepository->getAllApplications();
 
     }
-
 
     public function fetchApplication($id): PropertyApplication
     {

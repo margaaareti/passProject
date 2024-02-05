@@ -11,13 +11,8 @@ use Illuminate\Support\Facades\Log;
 
 class CarAppService extends AppService
 {
-
-    protected CarAppRepository $carAppRepository;
-
-    public function __construct(CarAppRepository $carAppRepository)
-    {
-        $this->carAppRepository = $carAppRepository;
-    }
+    public function __construct( protected CarAppRepository $carAppRepository)
+    {}
 
     public function create(array $data)
     {
@@ -49,9 +44,7 @@ class CarAppService extends AppService
 
     public function fetchAllCarApplications(): Collection
     {
-
         return $data = $this->carAppRepository->getAllCarApplications();
-
     }
 
     public function fetchCarApplication($id): CarApplication

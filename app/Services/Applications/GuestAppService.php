@@ -11,13 +11,8 @@ use Illuminate\Support\Facades\Log;
 
 class GuestAppService extends AppService
 {
-
-    protected GuestAppRepository $guestAppRepository;
-
-    public function __construct(GuestAppRepository $guestAppRepository)
-    {
-        $this->guestAppRepository = $guestAppRepository;
-    }
+    public function __construct(protected GuestAppRepository $guestAppRepository)
+    {}
 
     public function create(array $data)
     {

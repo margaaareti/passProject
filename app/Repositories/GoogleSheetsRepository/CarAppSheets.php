@@ -2,9 +2,6 @@
 
 namespace App\Repositories\GoogleSheetsRepository;
 
-
-
-
 class CarAppSheets extends ApplicationsSheets
 
 {
