@@ -12,6 +12,42 @@
 
     </x-common.nav-buttons>
 
+    <!-- Модальное окно с полями добавления имущества в заявке на внос/вынос -->
+    <div id="equipmentModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Добавить Имущество/оборудование</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="equipmentForm">
+                        <div class="form-group">
+                            <label for="equipmentName">Название:</label>
+                            <input type="text" class="form-control" id="equipmentName">
+                        </div>
+                        <div class="form-group">
+                            <label for="equipmentQuantity">Количество:</label>
+                            <input type="number" class="form-control" id="equipmentQuantity">
+                        </div>
+                        <div id="modalWarning" class="alert alert-danger mt-2"
+                             style="display: none;">
+                            Пожалуйста, заполните все поля.
+                        </div>
+                        <button type="button" class="btn btn-success"
+                                id="addEquipmentModalBtn">
+                            Добавить
+                        </button>
+                        <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal">
+                            Закрыть
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <div class="container">
         <div class="row justify-content-center">
@@ -99,18 +135,6 @@
 
                                     <x-common.common-form-items :user="$user" :objects="$objectsForInvitation">
 
-                                        <x-form-item class="mb-1 mt-1">
-                                            <input type="checkbox" name="guestEquipment-show"
-                                                   class="questEquipment-checkbox" {{ old('guestEquipment-show') ? 'checked' : '' }}>
-                                            <x-label for="equipment">{{__('Имущество/оборудование')}}:
-                                            </x-label>
-                                            <x-textarea name="equipment" id="guestEquipment" rows="4"
-                                                        cols="40"
-                                                        class="equipment-field @error('equipment') is-invalid @enderror">{{old('equipment')}}
-                                            </x-textarea>
-                                            <x-error name="guestEquipment-show"/>
-                                        </x-form-item>
-
                                         <x-form-item>
                                             <x-label required for="guests">{{__('ФИО гостей:')}}
                                                 <x-icon title="ФИО каждого гостя с новой строки">
@@ -125,6 +149,18 @@
                                             @error('guests')
                                             <x-error :message="$message"></x-error>
                                             @enderror
+                                        </x-form-item>
+
+                                        <x-form-item class="mb-1 mt-1">
+                                            <input type="checkbox" name="guestEquipment-show"
+                                                   class="questEquipment-checkbox" {{ old('guestEquipment-show') ? 'checked' : '' }}>
+                                            <x-label for="equipment">{{__('Имущество/оборудование')}}:
+                                            </x-label>
+                                            <x-textarea name="equipment" id="guestEquipment" rows="4"
+                                                        cols="40"
+                                                        class="equipment-field @error('equipment') is-invalid @enderror">{{old('equipment')}}
+                                            </x-textarea>
+                                            <x-error name="guestEquipment-show"/>
                                         </x-form-item>
 
                                         <x-common.common-person-info :user="$user">
@@ -302,40 +338,6 @@
                             <input type="hidden" id="hiddenEquipmentData" name="hiddenEquipmentData"
                                    value="{{old('hiddenEquipmentData')}}">
 
-                            <div id="equipmentModal" class="modal fade" tabindex="-1" role="dialog">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">Добавить Имущество/оборудование</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div id="equipmentForm">
-                                                <div class="form-group">
-                                                    <label for="equipmentName">Название:</label>
-                                                    <input type="text" class="form-control" id="equipmentName">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="equipmentQuantity">Количество:</label>
-                                                    <input type="number" class="form-control" id="equipmentQuantity">
-                                                </div>
-                                                <div id="modalWarning" class="alert alert-danger mt-2"
-                                                     style="display: none;">
-                                                    Пожалуйста, заполните все поля.
-                                                </div>
-                                                <button type="button" class="btn btn-success"
-                                                        id="addEquipmentModalBtn">
-                                                    Добавить
-                                                </button>
-                                                <button type="button" class="btn btn-danger btn-secondary" data-bs-dismiss="modal">
-                                                    Закрыть
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
                             <x-form-item>
                                 <x-label required for="purpose">{{__('Цель:')}}

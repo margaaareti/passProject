@@ -47,6 +47,8 @@ class StoreGuestAppRequest extends FormRequest
             'department' => 'Поле "Подразделение" может содержать только буквы',
             'guests.regex' => 'Поле "ФИО гостя" может содержать только буквы',
             'phone_number.regex' => 'Телефон должен быть формата 8-XXX-XXX-XX-XX',
+            'responsible_person.required' => 'ФИО ответственного лица обязательны!',
+            'phone_number.required' => 'Контактные данные ответственного лица обязательны!',
         ];
     }
 }

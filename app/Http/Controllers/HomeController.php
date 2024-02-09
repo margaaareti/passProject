@@ -10,21 +10,11 @@ use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
-    protected GuestAppService $guestAppService;
-    protected CarAppService $carAppService;
-    protected PropertyAppService $propertyAppService;
-
     public function __construct(
-        GuestAppService $guestAppService,
-        CarAppService $carAppService,
-        PropertyAppService $propertyAppService,
-    )
-    {
-        $this->guestAppService = $guestAppService;
-        $this->carAppService = $carAppService;
-        $this->propertyAppService = $propertyAppService;
-
-    }
+        protected GuestAppService $guestAppService,
+        protected CarAppService $carAppService,
+        protected PropertyAppService $propertyAppService,
+    ){}
 
     public function index()
     {

@@ -93,5 +93,4 @@ class PropertyAppSheets extends ApplicationsSheets
             return $e->getMessage();
         }
     }
-
 }

@@ -20,7 +20,7 @@
         @foreach($objects as $object => $text)
             <option class="select-option" value="{{ $object }}"
             @if($multiple)
-                {{ in_array($object, $oldValue) ? 'selected' : '' }}
+                {{ in_array($object, old('object', [])) ? 'selected' : '' }}
                 @else
                 {{ $object == $oldValue ? 'selected' : '' }}
                 @endif

@@ -4,7 +4,7 @@
 <form {{$attributes}}>
     @csrf
     @if ($errors->any())
-        <div class="alert alert-danger pb-0">
+        <div class="alert alert-danger pb-0" data-form="common">
             <ul>
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>

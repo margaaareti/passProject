@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreApplicationsRequests\StoreGuestAppRequest;
 use App\Jobs\EmailNotificationsJobs\Guests\SendAddNewGuestNotification;
 use App\Models\PeopleApplication;
+use App\Models\User;
 use App\Services\Applications\CarAppService;
 use App\Services\Applications\GuestAppService;
 use Illuminate\Http\JsonResponse;
@@ -15,16 +16,11 @@ use Illuminate\Support\Facades\Log;
 
 class GuestAppController extends Controller
 {
-
-    protected GuestAppService $guestAppService;
-    protected CarAppService $carAppService;
-
-    public function __construct(GuestAppService $guestAppService, CarAppService $carAppService)
+    public function __construct(
+        protected GuestAppService $guestAppService,
+        protected CarAppService $carAppService)
     {
         $this->middleware('custom.throttle')->only('store');
-        $this->guestAppService = $guestAppService;
-        $this->carAppService = $carAppService;
-
     }
 
 
@@ -33,11 +29,8 @@ class GuestAppController extends Controller
         //
     }
 
-
     public function store(StoreGuestAppRequest $request)
     {
-
-
         $limitExceeded = checkRequestLimit($request, 5);
         if ($limitExceeded) {
             return $limitExceeded;

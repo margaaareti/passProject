@@ -2,22 +2,15 @@
 
 namespace App\Repositories\Applications;
 
-use App\Models\PeopleApplication;
-use App\Models\Property;
 use App\Models\PropertyApplication;
 use App\Repositories\AppRepository;
-use App\Services\Applications\PropertyAppService;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Laravel\Octane\Exceptions\DdException;
 
 class PropertyAppRepository extends AppRepository
 {
 
-    /**
-     * @throws DdException
-     */
     public function create(array $data, array $propertiesList)
     {
 
