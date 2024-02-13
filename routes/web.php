@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminControllers\AdminController;
 use App\Http\Controllers\ApplicationControllers\CarAppController;
 use App\Http\Controllers\ApplicationControllers\GuestAppController;
 use App\Http\Controllers\ApplicationControllers\PropertyAppController;
@@ -26,8 +27,6 @@ Route::get('/', function () {
 
 Auth::routes(['verify' => true]);
 
-
-
 Route::prefix('/home')->middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/card', [HomeController::class, 'email']);
@@ -53,4 +52,9 @@ Route::prefix('/home')->middleware(['auth', 'verified'])->group(function () {
 
 });
 
+Route::prefix('/admin')->middleware(['auth','verified'])->group(function () {
+    Route::get("/show-applications", [AdminController::class, 'showAllApplications'])->name('admin.app.showAllApp');
+//    Route::get("/show-application/{id}", [AdminController::class, 'showApplication'])->name('admin.app.showApp');
+//    Route::post("/show-applications", [AdminController::class, 'approveApplication'])->name('admin.app.showApp');
+});
 
