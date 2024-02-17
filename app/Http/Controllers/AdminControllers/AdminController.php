@@ -7,6 +7,8 @@ use App\Models\CarApplication;
 use App\Models\PeopleApplication;
 use App\Models\PropertyApplication;
 use App\Modules\Admin\AdminPanelService;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -25,11 +27,33 @@ class AdminController extends Controller
             'car' => CarApplication::findOrFail($id),
             'property' => PropertyApplication::findOrFail($id),
             'people' => PeopleApplication::findOrFail($id),
-            default => abort(404), // Если тип модели неправильный, выведите ошибку 404
         };
+
+        if (!$application) {
+            abort(404);
+        }
+
+        $application->viewed=true;
+        $application->save();
 
         // Здесь вы можете передать данные в представление и отобразить их
         return view('admin.showApp', compact('application'));
+    }
+
+
+    public function approveApplication(Request $request, AdminPanelService $adminPanelService)
+    {
+        $user= Auth::user();
+
+        if(!$user){
+            abort(404)
+;        }
+
+        $data = $request->all();
+        unset($data['_token']);
+
+       $data = $adminPanelService->proccessData($data)->run();
+       dd($data);
 
     }
 

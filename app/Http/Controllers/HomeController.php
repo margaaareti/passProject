@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Services\Applications\CarAppService;
 use App\Services\Applications\GuestAppService;
 use App\Services\Applications\PropertyAppService;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller

@@ -56,7 +56,7 @@ class PropertyApplication extends Model
 
     public function getType():string
     {
-        return "people";
+        return "property";
     }
 
 

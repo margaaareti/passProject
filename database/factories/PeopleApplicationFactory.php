@@ -20,6 +20,7 @@ class PeopleApplicationFactory extends Factory
         return [
             'user_id' => 1,
             'signed_by' => $this->faker->name,
+            'application_number'=>'21.01.2023/4',
             'start_date' => $this->faker->date,
             'end_date' => $this->faker->date,
             'object' => $this->faker->word,
@@ -30,7 +31,8 @@ class PeopleApplicationFactory extends Factory
             'guests_count' => $this->faker->numberBetween(1, 10),
             'responsible_person' => $this->faker->name,
             'phone_number' => $this->faker->phoneNumber,
-            'additional_info' => $this->faker->text(300)
+            'additional_info' => $this->faker->text(300),
+            'viewed'=>false
 
         ];
     }

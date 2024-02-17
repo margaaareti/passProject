@@ -50,6 +50,20 @@
                                 </td>
                             </tr>
 
+{{--                        <div>--}}
+{{--                            @foreach($application->guests as $guest)--}}
+{{--                                <p>{{$guest->name}}</p>--}}
+{{--                            @endforeach--}}
+{{--                        </div>--}}
+
+                        <form action="{{route('admin.app.approveApp', $application->id)}}}" method="post">
+                            @csrf
+
+                            <input type="hidden" name="id" value="{{$application->id}}">
+                            <input type="hidden" name="type" value="{{$application->getType()}}">
+
+                            <button type="submit">Согласовать</button>
+                        </form>
                     </table>
                 </div>
         </div>

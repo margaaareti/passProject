@@ -10,6 +10,7 @@
 
                 <div class="table-responsive">
                     <table class="table">
+                        <button onclick="window.location.reload();">Обновить страницу</button>
                         <tr>
                             <th>ID заявки</th>
                             <th>Тип Заявки</th>
@@ -23,8 +24,8 @@
                             <th></th>
                         <tr>
                         @foreach($applications as $application)
-{{--                            <p>{{$application->user['name']}}</p>--}}
-                            <tr>
+                            {{--                            <p>{{$application->user['name']}}</p>--}}
+                            <tr @if(!$application->viewed) style="font-weight: bold" @endif>
                                 <td class="text-center">{{$application->id}}</td>
                                 <td>{{$application->application_type}}</td>
                                 <td class="text-center">{{$application->user->department}}</td>
@@ -53,8 +54,8 @@
                                     </a>
                                 </td>
                             </tr>
-
                         @endforeach
+
                     </table>
                 </div>
             @endif
