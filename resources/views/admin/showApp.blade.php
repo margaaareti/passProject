@@ -3,9 +3,6 @@
 @section('content')
     <section>
         <div class="container">
-            @if($applications->isEmpty())
-                Нет ни одной записи
-            @else
                 <h4>Все заявки</h4>
 
                 <div class="table-responsive">
@@ -22,7 +19,6 @@
                             <th>Контактный номер</th>
                             <th></th>
                         <tr>
-                        @foreach($applications as $application)
 {{--                            <p>{{$application->user['name']}}</p>--}}
                             <tr>
                                 <td class="text-center">{{$application->id}}</td>
@@ -41,7 +37,7 @@
                                 <td>{{$application->responsible_person}}</td>
                                 <td>{{$application->phone_number}}</td>
                                 <td>
-                                    <a href="{{route('admin.app.showApp', ['type'=>$application->getType(), 'id'=>$application->id])}}">
+                                    <a href="">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                              fill="currentColor"
                                              class="bi bi-eye" viewBox="0 0 16 16">
@@ -54,12 +50,10 @@
                                 </td>
                             </tr>
 
-                        @endforeach
                     </table>
                 </div>
-            @endif
         </div>
     </section>
 @endsection
 
-
+{{--{{route('admin.app.showApp', $application->id)}}--}}

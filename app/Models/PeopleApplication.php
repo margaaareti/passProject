@@ -27,6 +27,8 @@ class PeopleApplication extends Model
         'equipment',
         'phone_number',
         'responsible_person',
+        'approved_by',
+        'viewed'
 
     ];
 
@@ -43,6 +45,21 @@ class PeopleApplication extends Model
     public function guests(): BelongsToMany
     {
         return $this->belongsToMany(Guest::class, 'form_guests');
+    }
+
+    public function getName():string
+    {
+        return "Заявка на проход посетителей №";
+    }
+
+    public function getUrl():string
+    {
+        return "showGuestApp";
+    }
+
+    public function getType():string
+    {
+        return "people";
     }
 
 }

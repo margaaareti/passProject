@@ -24,6 +24,8 @@ class CarApplication extends Model
         'equipment',
         'phone_number',
         'responsible_person',
+        'approved_by',
+        'viewed'
     ];
 
     protected $casts = [
@@ -38,6 +40,21 @@ class CarApplication extends Model
     public function cars(): BelongsToMany
     {
         return $this->belongsToMany(Car::class, 'form_cars');
+    }
+
+    public function getName():string
+    {
+        return "Заявка на въезд автотранспорта №";
+    }
+
+    public function getUrl():string
+    {
+        return "showCarApp";
+    }
+
+    public function getType():string
+    {
+        return "car";
     }
 
 }

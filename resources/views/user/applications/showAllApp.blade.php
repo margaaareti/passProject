@@ -18,23 +18,10 @@
                 @forelse($applications as $application)
                     <div class="card-container__item">
                         <div class="card h-100">
-
-                            @if($application['application_type'] === 'Проход')
                                 <div class="card__header card-header text-center">
                                     <a class="card-header__link"
-                                       href="{{route('user.app.showGuestApp', $application->id)}}">{{ __('Заявка на проход посетителей №')}} {{$application->id}}</a>
+                                       href="{{route('user.app.' . $application->getUrl(), $application->id)}}">{{ __($application->getName())}} {{$application->id}}</a>
                                 </div>
-                            @elseif($application['application_type'] === 'Въезд')
-                                <div class="card__header card-header text-center">
-                                    <a class="card-header__link"
-                                       href="{{route('user.app.showCarApp', $application->id)}}">{{ __('Заявка на въезд автотранспорта №')}} {{$application->id}}</a>
-                                </div>
-                            @elseif($application['application_type'] === 'Внос/Вынос')
-                                <div class="card__header card-header text-center">
-                                    <a class="card-header__link"
-                                       href="{{route('user.app.showPropertyApp', $application->id)}}">{{ __('Заявка на Внос/Вынос имущества №')}} {{$application->id}}</a>
-                                </div>
-                            @endif
 
                             <div class="card__body card-body">
 

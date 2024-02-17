@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('application_number')->nullable("");
             $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
             $table->boolean('is_approved')->default(false);
+            $table->foreignId('approved_by')->nullable()->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
             $table->date('property-in-date')->nullable();
             $table->date('property-out-date')->nullable();
             $table->string('signed_by')->nullable(false);
@@ -31,6 +32,7 @@ return new class extends Migration
             $table->string('responsible_person')->nullable(false);
             $table->string('phone_number')->nullable(false);
             $table->string('additional_info', 300)->nullable();
+            $table->boolean('viewed')->default(false);
         });
     }
 

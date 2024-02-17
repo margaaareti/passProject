@@ -42,8 +42,8 @@ Route::prefix('/home')->middleware(['auth', 'verified'])->group(function () {
     Route::post("/car-application", [CarAppController::class, 'store'])->name('carCreate');
     Route::get("/car-applications/{id}", [CarAppController::class, 'showApp'])->name('user.app.showCarApp');
 
-    Route::post("/property-application", [PropertyAppController::class,'store'])->name('property.app.create');
-    Route::get("/property-application/{id}", [PropertyAppController::class,'showApp'])->name('user.app.showPropertyApp');
+    Route::post("/property-application", [PropertyAppController::class, 'store'])->name('property.app.create');
+    Route::get("/property-application/{id}", [PropertyAppController::class, 'showApp'])->name('user.app.showPropertyApp');
 
 
     Route::get('/hello', function () {
@@ -52,9 +52,9 @@ Route::prefix('/home')->middleware(['auth', 'verified'])->group(function () {
 
 });
 
-Route::prefix('/admin')->middleware(['auth','verified'])->group(function () {
+Route::prefix('/admin')->middleware(['auth', 'verified'])->group(function () {
     Route::get("/show-applications", [AdminController::class, 'showAllApplications'])->name('admin.app.showAllApp');
-//    Route::get("/show-application/{id}", [AdminController::class, 'showApplication'])->name('admin.app.showApp');
+    Route::get("/show-application/{type}/{id}", [AdminController::class, 'showApplication'])->name('admin.app.showApp');
 //    Route::post("/show-applications", [AdminController::class, 'approveApplication'])->name('admin.app.showApp');
 });
 

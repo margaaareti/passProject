@@ -25,6 +25,8 @@ class PropertyApplication extends Model
         'equipment',
         'phone_number',
         'responsible_person',
+        'approved_by',
+        'viewed'
     ];
 
     protected $casts = [
@@ -41,5 +43,21 @@ class PropertyApplication extends Model
     {
         return $this->hasMany(Property::class);
     }
+
+    public function getName():string
+    {
+        return "Заявка на внос/вынос имущества №";
+    }
+
+    public function getUrl():string
+    {
+        return "showPropertyApp";
+    }
+
+    public function getType():string
+    {
+        return "people";
+    }
+
 
 }
