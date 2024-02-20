@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\AdminControllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\CarApplication;
-use App\Models\PeopleApplication;
-use App\Models\PropertyApplication;
+
 use App\Modules\Admin\AdminPanelService;
+use App\Modules\Admin\ModelExtractor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,11 +22,7 @@ class AdminController extends Controller
 
     public function showApplication($type,$id)
     {
-        $application = match ($type) {
-            'car' => CarApplication::findOrFail($id),
-            'property' => PropertyApplication::findOrFail($id),
-            'people' => PeopleApplication::findOrFail($id),
-        };
+        $application = ModelExtractor::getModel($type,$id);
 
         if (!$application) {
             abort(404);

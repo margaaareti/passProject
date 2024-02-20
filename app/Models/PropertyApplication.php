@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
-class PropertyApplication extends Model
+class PropertyApplication extends Application
 {
     use HasFactory;
 
@@ -44,6 +45,13 @@ class PropertyApplication extends Model
         return $this->hasMany(Property::class);
     }
 
+    public function application(): MorphOne
+    {
+        return $this->morphOne(Application::class, 'applicationable');
+    }
+
+
+
     public function getName():string
     {
         return "Заявка на внос/вынос имущества №";
@@ -56,7 +64,7 @@ class PropertyApplication extends Model
 
     public function getType():string
     {
-        return "property";
+        return "properties";
     }
 
 

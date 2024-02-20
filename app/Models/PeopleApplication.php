@@ -3,11 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
-class PeopleApplication extends Model
+class PeopleApplication extends Application
 {
     use HasFactory;
 
@@ -47,6 +47,11 @@ class PeopleApplication extends Model
         return $this->belongsToMany(Guest::class, 'form_guests');
     }
 
+    public function application(): MorphOne
+    {
+        return $this->morphOne(Application::class, 'applicationable');
+    }
+
     public function getName():string
     {
         return "Заявка на проход посетителей №";
@@ -59,7 +64,7 @@ class PeopleApplication extends Model
 
     public function getType():string
     {
-        return "people";
+        return "guests";
     }
 
 }

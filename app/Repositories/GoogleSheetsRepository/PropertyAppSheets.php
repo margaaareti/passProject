@@ -22,8 +22,6 @@ class PropertyAppSheets extends ApplicationsSheets
         $equipmentList = '';
         $counter = 1;
 
-
-
         while (isset($data["equipment_name_$counter"])) {
             // Получаем название имущества и его количество
             $itemName = $data["equipment_name_$counter"];
