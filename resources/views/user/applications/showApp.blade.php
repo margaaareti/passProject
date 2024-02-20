@@ -12,7 +12,7 @@
         <div class="card-container">
             <div class="card-container__item">
                 <div class="card h-100">
-                    @if($application->guests)
+                    @if($application->applicationable->guests)
                         <x-title class="card__header card-header text-center">
                             <h1 class="card-header__title guest-title">{{ __('Заявка на проход посетителей №')}} {{$application->id}}</h1>
                         </x-title>
@@ -53,10 +53,10 @@
                         @endif
                         <p class="card-body__text"><strong>Ответственный:</strong> {{$application->responsible_person}}</p>
 
-                        @if($application->guests)
+                        @if($application->applicationable->guests)
 
                             <div id="vueApp">
-                                <vue-app data-application-id="{{$application->id}}" data-application-created="{{ $application->created_at }}"></vue-app>
+                                <vue-app data-application-id="{{$application->applicationable->id}}" data-application-created="{{ $application->created_at }}"></vue-app>
                             </div>
 
                                 @elseif($application->cars)

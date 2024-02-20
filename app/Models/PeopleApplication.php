@@ -67,4 +67,14 @@ class PeopleApplication extends Application
         return "guests";
     }
 
+    public function getApplicationType(): string
+    {
+        return $this->getMorphClass();
+    }
+
+    public function getApplicationId(): int
+    {
+        return $this->id;
+    }
+
 }

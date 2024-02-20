@@ -20,7 +20,7 @@
                         <div class="card h-100">
                                 <div class="card__header card-header text-center">
                                     <a class="card-header__link"
-                                       href="{{route('user.app.' . $application->getUrl(), $application->id)}}">{{ __($application->getName())}} {{$application->id}}</a>
+                                       href="{{route('user.app.' . $application->applicationable->getUrl(), $application->id)}}">{{ __($application->applicationable->getName())}} {{$application->id}}</a>
                                 </div>
 
                             <div class="card__body card-body">
@@ -62,13 +62,13 @@
                                     <p class="card-body__text">Цель: {{$application->purpose}}</p>
                                     <p class="card-body__text">Ответственный: {{$application->responsible_person}}</p>
                                 @endif
-                                @if ($application->guests)
+                                @if ($application->applicationable->guests)
                                     <p class="card-body__text">Количество лиц, указанных в
                                         заявке: {{$application->guests_count}}</p>
 
                                     <ul class="card-body__list guest-list">
-                                        @php $guestCount = count($application->guests); @endphp <!-- Считаем количество гостей -->
-                                        @foreach ($application->guests as $index => $guest)
+                                        @php $guestCount = count($application->applicationable->guests); @endphp <!-- Считаем количество гостей -->
+                                        @foreach ($application->applicationable->guests as $index => $guest)
                                             <li class="card-body__text @if($index >= 2) hidden @endif">{{ $guest->name }}</li>
                                             <!-- Показываем всех гостей -->
                                         @endforeach

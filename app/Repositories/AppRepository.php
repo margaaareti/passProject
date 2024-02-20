@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Jobs\EmailNotificationsJobs\Cars\SendNewCarApplicationNotification;
 use App\Jobs\EmailNotificationsJobs\Guests\SendAddNewGuestNotification;
+use App\Models\Application;
 use App\Models\CarApplication;
 use App\Models\Counter;
 use App\Models\PeopleApplication;
@@ -12,6 +13,7 @@ use App\Repositories\GoogleSheetsRepository\ApplicationsSheets;
 use App\Repositories\GoogleSheetsRepository\CarAppSheets;
 use App\Repositories\GoogleSheetsRepository\GuestAppSheets;
 use App\Repositories\GoogleSheetsRepository\PropertyAppSheets;
+use Google\Service\AdMob\App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -24,6 +26,7 @@ class AppRepository
     protected PeopleApplication $peopleAppModel;
     protected CarApplication $carAppModel;
     protected PropertyApplication $propertyAppModel;
+    protected Application $application;
 
     protected GuestAppSheets $guestAppSheets;
     protected CarAppSheets $carAppSheets;
@@ -36,11 +39,14 @@ class AppRepository
         PeopleApplication $peopleAppModel,
         CarApplication $carAppModel,
         PropertyApplication $propertyAppModel,
+        Application $application,
         GuestAppSheets $guestAppSheets,
         CarAppSheets $carAppSheets,
         PropertyAppSheets $propertyAppSheets,
+
     ) {
         $this->date = date('d.m.Y');
+        $this->application = $application;
         $this->peopleAppModel = $peopleAppModel;
         $this->carAppModel = $carAppModel;
         $this->propertyAppModel=$propertyAppModel;

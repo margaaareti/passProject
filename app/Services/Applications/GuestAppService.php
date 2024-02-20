@@ -2,6 +2,7 @@
 
 namespace App\Services\Applications;
 
+use App\Models\Application;
 use App\Models\PeopleApplication;
 use App\Repositories\Applications\GuestAppRepository;
 use App\Services\AppService;
@@ -41,7 +42,7 @@ class GuestAppService extends AppService
 
     }
 
-    public function fetchApplication($id): PeopleApplication
+    public function fetchApplication($id): Application
     {
         $id = (int)$id;
         return $this->guestAppRepository->getApplication($id);

@@ -4,6 +4,7 @@ namespace App\Repositories\Applications;
 
 
 use App\Jobs\EmailNotificationsJobs\Guests\SendNewGuestApplicationNotification;
+use App\Models\Application;
 use App\Models\Guest;
 use App\Models\PeopleApplication;
 use App\Repositories\AppRepository;
@@ -19,16 +20,25 @@ class GuestAppRepository extends AppRepository
         $data = $this->GetApplicationCommonData($data);
 
         try {
-            $newPeopleApplication = $this->peopleAppModel->create($data);
+
+            // Создание записи в таблице PeopleApplications
+            $newPeopleApplication = $this->peopleAppModel->create([
+                'rooms' => $data['rooms'], // Пример индивидуального поля
+                'guests_count' => $data['guests_count'], // Пример индивидуального поля
+                // Добавьте остальные индивидуальные поля заявки PeopleApplication
+            ]);
 
             foreach ($data['guests'] as $guest_name) {
-
                 $guest = new Guest(['name' => $guest_name]);
-
                 $guest->save();
-
                 $newPeopleApplication->guests()->attach($guest->id);
             }
+
+            // Создание записи в общей таблице заявок
+            $newApplication = Application::create(array_merge($data,[
+                'applicationable_type' => $newPeopleApplication->getApplicationType(),
+                'applicationable_id' => $newPeopleApplication->getApplicationId(),
+            ]));
 
         } catch (\Exception $e) {
             Log::error('Error sending data to Database: ' . $e->getMessage());
@@ -53,7 +63,7 @@ class GuestAppRepository extends AppRepository
             return $e->getMessage();
         }
 
-        return $newPeopleApplication->id;
+        return $newApplication->id;
 
     }
 
@@ -62,13 +72,14 @@ class GuestAppRepository extends AppRepository
     public function getAllApplications(): Collection
     {
         $userId = Auth::id();
-        return $this->peopleAppModel->with('guests')->where('user_id', $userId)->get();
+        $applications = $this->application->with('applicationable.guests')->where('user_id', $userId)->get();
+        return $applications;
     }
 
     //Получаем конкретную заявку
-    public function getApplication($id): PeopleApplication
+    public function getApplication($id): Application
     {
         $userId = Auth::id();
-        return $this->peopleAppModel->where('user_id', $userId)->where('id', $id)->first();
+        return $this->application->where('user_id', $userId)->where('id', $id)->first();
     }
 }
