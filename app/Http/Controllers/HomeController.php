@@ -2,17 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\Applications\CarAppService;
-use App\Services\Applications\GuestAppService;
-use App\Services\Applications\PropertyAppService;
+use App\Services\AppService;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
     public function __construct(
-        protected GuestAppService $guestAppService,
-        protected CarAppService $carAppService,
-        protected PropertyAppService $propertyAppService,
+        protected AppService $appService
     ){}
 
     public function index()
@@ -58,13 +54,7 @@ class HomeController extends Controller
     public function showAllApplications()
     {
         $user = Auth::user();
-        $guestApplications = $this->guestAppService->fetchAllApplications();
-        $carApplications = $this->carAppService->fetchAllCarApplications();
-        $propertyApplications = $this->propertyAppService->fetchAllApplications();
-
-
-        $applications = $guestApplications->concat($carApplications)->concat($propertyApplications)->sortByDesc('created_at');
-
+        $applications = $this->appService->fetchAllApplications();
 
         return view('user.applications.showAllApp', compact('user', 'applications'));
     }

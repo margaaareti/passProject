@@ -2,10 +2,10 @@
 
 namespace App\Services\Applications;
 
-use App\Models\CarApplication;
+use App\Models\Application;
+
 use App\Repositories\Applications\CarAppRepository;
 use App\Services\AppService;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Log;
 
 
@@ -39,17 +39,11 @@ class CarAppService extends AppService
             Log::error('Error sending data Repository: ' . $e->getMessage());
             return $e->getMessage();
         }
-
     }
 
-    public function fetchAllCarApplications(): Collection
-    {
-        return $data = $this->carAppRepository->getAllCarApplications();
-    }
-
-    public function fetchCarApplication($id): CarApplication
+    public function fetchCarApplication($id): Application
     {
         $id = (int)$id;
-        return $this->carAppRepository->getCarApplication($id);
+        return $this->carAppRepository->getApplication($id);
     }
 }

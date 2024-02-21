@@ -13,22 +13,8 @@ class PeopleApplication extends Application
 
     protected $fillable = [
 
-        'name',
-        'user_id',
-        'application_number',
-        'application_type',
-        'is_approved',
-        'signed_by',
-        'start_date', 'end_date',
-        'object', 'purpose',
         'rooms',
         'guests_count',
-        'contract_number',
-        'equipment',
-        'phone_number',
-        'responsible_person',
-        'approved_by',
-        'viewed'
 
     ];
 

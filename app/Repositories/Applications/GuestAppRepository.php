@@ -6,10 +6,7 @@ namespace App\Repositories\Applications;
 use App\Jobs\EmailNotificationsJobs\Guests\SendNewGuestApplicationNotification;
 use App\Models\Application;
 use App\Models\Guest;
-use App\Models\PeopleApplication;
 use App\Repositories\AppRepository;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 
@@ -21,11 +18,9 @@ class GuestAppRepository extends AppRepository
 
         try {
 
-            // Создание записи в таблице PeopleApplications
             $newPeopleApplication = $this->peopleAppModel->create([
-                'rooms' => $data['rooms'], // Пример индивидуального поля
-                'guests_count' => $data['guests_count'], // Пример индивидуального поля
-                // Добавьте остальные индивидуальные поля заявки PeopleApplication
+                'rooms' => $data['rooms'],
+                'guests_count' => $data['guests_count'],
             ]);
 
             foreach ($data['guests'] as $guest_name) {
@@ -46,8 +41,8 @@ class GuestAppRepository extends AppRepository
         }
 
         try {
-            $data['start_date'] = $this->formatDate($data['start_date']);
-            $data['end_date'] = $this->formatDate($data['end_date']);
+            $data['start_date'] = formatDate($data['start_date']);
+            $data['end_date'] = formatDate($data['end_date']);
 
             $this->guestAppSheets->create($data);
 
@@ -62,24 +57,7 @@ class GuestAppRepository extends AppRepository
             Log::error('Error sending data to Google Sheets: ' . $e->getMessage());
             return $e->getMessage();
         }
-
         return $newApplication->id;
-
     }
 
-
-    //Получаем коллецию заявок пользователя
-    public function getAllApplications(): Collection
-    {
-        $userId = Auth::id();
-        $applications = $this->application->with('applicationable.guests')->where('user_id', $userId)->get();
-        return $applications;
-    }
-
-    //Получаем конкретную заявку
-    public function getApplication($id): Application
-    {
-        $userId = Auth::id();
-        return $this->application->where('user_id', $userId)->where('id', $id)->first();
-    }
 }

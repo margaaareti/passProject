@@ -2,8 +2,15 @@
 
 namespace App\Services;
 
+use App\Models\Application;
+use App\Repositories\AppRepository;
+use Illuminate\Database\Eloquent\Collection;
+
 class AppService
 {
+
+    public function __construct(public AppRepository $appRepository)
+    {}
 
     protected function processCommonData(array $data): array
     {
@@ -30,5 +37,11 @@ class AppService
 
         return $data;
     }
+
+    public function fetchAllApplications(): Collection
+    {
+        return $data = $this->appRepository->getAllApplications();
+    }
+
 
 }

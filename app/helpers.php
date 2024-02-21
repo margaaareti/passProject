@@ -30,3 +30,13 @@ if(!function_exists('checkRequestLimit')) {
         $request->session()->put('lastRequestTime_' . $token, $currentTime);
     }
 }
+
+if(!function_exists('formatDate')) {
+
+    function formatDate($data, $outputFormat = 'd.m.Y'): string
+    {
+        return date_format(date_create($data), $outputFormat);
+    }
+}
+
+

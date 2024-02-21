@@ -22,7 +22,6 @@ class PropertyAppService extends AppService
         }
 
         $data['application_type'] = 'Внос/Вынос';
-//      $data['equipment'] = preg_split("/[\n,]+/", str_replace("\r\n", "\n", $data['equipment']));
 
         $propertiesList = [];
         $counter = 1;

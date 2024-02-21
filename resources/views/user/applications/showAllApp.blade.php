@@ -20,7 +20,7 @@
                         <div class="card h-100">
                                 <div class="card__header card-header text-center">
                                     <a class="card-header__link"
-                                       href="{{route('user.app.' . $application->applicationable->getUrl(), $application->id)}}">{{ __($application->applicationable->getName())}} {{$application->id}}</a>
+                                       href="{{route('user.app.' . $application->applicationable->getUrl(), $application->id)}}">{{ __($application->applicationable->getName())}} {{$application->applicationable->getApplicationId()}}</a>
                                 </div>
 
                             <div class="card__body card-body">
@@ -64,7 +64,7 @@
                                 @endif
                                 @if ($application->applicationable->guests)
                                     <p class="card-body__text">Количество лиц, указанных в
-                                        заявке: {{$application->guests_count}}</p>
+                                        заявке: {{$application->applicationable->guests_count}}</p>
 
                                     <ul class="card-body__list guest-list">
                                         @php $guestCount = count($application->applicationable->guests); @endphp <!-- Считаем количество гостей -->
@@ -80,12 +80,12 @@
                                         </button>
                                     @endif
 
-                                @elseif ($application->cars)
+                                @elseif ($application->applicationable->cars)
                                     <p class="card-body__text">Количество авто, указанных в
-                                        заявке: {{$application->cars_count}}</p>
+                                        заявке: {{$application->applicationable->cars_count}}</p>
                                     <ul class="card-body__list car-list">
-                                        @php $carsCount = count($application->cars); @endphp <!-- Считаем количество авто -->
-                                        @foreach ($application->cars as $index => $car)
+                                        @php $carsCount = count($application->applicationable->cars); @endphp <!-- Считаем количество авто -->
+                                        @foreach ($application->applicationable->cars as $index => $car)
                                             <li class="card-body__text @if($index >= 2) hidden @endif">{{ $car->number }}</li>
                                         @endforeach
                                         @if($carsCount > 2)

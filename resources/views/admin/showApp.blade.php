@@ -60,7 +60,6 @@
                             @csrf
 
                             <input type="hidden" name="id" value="{{$application->id}}">
-                            <input type="hidden" name="type" value="{{$application->getType()}}">
 
                             <button type="submit">Согласовать</button>
                         </form>

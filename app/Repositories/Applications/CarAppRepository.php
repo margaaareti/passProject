@@ -2,11 +2,7 @@
 
 namespace App\Repositories\Applications;
 
-
-use App\Models\CarApplication;
 use App\Repositories\AppRepository;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 
@@ -38,17 +34,4 @@ class CarAppRepository extends AppRepository
         return $newCarApplication->id;
     }
 
-
-   public function getAllCarApplications(): Collection
-    {
-        $userId = Auth::id();
-        return $this->carAppModel->with('cars')->where('user_id', $userId)->get();
-    }
-
-    //Получаем конкретную заявку
-    public function getCarApplication($id): CarApplication
-    {
-        $userId = Auth::id();
-        return $this->carAppModel->where('user_id', $userId)->where('id', $id)->first();
-    }
 }

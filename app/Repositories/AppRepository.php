@@ -13,53 +13,35 @@ use App\Repositories\GoogleSheetsRepository\ApplicationsSheets;
 use App\Repositories\GoogleSheetsRepository\CarAppSheets;
 use App\Repositories\GoogleSheetsRepository\GuestAppSheets;
 use App\Repositories\GoogleSheetsRepository\PropertyAppSheets;
-use Google\Service\AdMob\App;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Laravel\Octane\Exceptions\DdException;
 
 class AppRepository
 {
     protected string $date;
 
-    protected PeopleApplication $peopleAppModel;
-    protected CarApplication $carAppModel;
-    protected PropertyApplication $propertyAppModel;
-    protected Application $application;
-
-    protected GuestAppSheets $guestAppSheets;
-    protected CarAppSheets $carAppSheets;
-
-    protected PropertyAppSheets $propertyAppSheets;
-
-
-
     public function __construct(
-        PeopleApplication $peopleAppModel,
-        CarApplication $carAppModel,
-        PropertyApplication $propertyAppModel,
-        Application $application,
-        GuestAppSheets $guestAppSheets,
-        CarAppSheets $carAppSheets,
-        PropertyAppSheets $propertyAppSheets,
+         protected PeopleApplication $peopleAppModel,
+         protected CarApplication $carAppModel,
+         protected PropertyApplication $propertyAppModel,
+         protected Application $application,
+         protected GuestAppSheets $guestAppSheets,
+         protected CarAppSheets $carAppSheets,
+         protected PropertyAppSheets $propertyAppSheets,
 
     ) {
         $this->date = date('d.m.Y');
-        $this->application = $application;
-        $this->peopleAppModel = $peopleAppModel;
-        $this->carAppModel = $carAppModel;
-        $this->propertyAppModel=$propertyAppModel;
-
-        $this->guestAppSheets = $guestAppSheets;
-        $this->carAppSheets = $carAppSheets;
-        $this->propertyAppSheets = $propertyAppSheets;
     }
 
 
     protected function createApplication(array $data, Model $appModel, string $relationshipKey, string $relationshipModel)
     {
-        $newApplication = $appModel->create($data);
+
+        $newCarApplication = $appModel->create([
+            'cars_count' => $data['cars_count']
+        ]);
 
         foreach ($data[$relationshipKey] as $car_number) {
 
@@ -69,10 +51,13 @@ class AppRepository
 
             $model->save();
 
-            $newApplication->{$relationshipKey}()->attach($model->id);
+            $newCarApplication->{$relationshipKey}()->attach($model->id);
         }
 
-        return $newApplication;
+        return Application::create(array_merge($data,[
+            'applicationable_type'=> $newCarApplication ->getApplicationType(),
+            'applicationable_id' => $newCarApplication->getApplicationId(),
+        ]));
     }
 
     protected function createAdditionalData(array $data, ApplicationsSheets $appSheets)
@@ -95,24 +80,17 @@ class AppRepository
         }
     }
 
-    public function formatDate($date, $outputFormat = 'd.m.Y'): string
-    {
-        return date_format(date_create($date), $outputFormat);
-    }
-
     protected function formatDates(array $data, $outputFormat = 'd.m.Y'): array
     {
-        $data['start_date'] = $this->formatDate($data['start_date'], $outputFormat);
-        $data['end_date'] = $this->formatDate($data['end_date'], $outputFormat);
+        $data['start_date'] = date_format(date_create($data['start_date']), $outputFormat);
+        $data['end_date'] = date_format(date_create($data['end_date']), $outputFormat);
 
         return $data;
     }
 
     public function GetApplicationCommonData(array $data): array {
 
-        $lastCarRecord = $this->carAppModel->latest()->first();
-        $lastPeopleRecord = $this->peopleAppModel->latest()->first();
-        $lastPropertyRecord = $this->propertyAppModel->latest()->first();
+        $lastRecord = $this->application->latest()->first();
 
         //Получаем значение счетчика из базы данных
         $counter = Counter::first();
@@ -121,11 +99,8 @@ class AppRepository
             $counter->save();
         }
 
-
         if (
-            ($lastCarRecord && $lastCarRecord->created_at->format('d.m.Y') == $this->date) ||
-            ($lastPeopleRecord && $lastPeopleRecord->created_at->format('d.m.Y') == $this->date) ||
-            ($lastPropertyRecord && $lastPropertyRecord->created_at->format('d.m.Y') == $this->date)
+            ($lastRecord && $lastRecord->created_at->format('d.m.Y') == $this->date)
         ) {
             $counter->increment('value');
         } else {
@@ -152,6 +127,18 @@ class AppRepository
         $data['user_isu'] = auth()->user()->isu_number;
 
         return $data;
+    }
+
+    public function getApplication($id): Application
+    {
+        $userId = Auth::id();
+        return $this->application->where('user_id', $userId)->where('id', $id)->first();
+    }
+
+    public function getAllApplications(): Collection
+    {
+        $userId = Auth::id();
+        return $this->application->where('user_id', $userId)->get();
     }
 
 }

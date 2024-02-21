@@ -26,8 +26,18 @@ class Application extends Model
         'viewed'
     ];
 
+    protected $casts = [
+        'is_approved' => 'boolean',
+    ];
+
     public function applicationable():MorphTo
     {
         return $this->morphTo();
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }

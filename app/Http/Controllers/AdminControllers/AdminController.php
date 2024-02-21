@@ -4,6 +4,7 @@ namespace App\Http\Controllers\AdminControllers;
 
 use App\Http\Controllers\Controller;
 
+use App\Models\Application;
 use App\Modules\Admin\AdminPanelService;
 use App\Modules\Admin\ModelExtractor;
 use Illuminate\Http\Request;
@@ -22,7 +23,7 @@ class AdminController extends Controller
 
     public function showApplication($type,$id)
     {
-        $application = ModelExtractor::getModel($type,$id);
+        $application = Application::findOrFail($id);
 
         if (!$application) {
             abort(404);
@@ -44,10 +45,10 @@ class AdminController extends Controller
             abort(404)
 ;        }
 
-        $data = $request->all();
-        unset($data['_token']);
+        $applicationId = $request->input('id');
 
-       $data = $adminPanelService->proccessData($data)->run();
+
+       $data = $adminPanelService->proccessData($applicationId)->run();
        dd($data);
 
     }

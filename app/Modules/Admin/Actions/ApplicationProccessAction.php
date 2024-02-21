@@ -2,14 +2,14 @@
 
 namespace App\Modules\Admin\Actions;
 
-use App\Modules\Admin\ModelExtractor;
+use App\Models\Application;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
 class ApplicationProccessAction
 {
-    public function __construct(public array $applicationData)
+    public function __construct(public int $applicationId)
     {
     }
 
@@ -19,72 +19,68 @@ class ApplicationProccessAction
         $admin = Auth::user();
         $adminId = $admin->id;
 
-        $application = ModelExtractor::getModel($this->applicationData['type'], $this->applicationData['id']);
+        $application = Application::findOrFail($this->applicationId);
 
-        if($application) {
-            $application->approved_by = $adminId;
-            $application->is_approved = true;
-            $application->save();
-        }
+        $application->update([
+            'approved_by' => $adminId,
+            'is_approved' => true
+        ]);
 
-        $applicationArray = $application->toArray(); // Преобразуем данные приложения в массив
+        $relatedModel = $application->applicationable;
 
-// Получаем гостей приложения и преобразуем их в массив
+        // Получаем гостей приложения и преобразуем их в массив
         $itemArray = [];
-        foreach ($application->{$application->getType()} as $item) {
-            $itemsArray[] = $item->toArray();
+        $applicationType = $application->application_type;
+
+        if ($relatedModel) {
+            $itemName = $application->application_type === 'Въезд' ? "number" : "name";
+            $itemArray = collect($relatedModel->{$application->applicationable->getType()})->pluck($itemName)->toArray();
         }
 
-        $departmentData = $application->user->department;
+        $data = array_merge($application->toArray(), [
+            'guests' => $applicationType === 'Проход' ? implode("\n", $itemArray) : '',
+            'cars' => $applicationType === 'Въезд' ? implode("\n", $itemArray) : '',
+            'equipment' => $applicationType === 'Внос/Вынос' ? implode("\n", $itemArray) : '',
+        ]);
 
         $itemName = $application->application_type === 'Въезд' ? "number" : "name";
 
         $applicationType = $application->application_type;
 
-        if ($applicationType === 'Проход') {
-            $data = array_merge($applicationArray, ['guests' => $itemArray]);
-            $data['guests'] = implode("\n", array_column($itemsArray, $itemName));
-            $data['cars'] = '';
-        } else if ($applicationType === 'Въезд') {
-            $data = array_merge($applicationArray, ['cars' => $itemArray]);
-            $data['cars'] = implode("\n", array_column($itemsArray, $itemName));
-            $data['guests'] = '';
-        } else if ($applicationType === 'Внос/Вынос') {
-            $data = array_merge($applicationArray, ['equipment' => $itemArray]);
-            $data['equipment'] = implode("\n", array_column($itemsArray, $itemName));
-            $data['guests'] = '';
-            $data['cars'] = '';
-            if (isset($data['property-in-date']) && isset($data['property-out-date'])) {
+        $keysToDelete = ['id', 'created_at', 'updated_at', 'user_id', 'is_approved', 'approved_by', 'viewed'];
+        $data = array_diff_key($data, array_flip($keysToDelete));
+
+        $data['department'] = $application->user->department;
+        $data['start_date'] = date_format(date_create($data['start_date']), 'd.m.Y');
+        $data['end_date'] = date_format(date_create($data['end_date']), 'd.m.Y');
+        $data['time_range'] = $data['time_range'] ?? '';
+        $data['contract_number'] = $data['contract_number'] ?? '';
+
+
+        if ($applicationType === 'Внос/Вынос') {
+            if (isset($data['property-in-date'], $data['property-out-date'])) {
                 $data['start_date'] = $data['property-in-date'];
                 $data['end_date'] = $data['property-out-date'];
-                $data['object'] = ['object_in'=>$data['object_in'], 'object_out'=>$data['object_out']];
+                $data['object'] = [
+                    'object_in' => $data['object_in'],
+                    'object_out' => $data['object_out']
+                ];
                 unset($data['property-in-date'], $data['property-out-date']);
             } elseif (isset($data['property-out-date'])) {
                 $data['start_date'] = $data['property-out-date'];
                 $data['end_date'] = $data['property-out-date'];
-                $data['object'] = ['object_out'=>$data['object_out']];
+                $data['object'] = [
+                    'object_out' => $data['object_out']
+                ];
                 unset($data['property-out-date']);
             } elseif (isset($data['property-in-date'])) {
                 $data['start_date'] = $data['property-in-date'];
                 $data['end_date'] = $data['property-in-date'];
-                $data['object'] = ['object_in'=>$data['object_in']];
+                $data['object'] = [
+                    'object_in' => $data['object_in']
+                ];
                 unset($data['property-in-date']);
             }
-        }
-
-        if(!isset($data['contract_number'])) {
-            $data['contract_number'] = '';
-        }
-        $keyToDelete = ['id', 'created_at', 'updated_at', 'user_id', 'is_approved', 'approved_by', 'viewed'];
-        foreach ($keyToDelete as $key) {
-            unset($data[$key]);
-        }
-
-        $data['department'] = $departmentData;
-        $data['start_date'] = date_format(date_create($data['start_date']), 'd.m.Y');
-        $data['end_date'] = date_format(date_create($data['end_date']), 'd.m.Y');
-        if (!isset($data['time_range'])) {
-            $data['time_range'] = '';
         }
 
         return $array = [
@@ -94,10 +90,6 @@ class ApplicationProccessAction
         ];
     }
 
-    protected function getApplicationNumber(): string|null
-    {
-
-    }
 }
 
 

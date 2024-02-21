@@ -35,13 +35,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    public function peopleList(): HasMany
+    public function applications()
     {
-        return $this->hasMany(PeopleApplication::class);
-    }
-
-    public function carList(): HasMany
-    {
-        return $this->hasMany(CarApplication::class);
+        return $this->hasMany(Application::class);
     }
 }

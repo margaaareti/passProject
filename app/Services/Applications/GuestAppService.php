@@ -35,12 +35,6 @@ class GuestAppService extends AppService
 
     }
 
-    public function fetchAllApplications(): Collection
-    {
-
-        return $this->guestAppRepository->getAllApplications();
-
-    }
 
     public function fetchApplication($id): Application
     {

@@ -24,9 +24,8 @@
                             <th></th>
                         <tr>
                         @foreach($applications as $application)
-                            {{--                            <p>{{$application->user['name']}}</p>--}}
                             <tr @if(!$application->viewed) style="font-weight: bold" @endif>
-                                <td class="text-center">{{$application->id}}</td>
+                                <td class="text-center">{{$application->applicationable->id}}</td>
                                 <td>{{$application->application_type}}</td>
                                 <td class="text-center">{{$application->user->department}}</td>
                                 <td>{{$application->user['last_name']}} {{$application->user['name']}} {{$application->user['patronymic']}}</td>
@@ -42,7 +41,7 @@
                                 <td>{{$application->responsible_person}}</td>
                                 <td>{{$application->phone_number}}</td>
                                 <td>
-                                    <a href="{{route('admin.app.showApp', ['type'=>$application->getType(), 'id'=>$application->id])}}">
+                                    <a href="{{route('admin.app.showApp', ['type'=>$application->applicationable->getType(), 'id'=>$application->id])}}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                              fill="currentColor"
                                              class="bi bi-eye" viewBox="0 0 16 16">

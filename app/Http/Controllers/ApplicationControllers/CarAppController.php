@@ -72,7 +72,6 @@ class CarAppController extends Controller
 
     }
 
-
     public function showApp($id)
     {
         $user = Auth::user();
