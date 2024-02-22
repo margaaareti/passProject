@@ -2,6 +2,7 @@
 
 namespace App\Services\Applications;
 
+use App\Models\Application;
 use App\Models\PropertyApplication;
 use App\Repositories\Applications\PropertyAppRepository;
 use App\Services\AppService;
@@ -21,6 +22,19 @@ class PropertyAppService extends AppService
             unset($data[$key]);
         }
 
+        if ($data['property-in-date'] !== null && $data['property-out-date'] === null) {
+            $data['start_date'] = $data['property-in-date'];
+            $data['end_date'] = $data['property-in-date'];
+        } elseif ($data['property-out-date'] !== null && $data['property-in-date'] === null) {
+            $data['start_date'] = $data['property-out-date'];
+            $data['end_date'] = $data['property-out-date'];
+        } else {
+            $data['start_date'] = $data['property-in-date'] ;
+            $data['end_date'] = $data['property-out-date'];
+        }
+
+        unset($data['property-in-date'], $data['property-out-date']);
+
         $data['application_type'] = 'Внос/Вынос';
 
         $propertiesList = [];
@@ -39,7 +53,6 @@ class PropertyAppService extends AppService
             $counter++;
         }
 
-
         try {
             return $this->propertyAppRepository->create($data, $propertiesList);
         } catch (\Exception $e) {
@@ -47,17 +60,10 @@ class PropertyAppService extends AppService
             return $e->getMessage();
         }
 
-
     }
 
-    public function fetchAllApplications(): Collection
-    {
 
-        return $this->propertyAppRepository->getAllApplications();
-
-    }
-
-    public function fetchApplication($id): PropertyApplication
+    public function fetchApplication($id): Application
     {
         $id = (int)$id;
         return $this->propertyAppRepository->getApplication($id);

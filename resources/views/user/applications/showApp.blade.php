@@ -69,7 +69,6 @@
                                 <x-button class="card-body__button">
                                     + Добавить автомобиль
                                 </x-button>
-
                                 @endif
                             </div>
                     </div>

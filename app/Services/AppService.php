@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Models\Application;
 use App\Repositories\AppRepository;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -40,7 +39,7 @@ class AppService
 
     public function fetchAllApplications(): Collection
     {
-        return $data = $this->appRepository->getAllApplications();
+        return $this->appRepository->getAllApplications();
     }
 
 

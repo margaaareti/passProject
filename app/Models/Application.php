@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 class Application extends Model
 {
     protected $fillable = [
-
         'user_id',
         'application_number',
         'application_type',
@@ -17,6 +16,7 @@ class Application extends Model
         'is_approved', 'approved_by',
         'signed_by',
         'start_date', 'end_date',
+        'rooms',
         'object', 'purpose',
         'contract_number',
         'equipment',

@@ -251,7 +251,7 @@
                                             <x-label required for="property-in-date">{{__('Дата вноса:')}}</x-label>
                                             <x-input class="property-in-date" type="date" name="property-in-date"
                                                      id="end-date"
-                                                     value="{{ now()->format('Y-m-d') }}"/>
+                                                     value="{{now()->format('Y-m-d') }}"/>
                                             @error('start_date')
                                             <x-error :message="$message"></x-error>
                                             @enderror

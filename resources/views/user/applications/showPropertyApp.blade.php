@@ -35,29 +35,26 @@
 
                         <p class="card-body__text">
                             <strong>Отправлено:</strong> {{$application->created_at->format('H:i:s d.m.Y')}}</p>
-                        @if($application->object_in)
-                            <p class="card-body__text"><strong>Дата вноса:</strong>:  </strong>{{date_format(date_create($application->{'property-in-date'}),'d.m.Y') }}
+                        @if($application->applicationable->object_in)
+                            <p class="card-body__text"><strong>Дата вноса:</strong>  </strong>{{date_format(date_create($application->{'property-in-date'}),'d.m.Y') }}
                             </p>
-                            <p class="card-body__text"><strong>Локация:</strong>: {{$application->object_in}}
+                            <p class="card-body__text"><strong>Локация:</strong> {{$application->applicationable->object_in}}
                             </p>
                         @endif
-                        @if($application->object_out)
+                        @if($application->applicationable->object_out)
                             <p class="card-body__text"><strong>Дата вноса: </strong>{{date_format(date_create($application->{'property-out-date'}),'d.m.Y') }}
                             </p>
-                            <p class="card-body__text"><strong>Локация:</strong> {{$application->object_out}}</p>
+                            <p class="card-body__text"><strong>Локация:</strong> {{$application->applicationable->object_out}}</p>
                         @endif
                         <p class="card-body__text"><strong>Цель:</strong> {{$application->purpose}}</p>
-                        @if($application->equipment)
-                            <p class="card-body__text"><strong>Вносимое
-                                    оборудование:</strong> {{$application->equipment}}</p>
-                        @endif
+
                         <p class="card-body__text">
                             <strong>Ответственный:</strong> {{$application->responsible_person}}</p>
 
-                        @if($application->properties)
+                        @if($application->applicationable->properties)
                             <p class="card-body__text"><strong>Оборудование:</strong></p>
                             <ul>
-                                @foreach($application->properties as $property)
+                                @foreach($application->applicationable->properties as $property)
                                     <li>{{ $property->name }} - {{ $property->quantity }} шт.</li>
                                 @endforeach
                             </ul>
@@ -72,15 +69,3 @@
 
 
 @endsection
-
-{{--<p class="card-body__text"><strong>Количество лиц, указанных в--}}
-{{--        заявке:</strong> {{$application->guests_count}}</p>--}}
-{{--<div class="card-body__guest-block">--}}
-{{--    <ul class="card-body__list guest-list">--}}
-{{--        @foreach ($application->guests as $guest)--}}
-{{--            <li class="card-body__text">{{ $guest->name }}</li>--}}
-{{--        @endforeach--}}
-{{--    </ul>--}}
-{{--    <x-button class="card-body__button">--}}
-{{--        + Добавить гостя--}}
-{{--    </x-button>--}}

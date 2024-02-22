@@ -32,7 +32,6 @@ class GuestAppService extends AppService
             Log::error('Error sending data Repository: ' . $e->getMessage());
             return $e->getMessage();
         }
-
     }
 
 

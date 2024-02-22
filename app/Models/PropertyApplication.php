@@ -13,25 +13,11 @@ class PropertyApplication extends Application
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'user_id',
-        'application_number',
-        'application_type',
         'type',
-        'is_approved',
-        'signed_by',
-        'property-in-date', 'property-out-date',
-        'object_in','object_out', 'purpose',
-        'contract_number',
-        'equipment',
-        'phone_number',
-        'responsible_person',
-        'approved_by',
-        'viewed'
+        'object_in','object_out',
     ];
 
     protected $casts = [
-        'is_approved' => 'boolean',
     ];
 
 
@@ -67,5 +53,14 @@ class PropertyApplication extends Application
         return "properties";
     }
 
+    public function getApplicationType(): string
+    {
+        return $this->getMorphClass();
+    }
+
+    public function getApplicationId(): int
+    {
+        return $this->id;
+    }
 
 }

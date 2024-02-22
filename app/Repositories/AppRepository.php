@@ -129,7 +129,7 @@ class AppRepository
         return $data;
     }
 
-    public function getApplication($id): Application
+    public function getApplication($id): Application|null
     {
         $userId = Auth::id();
         return $this->application->where('user_id', $userId)->where('id', $id)->first();

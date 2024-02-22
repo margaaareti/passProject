@@ -2,10 +2,8 @@
 
 namespace App\Repositories\Applications;
 
-use App\Models\PropertyApplication;
+use App\Models\Application;
 use App\Repositories\AppRepository;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class PropertyAppRepository extends AppRepository
@@ -18,9 +16,19 @@ class PropertyAppRepository extends AppRepository
 
         try {
 
-            $newPropertyApplication = $this->propertyAppModel->create($data);
+            $newPropertyApplication = $this->propertyAppModel->create([
+                'type'=> $data['type'],
+                'object_in' => $data['object_in'] ?? null,
+                'object_out' => $data['object_out'] ?? null,
+            ]);
 
             $newPropertyApplication->properties()->createMany($propertiesList);
+
+            $newApplication = Application::create(array_merge($data, [
+                'object' => $data['object_in'] ?? $data['object_out'],
+                'applicationable_type' => $newPropertyApplication->getApplicationType(),
+                'applicationable_id' => $newPropertyApplication->getApplicationId(),
+            ]));
 
         } catch (\Exception $e) {
             Log::error('Error sending data to Database: ' . $e->getMessage());
@@ -28,33 +36,16 @@ class PropertyAppRepository extends AppRepository
         }
 
         try {
-            if (isset($data['property-in-date'])) {
-                $data['property-in-date'] = $this->formatDate($data['property-in-date']);
-            }
 
-            if (isset($data['property-out-date'])) {
-                $data['property-out-date'] = $this->formatDate($data['property-out-date']);
-            }
+            $data = $this->formatDates($data);
 
             $this->propertyAppSheets->create($data);
         } catch (\Exception $e) {
             Log::error('Error sending data to Database: ' . $e->getMessage());
             return $e->getMessage();
         }
-        return $newPropertyApplication->id;
+
+        return $newApplication->id;
     }
 
-
-    public function getAllApplications(): Collection
-    {
-        $userId = Auth::id();
-        return $this->propertyAppModel->where('user_id', $userId)->get();
-    }
-
-    //Получаем конкретную заявку
-    public function getApplication($id): PropertyApplication
-    {
-        $userId = Auth::id();
-        return $this->propertyAppModel->where('user_id', $userId)->where('id', $id)->first();
-    }
 }

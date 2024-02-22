@@ -18,10 +18,11 @@
                 @forelse($applications as $application)
                     <div class="card-container__item">
                         <div class="card h-100">
-                                <div class="card__header card-header text-center">
-                                    <a class="card-header__link"
-                                       href="{{route('user.app.' . $application->applicationable->getUrl(), $application->id)}}">{{ __($application->applicationable->getName())}} {{$application->applicationable->getApplicationId()}}</a>
-                                </div>
+
+                            <div class="card__header card-header text-center">
+                                <a class="card-header__link"
+                                   href="{{route('user.app.' . $application->applicationable->getUrl(), $application->id)}}">{{ __($application->applicationable->getName())}} {{$application->applicationable->getApplicationId()}}</a>
+                            </div>
 
                             <div class="card__body card-body">
 
@@ -38,18 +39,22 @@
                                 </div>
 
                                 <p class="card-body__text">
-                                    Отправлено: {{$application->created_at->format('H:i:s d.m.Y')}}</p>
+                                    Отправлено: {{$application->created_at->format('H:i:s d.m.Y')}}
+                                </p>
+
                                 @if($application['application_type'] === 'Внос/Вынос')
                                     <p class="card-body__text">Тип действия: {{$application->type}}</p>
-                                    @if($application['property-in-date'] || $application['object_in'] )
+                                    @if($application->applicationable->object_in)
                                         <p class="card-body__text">Дата
-                                            вноса: {{date_format(date_create($application->{'property-in-date'}),'d.m.Y')}}
-                                        <p class="card-body__text">Локация: {{$application->object_in}}</p>
+                                            вноса: {{date_format(date_create($application->start_date),'d.m.Y')}}
+                                        <p class="card-body__text">
+                                            Локация: {{$application->applicationable->object_in}}</p>
                                     @endif
-                                    @if($application['property-out-date'] || $application['object_out'])
+                                    @if($application->applicationable->object_out)
                                         <p class="card-body__text">Дата
-                                            выноса: {{date_format(date_create($application->{'property-out-date'}),'d.m.Y')}}
-                                        <p class="card-body__text">Локация: {{$application->object_out}}</p>
+                                            выноса: {{date_format(date_create($application->end_date),'d.m.Y')}}
+                                        <p class="card-body__text">
+                                            Локация: {{$application->applicationable->object_out}}</p>
                                     @endif
                                     <p class="card-body__text">Имущество: {{$application->equipment}}</p>
                                     <p class="card-body__text">Цель: {{$application->purpose}}</p>
@@ -62,6 +67,7 @@
                                     <p class="card-body__text">Цель: {{$application->purpose}}</p>
                                     <p class="card-body__text">Ответственный: {{$application->responsible_person}}</p>
                                 @endif
+
                                 @if ($application->applicationable->guests)
                                     <p class="card-body__text">Количество лиц, указанных в
                                         заявке: {{$application->applicationable->guests_count}}</p>
