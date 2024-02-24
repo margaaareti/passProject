@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Application;
 use App\Modules\Admin\AdminPanelService;
-use App\Modules\Admin\ModelExtractor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,7 +20,7 @@ class AdminController extends Controller
         return view('admin.showAllApp', compact('applications'));
     }
 
-    public function showApplication($type,$id)
+    public function showApplication($type, $id)
     {
         $application = Application::findOrFail($id);
 
@@ -29,7 +28,7 @@ class AdminController extends Controller
             abort(404);
         }
 
-        $application->viewed=true;
+        $application->viewed = true;
         $application->save();
 
         // Здесь вы можете передать данные в представление и отобразить их
@@ -39,17 +38,16 @@ class AdminController extends Controller
 
     public function approveApplication(Request $request, AdminPanelService $adminPanelService)
     {
-        $user= Auth::user();
+        $user = Auth::user();
 
-        if(!$user){
-            abort(404)
-;        }
+        if (!$user) {
+            abort(404);
+        }
 
         $applicationId = $request->input('id');
 
-
-       $data = $adminPanelService->proccessData($applicationId)->run();
-       dd($data);
+        $data = $adminPanelService->proccessData($applicationId)->run();
+        dd($data);
 
     }
 

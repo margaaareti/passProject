@@ -32,7 +32,7 @@ class AppRepository
          protected PropertyAppSheets $propertyAppSheets,
 
     ) {
-        $this->date = date('d.m.Y');
+        1;
     }
 
 
