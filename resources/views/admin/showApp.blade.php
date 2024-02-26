@@ -69,4 +69,3 @@
     </section>
 @endsection
 
-{{--{{route('admin.app.showApp', $application->id)}}--}}

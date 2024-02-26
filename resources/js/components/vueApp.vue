@@ -48,7 +48,6 @@
 import PostForm from "./UI/GuestForm.vue";
 import GuestList from "./UI/GuestList.vue";
 import axios from "axios";
-import MyInput from "@/components/UiElements/MyInput.vue";
 
 export default {
     name: "vue-app",
@@ -127,9 +126,15 @@ export default {
             const fullName = `${guest.surname} ${guest.name} ${guest.patronymic}`
 
             try {
-                const response = await axios.post(`/api/test/${this.applicationId}/add-guest`, {
+                const response = await axios.post(`/api/test/${this.applicationId}/add-guest`,
+                    {
                     fullName: fullName,
-                });
+                    },
+                    {
+                    // headers: {
+                    //     'X-CSRF-TOKEN': csrfToken,
+                    // }
+                },);
                 console.log(response)
                 this.guests.push(response.data); // Предполагаем, что сервер вернет нового гостя
                 // this.closeDialog();
@@ -156,7 +161,6 @@ export default {
                 (guest.surname && guest.surname.toLowerCase().startsWith(searchQueryLowerCase))
             );
         },
-
     }
 }
 </script>

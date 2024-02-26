@@ -4,7 +4,6 @@
             <slot></slot>
         </div>
     </div>
-
 </template>
 
 <script>

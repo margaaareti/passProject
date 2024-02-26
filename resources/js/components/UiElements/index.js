@@ -5,8 +5,8 @@ import MyDialog from "../UiElements/MyDialog.vue";
 
 
 export default [
-    MyButton,
     vueApp,
+    MyButton,
     MyInput,
     MyDialog,
 ]
