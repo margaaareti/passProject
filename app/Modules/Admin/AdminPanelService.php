@@ -6,6 +6,7 @@ namespace App\Modules\Admin;
 use App\Modules\Admin\Actions\ApplicationProccessAction;
 use App\Modules\Admin\Actions\GetAllApplicationAction;
 use App\Modules\Admin\Actions\SendDataToGoogleSheetsAction;
+use App\Modules\Admin\DTO\GoogleSheetDataDTO;
 
 class AdminPanelService
 {
@@ -14,9 +15,9 @@ class AdminPanelService
         return new GetAllApplicationAction();
     }
 
-    public function sendDataToGoogleSheets(array $data): SendDataToGoogleSheetsAction
+    public function sendDataToGoogleSheets(GoogleSheetDataDTO $data): SendDataToGoogleSheetsAction
     {
-        return new SendDataToGoogleSheetsAction();
+        return new SendDataToGoogleSheetsAction($data);
     }
 
     public function proccessData(int $id): ApplicationProccessAction

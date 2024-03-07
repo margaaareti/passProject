@@ -11,11 +11,6 @@
                 <div class="table-responsive">
                     <table class="table">
                         <button onclick="window.location.reload();">Обновить список</button>
-                        <script>
-                            window.onpopstate = function(event) {
-                                location.reload();
-                            };
-                        </script>
                         <tr>
                             <th>ID заявки</th>
                             <th>Тип Заявки</th>

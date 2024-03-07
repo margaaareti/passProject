@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\AdminControllers;
 
+use App\Exports\GuestExport;
 use App\Http\Controllers\Controller;
 
 use App\Models\Application;
 use App\Modules\Admin\AdminPanelService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AdminController extends Controller
 {
@@ -47,8 +49,16 @@ class AdminController extends Controller
         $applicationId = $request->input('id');
 
         $data = $adminPanelService->proccessData($applicationId)->run();
-        dd($data);
+
+        $approved_status = $adminPanelService->sendDataToGoogleSheets($data)->run();
+
+       return redirect()->back()->with('approved_status');
 
     }
+    public function export($appId)
+    {
+        return Excel::download(new GuestExport($appId), 'guests.xlsx');
+    }
+
 
 }

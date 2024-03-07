@@ -90,29 +90,29 @@ class AppRepository
 
     public function GetApplicationCommonData(array $data): array {
 
-        $lastRecord = $this->application->latest()->first();
-
-        //Получаем значение счетчика из базы данных
-        $counter = Counter::first();
-        if (!$counter) {
-            $counter = new Counter(['value' => 0]);
-            $counter->save();
-        }
-
-        if (
-            ($lastRecord && $lastRecord->created_at->format('d.m.Y') == $this->date)
-        ) {
-            $counter->increment('value');
-        } else {
-            $counter->update(['value' => 1]);
-        }
-        $counter->save();
-
-        $data['counter'] = $counter->value;
-
-        // форматируем номер заявки в строку с нулями в начале
-        $number = sprintf('%03d', $data['counter']);
-        $data['application_number'] = $this->date . '/' . $number;
+//        $lastRecord = $this->application->latest()->first();
+//
+//        //Получаем значение счетчика из базы данных
+//        $counter = Counter::first();
+//        if (!$counter) {
+//            $counter = new Counter(['value' => 0]);
+//            $counter->save();
+//        }
+//
+//        if (
+//            ($lastRecord && $lastRecord->created_at->format('d.m.Y') == $this->date)
+//        ) {
+//            $counter->increment('value');
+//        } else {
+//            $counter->update(['value' => 1]);
+//        }
+//        $counter->save();
+//
+//        $data['counter'] = $counter->value;
+//
+//        // форматируем номер заявки в строку с нулями в начале
+//        $number = sprintf('%03d', $data['counter']);
+//        $data['application_number'] = $this->date . '/' . $number;
 
         $data['user_id'] = Auth::id();
 

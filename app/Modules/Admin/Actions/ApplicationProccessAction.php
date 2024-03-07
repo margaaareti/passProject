@@ -27,8 +27,10 @@ class ApplicationProccessAction
         $sheetData = new GoogleSheetDataDTO();
 
         $application = Application::findOrFail($this->applicationId);
+        $applicationNumber = $this->getAppNumber($application);
 
         $application->update([
+            'application_number' => $applicationNumber,
             'approved_by' => $adminId,
             'is_approved' => true
         ]);
@@ -67,7 +69,7 @@ class ApplicationProccessAction
         $data['end_date'] = date_format(date_create($data['end_date']), 'd.m.Y');
         $data['time_range'] = $data['time_range'] ?? '';
         $data['contract_number'] = $data['contract_number'] ?? '';
-        $data['application_number'] = $this->getAppNumber($application);
+        $data['application_number'] = $applicationNumber;
 
         if ($relatedModel->type === 'Внос-Вынос') {
             unset($data['object']);

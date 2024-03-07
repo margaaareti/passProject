@@ -19,7 +19,7 @@ class GuestAppRepository extends AppRepository
         try {
 
             $newPeopleApplication = $this->peopleAppModel->create([
-                'rooms' => $data['rooms'],
+                'rooms' => $data['rooms'] ?? null,
                 'guests_count' => $data['guests_count'],
             ]);
 
@@ -28,6 +28,8 @@ class GuestAppRepository extends AppRepository
                 $guest->save();
                 $newPeopleApplication->guests()->attach($guest->id);
             }
+
+            unset($data['unset']);
 
             // Создание записи в общей таблице заявок
             $newApplication = Application::create(array_merge($data,[
@@ -40,23 +42,7 @@ class GuestAppRepository extends AppRepository
             return $e->getMessage();
         }
 
-        try {
-            $data['start_date'] = formatDate($data['start_date']);
-            $data['end_date'] = formatDate($data['end_date']);
 
-            $this->guestAppSheets->create($data);
-
-            try {
-                dispatch(new SendNewGuestApplicationNotification($data));
-            } catch (\Exception $e) {
-                Log::error('Error sending email: ' . $e->getMessage());
-                return $e->getMessage();
-            }
-
-        } catch (\Exception $e) {
-            Log::error('Error sending data to Google Sheets: ' . $e->getMessage());
-            return $e->getMessage();
-        }
         return $newApplication->id;
     }
 

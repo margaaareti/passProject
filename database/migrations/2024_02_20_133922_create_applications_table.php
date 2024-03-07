@@ -25,7 +25,6 @@ return new class extends Migration
             $table->date('start_date')->nullable(false);
             $table->date('end_date')->nullable(false);
             $table->string('signed_by')->nullable(false);
-            $table->string('rooms')->nullable()->default(null);
             $table->string('object')->nullable(false);
             $table->string('purpose')->nullable(false);
             $table->string('contract_number')->nullable();

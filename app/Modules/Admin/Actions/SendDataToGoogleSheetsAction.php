@@ -10,14 +10,38 @@ use Revolution\Google\Sheets\Facades\Sheets;
 
 class SendDataToGoogleSheetsAction
 {
+    protected GoogleSheetDataDTO $appData;
 
-    public function run(GoogleSheetDataDTO $data): string
+
+    public function __construct(GoogleSheetDataDTO $appData)
+    {
+        $this->appData=$appData;
+    }
+
+    public function run(): string
     {
 
         $array = [
-            $data->application_number, $data->department, $data->organization_name, $data->signed_by, $data->start_date, $data->end_date,
-            $data->time_range, $data->object, $data->application_type, $data->purpose, $data->rooms,
-            '', '', $data->equipment, $data->guests, $data->is_foreigner, $data->car_numbers, $data->car_numbers, $data->car_model, $data->responsible_person, $data->phone_number
+            $this->appData->application_number,
+            $this->appData->department,
+            $this->appData->organization_name,
+            $this->appData->signed_by,
+            $this->appData->start_date,
+            $this->appData->end_date,
+            $this->appData->time_range,
+            $this->appData->object,
+            $this->appData->application_type,
+            $this->appData->purpose,
+            '',
+            $this->appData->rooms,
+            $this->appData->equipment,
+            $this->appData->guests,
+            $this->appData->is_foreigner,
+            $this->appData->car_numbers,
+            $this->appData->car_numbers,
+            $this->appData->car_model,
+            $this->appData->responsible_person,
+            $this->appData->phone_number
         ];
 
 

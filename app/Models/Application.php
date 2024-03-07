@@ -16,7 +16,6 @@ class Application extends Model
         'is_approved', 'approved_by',
         'signed_by',
         'start_date', 'end_date',
-        'rooms',
         'object', 'purpose',
         'contract_number',
         'equipment',
@@ -38,6 +37,11 @@ class Application extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function approver()
+    {
+        return $this->belongsTo(User::class, 'approved_by');
     }
 
 }
