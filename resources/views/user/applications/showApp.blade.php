@@ -80,14 +80,3 @@
 
 @endsection
 
-{{--<p class="card-body__text"><strong>Количество лиц, указанных в--}}
-{{--        заявке:</strong> {{$application->guests_count}}</p>--}}
-{{--<div class="card-body__guest-block">--}}
-{{--    <ul class="card-body__list guest-list">--}}
-{{--        @foreach ($application->guests as $guest)--}}
-{{--            <li class="card-body__text">{{ $guest->name }}</li>--}}
-{{--        @endforeach--}}
-{{--    </ul>--}}
-{{--    <x-button class="card-body__button">--}}
-{{--        + Добавить гостя--}}
-{{--    </x-button>--}}

@@ -48,6 +48,7 @@
 import PostForm from "./UI/GuestForm.vue";
 import GuestList from "./UI/GuestList.vue";
 import axios from "axios";
+import MyInput from "@/components/UiElements/MyInput.vue";
 
 export default {
     name: "vue-app",
