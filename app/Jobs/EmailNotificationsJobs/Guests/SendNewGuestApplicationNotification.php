@@ -22,6 +22,6 @@ class SendNewGuestApplicationNotification implements ShouldQueue
 
     public function handle(): void
     {
-        Mail::to('security@example.com')->send(new NewGuestApplicationNotification($this->guestApplicationData));
+        Mail::to('vvan@itmo.ru')->send(new NewGuestApplicationNotification($this->guestApplicationData));
     }
 }

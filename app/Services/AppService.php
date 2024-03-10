@@ -13,7 +13,7 @@ class AppService
 
     protected function processCommonData(array $data): array
     {
-        $keysToDelete=['selected_form','Checkbox1','Checkbox2'];
+        $keysToDelete=['Checkbox1','Checkbox2'];
 
         foreach ($keysToDelete as $key){
             unset($data[$key]);

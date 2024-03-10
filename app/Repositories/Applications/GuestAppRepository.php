@@ -5,6 +5,7 @@ namespace App\Repositories\Applications;
 
 use App\Jobs\EmailNotificationsJobs\Guests\SendNewGuestApplicationNotification;
 use App\Models\Application;
+use App\Models\Enums\ApplicationStatusEnum;
 use App\Models\Guest;
 use App\Repositories\AppRepository;
 use Illuminate\Support\Facades\Log;
@@ -35,7 +36,17 @@ class GuestAppRepository extends AppRepository
             $newApplication = Application::create(array_merge($data,[
                 'applicationable_type' => $newPeopleApplication->getApplicationType(),
                 'applicationable_id' => $newPeopleApplication->getApplicationId(),
+                'status'=>ApplicationStatusEnum::new
             ]));
+
+
+            try {
+                $this->createAdditionalData($data);
+            } catch (\Exception $e) {
+                Log::error('Error sending data to Google Sheets: ' . $e->getMessage());
+                return $e->getMessage();
+            }
+
 
         } catch (\Exception $e) {
             Log::error('Error sending data to Database: ' . $e->getMessage());

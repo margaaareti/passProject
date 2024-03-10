@@ -21,6 +21,6 @@ class AddNewGuestNotification extends Mailable
      * Get the message envelope.
      */
     public function build() {
-        return $this->view('emails.NewGuest_notification');
+        return $this->view('emails.NewGuest_notification', $this->newGuestApplicationData);
     }
 }

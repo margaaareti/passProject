@@ -4,15 +4,21 @@
     <section>
         <div class="container">
             <div class="d-flex justify-content-center align-items-center">
-                <h4>{{$application->applicationable->getName()}} {{$application->id}} </h4>
+                <h4 class="display-5 mb-4">{{$application->applicationable->getName()}} {{$application->id}}</h4>
             </div>
-            @if($application->is_approved)
+            @if($application->status->isApproved())
                 <div class="text-center d-flex align-items-center justify-content-center">
                     <div class="display-4 mb-3 ms-5">Согласовано!</div>
-                    <div class=""><small>({{$application->approver->last_name}} {{$application->approver->name}}) </small></div>
+                    <div class=""><small>({{$application->approver->last_name}} {{$application->approver->name}}
+                            ) </small></div>
                 </div>
-                <div class="alert alert-success text-center" role="alert">
-                    Данные заявки успешно внесены в Google таблицу под номером {{$application->application_number}}
+                <div class="alert alert-success text-center mb-0" role="alert">
+                    Данные заявки успешно внесены в Google таблицу под номером
+                    <strong>{{$application->application_number}}</strong>
+                </div>
+                <div class="mb-2">
+                    <a href="{{ route('admin.app.showAllApp', $application->applicationable->id) }}"
+                       class="btn  btn-success mt-3">← {{__('Вернуться к заявкам')}}</a>
                 </div>
             @endif
 
@@ -34,7 +40,12 @@
                             </tr>
                             <tr>
                                 <th>Кем подано</th>
-                                <td>{{$application->user['last_name']}} {{$application->user['name']}} {{$application->user['patronymic']}}</td>
+                                <td>
+                                    {{$application->user['last_name']}}
+                                    {{$application->user['name']}}
+                                    {{$application->user['patronymic']}}
+                                    ({{$application->user->isu_number}})
+                                </td>
                             </tr>
                             @if($application['application_type'] !== 'Внос/Вынос')
                                 <tr>
@@ -62,6 +73,13 @@
                                     <th>Объекты</th>
                                     <td>{{$application->object_in}} {{$application->object_out}}</td>
                                 </tr>
+                            @endif
+                            @if($application->equipment)
+                                <tr>
+                                    <th>Имущество/Оборудование</th>
+                                    <td>{{$application->equipment}}</td>
+                                </tr>
+
                             @endif
                             <tr>
                                 <th>Ответственный</th>
@@ -105,10 +123,10 @@
                                     </form>
                                 </div>
                             @endif
-                                <div>
-                                    <a href="{{ route('guests.export', $application->applicationable->id) }}"
-                                       class="btn  btn-success mt-3">{{__('Загрузить список приглашенных в exel')}}</a>
-                                </div>
+                            <div>
+                                <a href="{{ route('guests.export', $application->applicationable->id) }}"
+                                   class="btn  btn-success mt-3">{{__('Загрузить список приглашенных в exel')}}</a>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -22,6 +22,6 @@ class SendNewCarApplicationNotification implements ShouldQueue
 
     public function handle(): void
     {
-        Mail::to('security@example.com')->send(new NewCarApplicationNotification($this->carApplicationData));
+        Mail::to('vvan@itmo.ru')->send(new NewCarApplicationNotification($this->carApplicationData));
     }
 }

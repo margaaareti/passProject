@@ -4,7 +4,7 @@ namespace App\Modules\Admin\Actions;
 
 use App\Jobs\GoogleSheetsColorCell;
 use App\Modules\Admin\DTO\GoogleSheetDataDTO;
-use Illuminate\Database\Eloquent\Collection;
+use App\Modules\Admin\Events\SendApprovingEmailNotificationEvent;
 use Illuminate\Support\Facades\Log;
 use Revolution\Google\Sheets\Facades\Sheets;
 
@@ -15,7 +15,7 @@ class SendDataToGoogleSheetsAction
 
     public function __construct(GoogleSheetDataDTO $appData)
     {
-        $this->appData=$appData;
+        $this->appData = $appData;
     }
 
     public function run(): string
@@ -60,9 +60,12 @@ class SendDataToGoogleSheetsAction
 
             dispatch(new GoogleSheetsColorCell($spreadSheetId, $listName));
 
+            event (new SendApprovingEmailNotificationEvent([
+                'email' => $this->appData->user_email,
+                'app_type' => $this->appData->application_type
+            ]));
 
             return 'Данные успешно добавлены в таблицу';
-
 
         } catch (\Exception $e) {
             Log::error('Error sending data To google sheets: ' . $e->getMessage());

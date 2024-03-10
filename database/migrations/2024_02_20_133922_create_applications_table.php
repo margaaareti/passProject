@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('application_type')->nullable(false);
             $table->string('application_number')->nullable();
             $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->boolean('is_approved')->default(false);
+            $table->string('status')->nullable();
             $table->foreignId('approved_by')->nullable()->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
             $table->date('start_date')->nullable(false);
             $table->date('end_date')->nullable(false);

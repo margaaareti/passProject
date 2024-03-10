@@ -4,6 +4,7 @@ namespace App\Modules\Admin\Actions;
 
 use App\Models\Application;
 use App\Models\Counter;
+use App\Models\Enums\ApplicationStatusEnum;
 use App\Modules\Admin\DTO\GoogleSheetDataDTO;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,7 +24,6 @@ class ApplicationProccessAction
     {
 
         $admin = Auth::user();
-        $adminId = $admin->id;
         $sheetData = new GoogleSheetDataDTO();
 
         $application = Application::findOrFail($this->applicationId);
@@ -31,8 +31,8 @@ class ApplicationProccessAction
 
         $application->update([
             'application_number' => $applicationNumber,
-            'approved_by' => $adminId,
-            'is_approved' => true
+            'status' => ApplicationStatusEnum::approved,
+            'approved_by' => $admin->id
         ]);
 
         $relatedModel = $application->applicationable;
@@ -70,6 +70,7 @@ class ApplicationProccessAction
         $data['time_range'] = $data['time_range'] ?? '';
         $data['contract_number'] = $data['contract_number'] ?? '';
         $data['application_number'] = $applicationNumber;
+        $data['user_email'] = $application->user->email;
 
         if ($relatedModel->type === 'Внос-Вынос') {
             unset($data['object']);
@@ -87,21 +88,21 @@ class ApplicationProccessAction
 
     protected function getAppNumber(Application $application): string
     {
-        $lastRecord = $application->latest()->first();
-
         //Получаем значение счетчика из базы данных
-        $counter = Counter::first();
+        $counter = Counter::firstOrCreate(['id' => 1], ['value' => 0]);
+
         if (!$counter) {
             $counter = new Counter(['value' => 0]);
             $counter->save();
         }
 
         if (
-            ($lastRecord && $lastRecord->created_at->format('d.m.Y') == $this->date)
+            ($counter->updated_at->format('d.m.Y') !== $this->date)
         ) {
-            $counter->increment('value');
-        } else {
             $counter->update(['value' => 1]);
+            $counter->touch();
+        } else {
+            $counter->increment('value');
         }
         $counter->save();
 

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Enums\ApplicationStatusEnum;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
@@ -13,7 +14,7 @@ class Application extends Model
         'application_type',
         'applicationable_type',
         'applicationable_id',
-        'is_approved', 'approved_by',
+        'status', 'approved_by',
         'signed_by',
         'start_date', 'end_date',
         'object', 'purpose',
@@ -26,7 +27,7 @@ class Application extends Model
     ];
 
     protected $casts = [
-        'is_approved' => 'boolean',
+        'status' => ApplicationStatusEnum::class,
     ];
 
     public function applicationable():MorphTo

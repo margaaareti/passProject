@@ -23,7 +23,7 @@
                         </div>
 
                         <div class="approved-info">
-                            @if($application->is_approved === true)
+                            @if($application->status->isApproved())
                                 <p class="approved-info__text">Одобрено
                                     <img class="approved-info__image"
                                          src={{asset('img/approvedAppIcon.png')}} alt="Картинка"></p>

@@ -15,6 +15,7 @@ class SendAddNewGuestNotification implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected array $newGuestApplicationData;
+
     public function __construct(array $newGuestApplicationData)
     {
         $this->newGuestApplicationData = $newGuestApplicationData;
@@ -22,6 +23,6 @@ class SendAddNewGuestNotification implements ShouldQueue
 
     public function handle(): void
     {
-        Mail::to('security@example.com')->send(new AddNewGuestNotification($this->newGuestApplicationData));
+        Mail::to('vvan@itmo.ru')->send(new AddNewGuestNotification($this->newGuestApplicationData));
     }
 }

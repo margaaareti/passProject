@@ -26,8 +26,6 @@
         <h3 class="application_header">Почта: {{$carApplicationData['user_email']}}</h3>
         <h4 class="application_header">Заголовок HQ: {{$carApplicationData['object']}}, {{$carApplicationData['department']}},
             <{{$carApplicationData['end_date']}}> </h4>
-
-{{--        <p><strong>Тип:</strong> {{$carApplicationData['application_type']}} </p>--}}
         <p class="application_info"><strong>Подразделение: </strong>{{$carApplicationData['department']}}</p>
         <p class="application_info"><strong>C</strong> {{$carApplicationData['start_date']}}<strong> по </strong>{{$carApplicationData['end_date']}}
         </p>

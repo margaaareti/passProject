@@ -4,12 +4,12 @@ namespace App\Repositories;
 
 use App\Jobs\EmailNotificationsJobs\Cars\SendNewCarApplicationNotification;
 use App\Jobs\EmailNotificationsJobs\Guests\SendAddNewGuestNotification;
+use App\Jobs\EmailNotificationsJobs\Guests\SendNewGuestApplicationNotification;
 use App\Models\Application;
 use App\Models\CarApplication;
-use App\Models\Counter;
+use App\Models\Enums\ApplicationStatusEnum;
 use App\Models\PeopleApplication;
 use App\Models\PropertyApplication;
-use App\Repositories\GoogleSheetsRepository\ApplicationsSheets;
 use App\Repositories\GoogleSheetsRepository\CarAppSheets;
 use App\Repositories\GoogleSheetsRepository\GuestAppSheets;
 use App\Repositories\GoogleSheetsRepository\PropertyAppSheets;
@@ -57,19 +57,18 @@ class AppRepository
         return Application::create(array_merge($data,[
             'applicationable_type'=> $newCarApplication ->getApplicationType(),
             'applicationable_id' => $newCarApplication->getApplicationId(),
+            'status'=>ApplicationStatusEnum::new
         ]));
     }
 
-    protected function createAdditionalData(array $data, ApplicationsSheets $appSheets)
+    protected function createAdditionalData(array $data)
     {
         $data = $this->formatDates($data);
-
-        $appSheets->create($data);
 
         try {
             // Импорт правильного класса уведомлений в зависимости от типа заявки
             if ($data['selected_form'] === 'Guests') {
-                dispatch(new SendAddNewGuestNotification($data));
+                dispatch(new SendNewGuestApplicationNotification($data));
             } elseif ($data['selected_form'] === 'Car') {
                 dispatch(new SendNewCarApplicationNotification($data));
             }
@@ -90,29 +89,6 @@ class AppRepository
 
     public function GetApplicationCommonData(array $data): array {
 
-//        $lastRecord = $this->application->latest()->first();
-//
-//        //Получаем значение счетчика из базы данных
-//        $counter = Counter::first();
-//        if (!$counter) {
-//            $counter = new Counter(['value' => 0]);
-//            $counter->save();
-//        }
-//
-//        if (
-//            ($lastRecord && $lastRecord->created_at->format('d.m.Y') == $this->date)
-//        ) {
-//            $counter->increment('value');
-//        } else {
-//            $counter->update(['value' => 1]);
-//        }
-//        $counter->save();
-//
-//        $data['counter'] = $counter->value;
-//
-//        // форматируем номер заявки в строку с нулями в начале
-//        $number = sprintf('%03d', $data['counter']);
-//        $data['application_number'] = $this->date . '/' . $number;
 
         $data['user_id'] = Auth::id();
 

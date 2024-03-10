@@ -23,7 +23,8 @@
 
 <body>
 <div class="application-notification">
-    <h1 class="application_header">Заявка {{$newGuestApplicationData['application_number']}}: добавлен новый посетитель.</h1>
+{{--    <h1 class="application_header">Заявка {{$newGuestApplicationData['application_number']}}: добавлен новый посетитель.</h1>--}}
+    <h1 class="application_header"> добавлен новый посетитель.</h1>
     <p class="application_info"><strong>ФИО посетителя: {{$newGuestApplicationData['guest_name']}}</strong></p>
     <p class="application_info"><strong>Внесен сотрудником {{$newGuestApplicationData['user_department']}}: {{$newGuestApplicationData['user_name']}}</strong></p>
 </div>

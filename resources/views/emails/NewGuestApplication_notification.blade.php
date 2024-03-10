@@ -11,6 +11,7 @@
         text-align: center;
         max-width: 600px;
         margin: 0 auto;
+        margin: 0 auto;
         background: #31bdd3;
     }
 
@@ -27,25 +28,16 @@
         <h4 class="application_header">Заголовок HQ: {{$guestApplicationData['object']}}, {{$guestApplicationData['department']}},
             <{{$guestApplicationData['end_date']}}> </h4>
 
-        {{--<p><strong>Тип:</strong> {{$guestApplicationData['application_type']}} </p>--}}
         <p class="application_info"><strong>Подразделение: </strong>{{$guestApplicationData['department']}}</p>
         <p class="application_info"><strong>C</strong> {{$guestApplicationData['start_date']}}<strong> по </strong>{{$guestApplicationData['end_date']}}
         </p>
         <p class="application_info"><strong>Локация: </strong>{{$guestApplicationData['object']}}</p>
-        {{--<p><strong>Цель: </strong>{{$guestApplicationData['purpose']}}</p>--}}
-        {{--<p><strong>Кол-во гостей: </strong>{{$guestApplicationData['guests_count']}}</p>--}}
         <p class="application_info"><strong>Ответственный: </strong>{{$guestApplicationData['responsible_person']}}</p>
         <p class="application_info"><strong>Телефон: </strong>{{$guestApplicationData['phone_number']}}</p>
         @unless(empty($guestApplicationData['additional_info']))--}}
             <p><strong>Доп.информация: </strong>{{$guestApplicationData['additional_info']}}</p>--}}
         @endunless
 
-        {{--<p><strong>Приглашенные лица в зявке:</strong></p>--}}
-        {{--@foreach($guestApplicationData['guests'] as $guest_name)--}}
-        {{--        <ul>--}}
-        {{--            <li>{{$guest_name}}</li>--}}
-        {{--        </ul>--}}
-        {{--@endforeach--}}
     </div>
 </div>
 </body>

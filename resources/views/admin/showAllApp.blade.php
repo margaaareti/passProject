@@ -21,6 +21,7 @@
                             <th>Объекты</th>
                             <th>Ответственный</th>
                             <th>Контактный номер</th>
+                            <th>Статус</th>
                             <th></th>
                         <tr>
                         @foreach($applications as $application)
@@ -40,6 +41,7 @@
                                 @endif
                                 <td>{{$application->responsible_person}}</td>
                                 <td>{{$application->phone_number}}</td>
+                                <td><p class="text-{{$application->status->color()}}">{{$application->status->name()}}</p></td>
                                 <td>
                                     <a href="{{route('admin.app.showApp', ['type'=>$application->applicationable->getType(), 'id'=>$application->id])}}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"

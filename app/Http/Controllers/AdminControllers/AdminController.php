@@ -52,7 +52,7 @@ class AdminController extends Controller
 
         $approved_status = $adminPanelService->sendDataToGoogleSheets($data)->run();
 
-       return redirect()->back()->with('approved_status');
+        return redirect()->back()->with('approved_status');
 
     }
     public function export($appId)

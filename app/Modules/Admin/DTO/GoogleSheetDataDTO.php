@@ -25,10 +25,10 @@ class GoogleSheetDataDTO
     public string $car_model = '';
     public string $responsible_person;
     public string $phone_number;
+    public string $user_email = '';
 
     public function __set($name,$value)
     {
         $this->{$name} = $value;
     }
-
 }
