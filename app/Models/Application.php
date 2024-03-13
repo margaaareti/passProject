@@ -23,6 +23,7 @@ class Application extends Model
         'phone_number',
         'responsible_person',
         'approved_by',
+        'pending_comment',
         'viewed'
     ];
 
@@ -45,4 +46,8 @@ class Application extends Model
         return $this->belongsTo(User::class, 'approved_by');
     }
 
+    public function comment()
+    {
+        return $this->belongsTo(Comment::class, 'comment');
+    }
 }

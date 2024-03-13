@@ -4,6 +4,7 @@ namespace App\Modules\Admin\DTO;
 
 class GoogleSheetDataDTO
 {
+    public string $app_id;
     public string $application_number;
     public string $department;
     public string $organization_name = '';
@@ -26,6 +27,7 @@ class GoogleSheetDataDTO
     public string $responsible_person;
     public string $phone_number;
     public string $user_email = '';
+    public bool $with_letter = false;
 
     public function __set($name,$value)
     {

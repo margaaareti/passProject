@@ -32,6 +32,8 @@ return new class extends Migration
             $table->string('responsible_person')->nullable(false);
             $table->string('phone_number')->nullable(false);
             $table->string('additional_info', 300)->nullable();
+            $table->text('pending_comment')->nullable();
+            $table->foreignId('comment')->nullable()->references('id')->on('comments')->cascadeOnDelete()->cascadeOnUpdate();
             $table->boolean('viewed')->default(false);
         });
     }

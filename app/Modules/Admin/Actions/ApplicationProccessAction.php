@@ -14,7 +14,7 @@ class ApplicationProccessAction
     protected string $date;
 
     public function __construct(
-        public int $applicationId
+        public array $reqData
     )
     {
         $this->date = date('d.m.Y');
@@ -26,7 +26,7 @@ class ApplicationProccessAction
         $admin = Auth::user();
         $sheetData = new GoogleSheetDataDTO();
 
-        $application = Application::findOrFail($this->applicationId);
+        $application = Application::findOrFail($this->reqData['id']);
         $applicationNumber = $this->getAppNumber($application);
 
         $application->update([
@@ -48,7 +48,7 @@ class ApplicationProccessAction
 
         $data = array_merge($application->toArray(), [
             'guests' => $applicationType === 'Проход' ? implode("\n", $itemArray) : '',
-            'cars' => $applicationType === 'Въезд' ? implode("\n", $itemArray) : '',
+            'car_numbers' => $applicationType === 'Въезд' ? implode("\n", $itemArray) : '',
         ]);
 
         if($applicationType === 'Внос/Вынос') {
@@ -64,6 +64,8 @@ class ApplicationProccessAction
         $data = array_diff_key($data, array_flip($keysToDelete));
 
 
+        $data['with_letter'] = isset($this->reqData['with_letter']) && (bool)$this->reqData['with_letter'];
+        $data['app_id'] = strval($application->id);
         $data['department'] = $application->user->department;
         $data['start_date'] = date_format(date_create($data['start_date']), 'd.m.Y');
         $data['end_date'] = date_format(date_create($data['end_date']), 'd.m.Y');

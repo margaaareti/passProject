@@ -77,6 +77,7 @@ class AppRepository
             Log::error('Error sending email: ' . $e->getMessage());
             return $e->getMessage();
         }
+        return 'Уведомление о Вашей заявке отправлено';
     }
 
     protected function formatDates(array $data, $outputFormat = 'd.m.Y'): array

@@ -10,7 +10,19 @@
 
                 <div class="table-responsive">
                     <table class="table">
-                        <button onclick="window.location.reload();">Обновить список</button>
+                        <div class="d-flex">
+                            <div>
+                                <button onclick="window.location.reload();">Обновить список</button>
+                            </div>
+                            <div class="ms-3">
+                                <select class="form-select" name="filterStatus" id="filterStatus" onchange="applyFilter(this.value)">
+                                    <option value="all" {{ session('filter') == '' ? 'selected' : '' }}>Все</option>
+                                    <option value="new" {{ session('filter') == 'new' ? 'selected' : '' }}>Новые</option>
+                                    <option value="pending" {{ session('filter') == 'pending' ? 'selected' : '' }}>Ожидающие</option>
+                                    <option value="approved" {{ session('filter') == 'approved' ? 'selected' : '' }}>Согласованные</option>
+                                </select>
+                            </div>
+                        </div>
                         <tr>
                             <th>ID заявки</th>
                             <th>Тип Заявки</th>
@@ -41,7 +53,9 @@
                                 @endif
                                 <td>{{$application->responsible_person}}</td>
                                 <td>{{$application->phone_number}}</td>
-                                <td><p class="text-{{$application->status->color()}}">{{$application->status->name()}}</p></td>
+                                <td>
+                                    <p class="text-{{$application->status->color()}}">{{$application->status->name()}}</p>
+                                </td>
                                 <td>
                                     <a href="{{route('admin.app.showApp', ['type'=>$application->applicationable->getType(), 'id'=>$application->id])}}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
@@ -62,6 +76,13 @@
             @endif
         </div>
     </section>
+
+    <script>
+        function applyFilter(filter) {
+            // Формируем URL с параметром фильтра и перезагружаем страницу
+            window.location.href = window.location.pathname + '?filter=' + filter;
+        }
+    </script>
 @endsection
 
 

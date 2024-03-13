@@ -16,7 +16,6 @@ class AdminServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        Event::listen(SendApprovingEmailNotificationEvent::class, MyEventListener::class);
     }
 }
 

@@ -13,7 +13,7 @@ class GetAllApplicationAction
     public function run(): Collection
     {
 
-        return Application::all();
+        return Application::all()->sortByDesc('created_at');
     }
 
 }

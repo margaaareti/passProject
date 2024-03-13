@@ -38,7 +38,7 @@ class SendDataToGoogleSheetsAction
             $this->appData->guests,
             $this->appData->is_foreigner,
             $this->appData->car_numbers,
-            $this->appData->car_numbers,
+            $this->appData->car_brand,
             $this->appData->car_model,
             $this->appData->responsible_person,
             $this->appData->phone_number
@@ -60,10 +60,13 @@ class SendDataToGoogleSheetsAction
 
             dispatch(new GoogleSheetsColorCell($spreadSheetId, $listName));
 
-            event (new SendApprovingEmailNotificationEvent([
-                'email' => $this->appData->user_email,
-                'app_type' => $this->appData->application_type
-            ]));
+            if ($this->appData->with_letter === true) {
+                event(new SendApprovingEmailNotificationEvent([
+                    'app_id' => $this->appData->app_id,
+                    'email' => $this->appData->user_email,
+                    'app_type' => $this->appData->application_type
+                ]));
+            }
 
             return 'Данные успешно добавлены в таблицу';
 
@@ -72,6 +75,4 @@ class SendDataToGoogleSheetsAction
             return $e->getMessage();
         }
     }
-
-
 }

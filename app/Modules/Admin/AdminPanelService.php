@@ -20,9 +20,9 @@ class AdminPanelService
         return new SendDataToGoogleSheetsAction($data);
     }
 
-    public function proccessData(int $id): ApplicationProccessAction
+    public function proccessData(array $reqData): ApplicationProccessAction
     {
-        return new ApplicationProccessAction($id);
+        return new ApplicationProccessAction($reqData);
     }
 
 }

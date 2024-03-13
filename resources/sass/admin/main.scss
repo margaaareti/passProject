@@ -1,1 +1,22 @@
 @import 'bootstrap/scss/bootstrap';
+
+.form-check-input {
+    background-color: #eae5e5;
+    width: 20px;
+    height: 20px;
+    border-color: black;
+
+    &:checked {
+        outline-color: #7c1d1d !important;
+        background-color: #333232;
+        border-color: #414040;
+        box-shadow: #050e05 0px 0px 5px !important;
+    }
+
+    &:focus {
+        outline-color: #7c1d1d !important;
+        background-color: #333232;
+        border-color: #414040;
+        box-shadow: #050e05 0px 0px 5px !important;
+    }
+}

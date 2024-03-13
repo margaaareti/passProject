@@ -2,8 +2,6 @@
 
 namespace App\Repositories\Applications;
 
-
-use App\Jobs\EmailNotificationsJobs\Guests\SendNewGuestApplicationNotification;
 use App\Models\Application;
 use App\Models\Enums\ApplicationStatusEnum;
 use App\Models\Guest;
