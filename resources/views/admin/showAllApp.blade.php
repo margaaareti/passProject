@@ -5,8 +5,16 @@
         <div class="container">
             @if($applications->isEmpty())
                 Нет ни одной записи
+                <div class="mb-2">
+                    <a href="{{ route('admin.app.showAllApp', '') }}"
+                       class="btn  btn-success mt-3">← {{__('Вернуться к заявкам')}}</a>
+                </div>
             @else
                 <h4>Все заявки</h4>
+
+                @if(session('message'))
+                    <div class="alert alert-danger">{{ session('message') }}</div>
+                @endif
 
                 <div class="table-responsive">
                     <table class="table">
@@ -21,6 +29,13 @@
                                     <option value="pending" {{ session('filter') == 'pending' ? 'selected' : '' }}>Ожидающие</option>
                                     <option value="approved" {{ session('filter') == 'approved' ? 'selected' : '' }}>Согласованные</option>
                                 </select>
+                            </div>
+                            <div class="ms-3">
+                                <form action={{route('admin.app.search')}} method="GET">
+                                    <input type="text" name="application_number" class="form-control" value="{{session('message') ? '' : request()->input('application_number') }}" placeholder="Введите номер заявки">
+                                    <button type="submit" class="btn btn-primary mt-2">Поиск</button>
+                                </form>
+                                <button class="btn btn-primary mt-2" onclick="resetSearch()">Сбросить</button>
                             </div>
                         </div>
                         <tr>
@@ -38,7 +53,7 @@
                         <tr>
                         @foreach($applications as $application)
                             <tr @if(!$application->viewed) style="font-weight: bold" @endif>
-                                <td class="text-center">{{$application->applicationable->id}}</td>
+                                <td class="text-center">{{$application->id}}</td>
                                 <td>{{$application->application_type}}</td>
                                 <td class="text-center">{{$application->user->department}}</td>
                                 <td>{{$application->user['last_name']}} {{$application->user['name']}} {{$application->user['patronymic']}}</td>
@@ -81,6 +96,12 @@
         function applyFilter(filter) {
             // Формируем URL с параметром фильтра и перезагружаем страницу
             window.location.href = window.location.pathname + '?filter=' + filter;
+        }
+
+        function resetSearch() {
+            var currentUrl = window.location.href; // Получаем текущий URL страницы
+             // Удаляем все после "/search"
+            window.location.href = currentUrl.split('/search')[0]; // Перенаправляем на новый URL
         }
     </script>
 @endsection

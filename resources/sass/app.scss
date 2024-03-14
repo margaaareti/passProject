@@ -8,6 +8,7 @@
 @import 'buttons';
 @import 'applications-card';
 @import "property-data-form";
+@import "table-user-app";
 
 * {
     box-sizing: border-box;
@@ -213,6 +214,10 @@ body {
     }
 }
 
+.approved-info__text{
+    font-size: 20px;
+}
+
 //Блоки при добавлении имущества в форме вноса-выноса имущества
 //.equipment-block {
 //    display: flex;
@@ -230,6 +235,8 @@ body {
 //    width: 50px !important;
 //    height: 50px !important;
 //}
+
+
 
 
 

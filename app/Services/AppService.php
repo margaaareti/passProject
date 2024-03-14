@@ -37,9 +37,9 @@ class AppService
         return $data;
     }
 
-    public function fetchAllApplications(): Collection
+    public function fetchAllApplications($filter): Collection
     {
-        return $this->appRepository->getAllApplications();
+        return $this->appRepository->getAllApplications($filter);
     }
 
 

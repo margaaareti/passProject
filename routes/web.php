@@ -57,6 +57,7 @@ Route::prefix('/admin')->middleware(['auth', 'verified'])->group(function () {
     Route::get("/show-application/{type}/{id}", [AdminController::class, 'showApplication'])->name('admin.app.showApp');
     Route::post("/submit-application/{id}", [AdminController::class, 'approveApplication'])->name('admin.app.approveApp');
     Route::post("/pending-application/{id}", [AdminController::class, 'pendingApplication'])->name('admin.app.pendingApp');
+    Route::get("/show-applications/search", [AdminController::class, 'search'])->name('admin.app.search');
 
     Route::get("/show-application/{id}", [AdminController::class, 'export'])->name('guests.export');
 });

@@ -1,0 +1,13 @@
+.table {
+    text-align: center; /* Выравнивание содержимого ячеек таблицы по центру */
+}
+
+.table th,
+.table td {
+    vertical-align: middle; /* Выравнивание по вертикали по центру */
+}
+
+
+#vueApp {
+    margin-left: 200px;
+}

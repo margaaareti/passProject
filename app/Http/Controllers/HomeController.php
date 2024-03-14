@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\AppService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -51,10 +52,11 @@ class HomeController extends Controller
         }
     }
 
-    public function showAllApplications()
+    public function showAllApplications(Request $request)
     {
+        $filter = $request->input('filter');
         $user = Auth::user();
-        $applications = $this->appService->fetchAllApplications();
+        $applications = $this->appService->fetchAllApplications($filter);
 
         return view('user.applications.showAllApp', compact('user', 'applications'));
     }
@@ -63,6 +65,5 @@ class HomeController extends Controller
     {
         return view('emails.NewApplication_notification');
     }
-
 
 }

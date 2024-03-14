@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreApplicationsRequests\StoreGuestAppRequest;
 use App\Jobs\EmailNotificationsJobs\Guests\SendAddNewGuestNotification;
 use App\Models\PeopleApplication;
-use App\Models\User;
 use App\Services\Applications\CarAppService;
 use App\Services\Applications\GuestAppService;
 use Illuminate\Http\JsonResponse;

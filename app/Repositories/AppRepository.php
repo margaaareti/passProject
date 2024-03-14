@@ -112,10 +112,16 @@ class AppRepository
         return $this->application->where('user_id', $userId)->where('id', $id)->first();
     }
 
-    public function getAllApplications(): Collection
+    public function getAllApplications($filter): Collection
     {
+        if ($filter) {
+            session(['filter' => $filter]);
+        }
         $userId = Auth::id();
-        return $this->application->where('user_id', $userId)->get();
+        if (in_array($filter, ['pending', 'approved'])) {
+            return $this->application->where('user_id', $userId)->where('status', $filter)->get();
+        } else {
+            return $this->application->where('user_id', $userId)->get();
+        }
     }
-
 }

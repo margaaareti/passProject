@@ -18,7 +18,7 @@ class AdminController extends Controller
     public function showAllApplications(AdminPanelService $adminPanelService, Request $request)
     {
 
-//        $applications = $adminPanelService->getAllApplications()->run();
+        $applications = $adminPanelService->getAllApplications()->run();
 
         $filter = $request->input('filter', 'all');
 
@@ -48,7 +48,6 @@ class AdminController extends Controller
         $application->viewed = true;
         $application->save();
 
-        // Здесь вы можете передать данные в представление и отобразить их
         return view('admin.showApp', compact('application'));
     }
 
@@ -92,10 +91,28 @@ class AdminController extends Controller
 
     }
 
+    public function search(Request $request)
+    {
+        $appId = $request->input('application_number');
+
+        if(!$appId) {
+            return back()->with('message','Введите номер заявки');
+        }
+
+        $applications = Application::where('id', $appId)->get();
+
+
+        if($applications->isEmpty()) {
+            return back()->with('message', 'Заявки с ID ' . $request->input('application_number'). ' не существует');
+        }
+
+        return view('admin.showAllApp', compact('applications'));
+    }
+
+
     public function export($appId)
     {
         return Excel::download(new GuestExport($appId), 'guests.xlsx');
     }
-
 
 }

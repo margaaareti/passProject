@@ -28,7 +28,6 @@
                 </div>
                 <div class="alert alert-warning text-center mb-0" role="alert">
                     Заявка находится в ожидании по причине: {{$application->pending_comment}}
-                    <strong>{{$application->application_number}}</strong>
                 </div>
                 <div class="mb-2">
                     <a href="{{ route('admin.app.showAllApp', $application->applicationable->id) }}"

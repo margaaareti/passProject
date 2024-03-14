@@ -6,14 +6,20 @@
 
     <div id="new">
 
-        <button-component></button-component>
-
-
         <x-common.nav-buttons>
 
         </x-common.nav-buttons>
 
         <div class="container py-3">
+
+            <div class="mb-3">
+                <select class="form-select" name="filterAppCard" id="filterAppCard" onchange="applyFilterCard(this.value)">
+                    <option value="all" {{ session('filter') == '' ? 'selected' : '' }}>Все</option>
+                    <option value="pending" {{ session('filter') == 'pending' ? 'selected' : '' }}>Ожидающие</option>
+                    <option value="approved" {{ session('filter') == 'approved' ? 'selected' : '' }}>Одобренные</option>
+                </select>
+            </div>
+
             <div class="card-container">
                 @forelse($applications as $application)
                     <div class="card-container__item">
@@ -128,6 +134,12 @@
                         button.innerText = 'Скрыть';
                     }
                 }
+
+                function applyFilterCard(filter) {
+                    // Формируем URL с параметром фильтра и перезагружаем страницу
+                    window.location.href = window.location.pathname + '?filter=' + filter;
+                }
+
             </script>
         </div>
     </div>
