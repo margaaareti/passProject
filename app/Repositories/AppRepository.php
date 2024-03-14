@@ -114,14 +114,16 @@ class AppRepository
 
     public function getAllApplications($filter): Collection
     {
+        $userId = Auth::id();
+
         if ($filter) {
             session(['filter' => $filter]);
         }
-        $userId = Auth::id();
+
         if (in_array($filter, ['pending', 'approved'])) {
-            return $this->application->where('user_id', $userId)->where('status', $filter)->get();
+            return $this->application->where('user_id', $userId)->where('status', $filter)->orderBy('created_at', 'desc')->get();
         } else {
-            return $this->application->where('user_id', $userId)->get();
+            return $this->application->where('user_id', $userId)->orderBy('created_at', 'desc')->get();
         }
     }
 }

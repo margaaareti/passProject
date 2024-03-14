@@ -25,8 +25,7 @@
                 @endif
 
                 <x-button class="nav-buttons__button btn btn-light {{active_link('user.app.showAllApp')}}">
-                    <a href="{{ route('user.app.showAllApp') }}" class="nav-buttons__link nav-link">Статус
-                        заявок
+                    <a href="{{ route('user.app.showAllApp') }}" class="nav-buttons__link nav-link">Мои заявки
                     </a>
                 </x-button>
             </div>

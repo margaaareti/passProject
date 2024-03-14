@@ -68,7 +68,7 @@
                                     <tr>
                                         <th>Приглашенные</th>
                                         <td>
-                                            <div id="vueApp">
+                                            <div id="vueApp" class="item-block">
                                                 <vue-app data-application-id="{{$application->applicationable->id}}"
                                                          data-application-created="{{ $application->created_at }}"></vue-app>
                                             </div>
@@ -86,15 +86,12 @@
                                             заявке:
                                         </th>
                                         <td>
-                                            <div class="card-body__car-block">
+                                            <div class="card-body__car-block item-block">
                                                 <ul class="card-body__list car-list">
                                                     @foreach ($application->applicationable->cars as $car)
                                                         <li class="card-body__text">{{ $car->number }}</li>
                                                     @endforeach
                                                 </ul>
-                                                <x-button class="card-body__button">
-                                                    + Добавить автомобиль
-                                                </x-button>
                                             </div>
                                         </td>
                                     </tr>
