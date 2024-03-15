@@ -12,9 +12,10 @@
 
         <div class="container py-3">
 
+
             <div class="mb-3">
                 <select class="form-select" name="filterAppCard" id="filterAppCard" onchange="applyFilterCard(this.value)">
-                    <option value="all" {{ session('filter') == '' ? 'selected' : '' }}>Все</option>
+                    <option value="all" {{ session('filter') == 'all' ? 'selected' : '' }}>Все</option>
                     <option value="pending" {{ session('filter') == 'pending' ? 'selected' : '' }}>Ожидающие</option>
                     <option value="approved" {{ session('filter') == 'approved' ? 'selected' : '' }}>Одобренные</option>
                 </select>
