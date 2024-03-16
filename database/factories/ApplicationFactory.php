@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
+use App\Models\Application;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PeopleApplication>
+ * @extends Factory<Application>
  */
-class PeopleApplicationFactory extends Factory
+class ApplicationFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -24,16 +24,18 @@ class PeopleApplicationFactory extends Factory
             'start_date' => $this->faker->date,
             'end_date' => $this->faker->date,
             'object' => $this->faker->word,
-            'rooms' => $this->faker->word,
             'purpose' => $this->faker->sentence,
+            'applicationable_type'=> 'App\Models\PeopleApplication',
+            'applicationable_id'=> $this->faker->numberBetween(1, 10),
+            'application_type'=> 'Проход',
+            'status'=>'new',
+            'approved_by'=>null,
             'contract_number' => $this->faker->randomNumber(6),
             'equipment' => $this->faker->text,
-            'guests_count' => $this->faker->numberBetween(1, 10),
             'responsible_person' => $this->faker->name,
             'phone_number' => $this->faker->phoneNumber,
             'additional_info' => $this->faker->text(300),
             'viewed'=>false
-
         ];
     }
 }

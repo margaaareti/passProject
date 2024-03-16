@@ -46,7 +46,13 @@
                             </tr>
                             <tr>
                                 <th>Тип Заявки</th>
-                                <td>{{$application->application_type}}</td>
+                                <td>
+                                    {{$application->application_type}}
+
+                                    @if($application->application_type === 'Внос/Вынос')
+                                        (Действие: {{$application->applicationable->type}})
+                                    @endif
+                                </td>
                             </tr>
                             <tr>
                                 <th>Подразделение</th>
@@ -63,38 +69,52 @@
                             </tr>
                             @if($application['application_type'] !== 'Внос/Вынос')
                                 <tr>
-                                    <th>Начальная дата</th>
-                                    <td>{{date_format(date_create($application->start_date),'d.m.Y')}}</td>
-                                </tr>
-                                <tr>
-                                    <th>Конечная дата</th>
-                                    <td>{{date_format(date_create($application->end_date),'d.m.Y')}}</td>
-                                </tr>
-                                <tr>
                                     <th>Объекты</th>
                                     <td>{{$application->object}}</td>
                                 </tr>
                             @else
-                                <tr>
-                                    <th>Дата вноса</th>
-                                    <td>{{date_format(date_create($application->{'property-in-date'}),'d.m.Y') }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Дата выноса</th>
-                                    <td>{{date_format(date_create($application->{'property-out-date'}),'d.m.Y') }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Объекты</th>
-                                    <td>{{$application->object_in}} {{$application->object_out}}</td>
-                                </tr>
-                            @endif
-                            @if($application->equipment)
+                                @php
+                                    $startDate = date_format(date_create($application->start_date), 'd.m.Y');
+                                    $endDate = date_format(date_create($application->start_date), 'd.m.Y');
+                                    $objectIn = $application->applicationable->object_in;
+                                    $objectOut = $application->applicationable->object_out;
+                                @endphp
+
+                                @if($application->applicationable->type === 'Внос')
+                                    <tr>
+                                        <th>Дата вноса — Объект</th>
+                                        <td>{{ $startDate }} — {{ $objectIn }}</td>
+                                    </tr>
+
+                                @elseif($application->applicationable->type === 'Вынос')
+                                    <tr>
+                                        <th>Дата выноса — Объект</th>
+                                        <td>{{ $startDate }} — {{ $objectOut }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Локация</th>
+                                        <td>{{$objectOut}}</td>
+                                    </tr>
+
+                                @else
+                                    <tr>
+                                        <th>Дата вноса — Объект</th>
+                                        <td>{{ $startDate }} — {{ $objectOut }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Дата выноса — Объект</th>
+                                        <td>{{$endDate}} — {{ $objectOut }}</td>
+                                    </tr>
+                                @endif
                                 <tr>
                                     <th>Имущество/Оборудование</th>
-                                    <td>{{$application->equipment}}</td>
+                                    <td>  @foreach($application->applicationable->properties as $item)
+                                            {{$item->name}} - {{$item->quantity}} шт. <br>
+                                        @endforeach
+                                    </td>
                                 </tr>
-
                             @endif
+
                             <tr>
                                 <th>Ответственный</th>
                                 <td>{{$application->responsible_person}}</td>
@@ -103,6 +123,7 @@
                                 <th>Контактный номер</th>
                                 <td>{{$application->phone_number}}</td>
                             </tr>
+
                             @if($application->application_type == 'Проход')
                                 <tr>
                                     <th>Количество приглашенных</th>
@@ -116,15 +137,32 @@
                                         @endforeach
                                     </td>
                                 </tr>
+                            @endif
+
+                            @if($application->application_type == 'Въезд')
                                 <tr>
-                                    @if($application->additional_info)
-                                        <th>Дополнительная информация по заявке</th>
-                                        <td>
-                                            {{$application->additional_info}}
-                                        </td>
-                                    @endif
+                                    <th>Количество автомобилей</th>
+                                    <td>{{$application->applicationable->cars_count}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Автомобили</th>
+                                    <td>
+                                        @foreach($application->applicationable->cars as $car)
+                                            {{$car->number}} <br>
+                                        @endforeach
+                                    </td>
                                 </tr>
                             @endif
+
+                            @if($application->additional_info)
+                                <tr>
+                                    <th>Дополнительная информация по заявке</th>
+                                    <td>
+                                        {{$application->additional_info}}
+                                    </td>
+                                </tr>
+                            @endif
+
                         </table>
 
                         <div class="d-flex flex-row">
@@ -143,11 +181,11 @@
                                         </div>
                                     </form>
                                     @if(!$application->status->isPending())
-                                    <div>
-                                        <button type="submit" class="btn btn-warning mt-3 ms-3" id="pending_btn">В
-                                            ожидание
-                                        </button>
-                                    </div>
+                                        <div>
+                                            <button type="submit" class="btn btn-warning mt-3 ms-3" id="pending_btn">В
+                                                ожидание
+                                            </button>
+                                        </div>
                                     @endif
                                 </div>
                             @endif
@@ -168,7 +206,8 @@
                         </div>
                         <div class="modal-body">
                             <!-- Форма для ввода причины -->
-                            <form action="{{route('admin.app.pendingApp', $application->id)}}" method="post" id="reasonForm">
+                            <form action="{{route('admin.app.pendingApp', $application->id)}}" method="post"
+                                  id="reasonForm">
                                 @csrf
                                 <div class="form-group">
                                     <label class="mb-2" for="reason">Причина:</label>
@@ -177,7 +216,8 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" id="hide_btn">Отмена</button>
-                                    <button type="submit" class="btn btn-primary" onclick="submitReason()">Подтвердить</button>
+                                    <button type="submit" class="btn btn-primary" onclick="submitReason()">Подтвердить
+                                    </button>
                                 </div>
                             </form>
                         </div>
@@ -195,15 +235,15 @@
                 const modal = new bootstrap.Modal(pendingModal);
                 const hideButton = document.getElementById('hide_btn');
 
-                pendingBtn.addEventListener('click', function() {
+                pendingBtn.addEventListener('click', function () {
                     // Открываем модальное окно
                     modal.show();
                 })
 
-               hideButton.addEventListener('click', function() {
-                   // Открываем модальное окно
-                   modal.hide();
-               })
+                hideButton.addEventListener('click', function () {
+                    // Открываем модальное окно
+                    modal.hide();
+                })
 
                 checkbox.addEventListener('change', function () {
                     if (!this.checked) {

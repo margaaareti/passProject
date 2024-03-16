@@ -7,7 +7,7 @@
                 Нет ни одной записи
                 <div class="mb-2">
                     <a href="{{ route('admin.app.showAllApp', '') }}"
-                       class="btn  btn-success mt-3">← {{__('Вернуться к заявкам')}}</a>
+                       class="btn btn-success mt-3">← {{__('Вернуться к заявкам')}}</a>
                 </div>
             @else
                 <h4>Все заявки</h4>
@@ -17,28 +17,38 @@
                 @endif
 
                 <div class="table-responsive">
-                    <table class="table">
-                        <div class="d-flex">
+                    <table class="table table-hover">
+                        <caption>{{__('Таблица заявок')}}</caption>
+                        <div class="d-flex mb-4">
                             <div>
-                                <button onclick="window.location.reload();">Обновить список</button>
+                                <button class="button" onclick="window.location.reload();">Обновить список</button>
+
                             </div>
                             <div class="ms-3">
-                                <select class="form-select" name="filterStatus" id="filterStatus" onchange="applyFilter(this.value)">
+                                <select class="form-select" name="filterStatus" id="filterStatus"
+                                        onchange="applyFilter(this.value)">
                                     <option value="all" {{ session('filter') == '' ? 'selected' : '' }}>Все</option>
-                                    <option value="new" {{ session('filter') == 'new' ? 'selected' : '' }}>Новые</option>
-                                    <option value="pending" {{ session('filter') == 'pending' ? 'selected' : '' }}>Ожидающие</option>
-                                    <option value="approved" {{ session('filter') == 'approved' ? 'selected' : '' }}>Согласованные</option>
+                                    <option value="new" {{ session('filter') == 'new' ? 'selected' : '' }}>Новые
+                                    </option>
+                                    <option value="pending" {{ session('filter') == 'pending' ? 'selected' : '' }}>
+                                        Ожидающие
+                                    </option>
+                                    <option value="approved" {{ session('filter') == 'approved' ? 'selected' : '' }}>
+                                        Согласованные
+                                    </option>
                                 </select>
                             </div>
                             <div class="ms-3">
                                 <form action={{route('admin.app.search')}} method="GET">
-                                    <input type="text" name="application_number" class="form-control" value="{{session('message') ? '' : request()->input('application_number') }}" placeholder="Введите номер заявки">
+                                    <input type="text" name="application_number" class="form-control"
+                                           value="{{session('message') ? '' : request()->input('application_number') }}"
+                                           placeholder="Введите номер заявки">
                                     <button type="submit" class="btn btn-primary mt-2">Поиск</button>
                                 </form>
                                 <button class="btn btn-primary mt-2" onclick="resetSearch()">Сбросить</button>
                             </div>
                         </div>
-                        <tr>
+                        <tr class="table-active">
                             <th>ID заявки</th>
                             <th>Тип Заявки</th>
                             <th class="text-center">Подразделение</th>
@@ -47,24 +57,31 @@
                             <th>Конечная дата</th>
                             <th>Объекты</th>
                             <th>Ответственный</th>
-                            <th>Контактный номер</th>
+                            <th style="width: 140px">Контактный номер</th>
                             <th>Статус</th>
                             <th></th>
-                        <tr>
+                        </tr>
                         @foreach($applications as $application)
                             <tr @if(!$application->viewed) style="font-weight: bold" @endif>
                                 <td class="text-center">{{$application->id}}</td>
                                 <td>{{$application->application_type}}</td>
                                 <td class="text-center">{{$application->user->department}}</td>
                                 <td>{{$application->user['last_name']}} {{$application->user['name']}} {{$application->user['patronymic']}}</td>
+                                <td>{{date_format(date_create($application->start_date),'d.m.Y')}}</td>
+                                <td>{{date_format(date_create($application->end_date),'d.m.Y')}}</td>
                                 @if($application['application_type'] !== 'Внос/Вынос')
-                                    <td>{{date_format(date_create($application->start_date),'d.m.Y')}}</td>
-                                    <td>{{date_format(date_create($application->end_date),'d.m.Y')}}</td>
                                     <td>{{$application->object}}</td>
                                 @else
-                                    <td>{{date_format(date_create($application->{'property-in-date'}),'d.m.Y') }}</td>
-                                    <td>{{date_format(date_create($application->{'property-out-date'}),'d.m.Y') }}</td>
-                                    <td>{{$application->object_in}} {{$application->object_out}}</td>
+                                    <td>
+                                        @if($application->applicationable->object_in && $application->applicationable->object_out)
+                                            {{$application->applicationable->object_in}}
+                                            <br>{{$application->applicationable->object_out}}
+                                        @elseif($application->applicationable->object_in)
+                                            {{$application->applicationable->object_in}}
+                                        @elseif($application->applicationable->object_out)
+                                            {{$application->applicationable->object_out}}
+                                        @endif
+                                    </td>
                                 @endif
                                 <td>{{$application->responsible_person}}</td>
                                 <td>{{$application->phone_number}}</td>
@@ -92,6 +109,7 @@
         </div>
     </section>
 
+
     <script>
         function applyFilter(filter) {
             // Формируем URL с параметром фильтра и перезагружаем страницу
@@ -100,7 +118,7 @@
 
         function resetSearch() {
             var currentUrl = window.location.href; // Получаем текущий URL страницы
-             // Удаляем все после "/search"
+            // Удаляем все после "/search"
             window.location.href = currentUrl.split('/search')[0]; // Перенаправляем на новый URL
         }
     </script>

@@ -46,6 +46,7 @@ class GuestAppController extends Controller
         session()->flash('checkbox1', $request->has('Checkbox1'));
         session()->flash('checkbox2', $request->has('Checkbox2'));
 
+
         try {
             $guestApplicationId = $this->guestAppService->create($request->all());
         } catch (\Exception $error) {
@@ -59,6 +60,7 @@ class GuestAppController extends Controller
                 'time_start',
                 'time_end'
             ];
+
 
             //Задаем значения по умолчанию для очищаемых полей
             foreach ($clearedFields as $field) {

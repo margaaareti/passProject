@@ -19,7 +19,7 @@ class MyEventListener implements ShouldQueue
     }
 
     public function handle(SendApprovingEmailNotificationEvent $event): void
-    {
+    {   Log::info("Вызов отправки мыла");
         $sendingData = $event->sendingData;
         $sendingData['response']  = match ($sendingData['app_type']){
             "Проход" => config('email_responses.guest_approved'),

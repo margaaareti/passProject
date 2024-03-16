@@ -15,7 +15,7 @@
 
             <div class="mb-3">
                 <select class="form-select" name="filterAppCard" id="filterAppCard" onchange="applyFilterCard(this.value)">
-                    <option value="all" {{ session('filter') == 'all' ? 'selected' : '' }}>Все</option>
+                    <option value="new" {{ session('filter') == 'all' ? 'selected' : '' }}>Все</option>
                     <option value="pending" {{ session('filter') == 'pending' ? 'selected' : '' }}>Ожидающие</option>
                     <option value="approved" {{ session('filter') == 'approved' ? 'selected' : '' }}>Одобренные</option>
                 </select>
@@ -38,6 +38,10 @@
                                         <p class="approved-info__text">Одобрено <img class="approved-info__image"
                                                                                      src={{asset('img/approvedAppIcon.png')}} alt="Картинка">
                                         </p>
+                                    @elseif($application->status->isPending())
+                                        <p class="approve-info__text">
+                                            Ожидает доп. согласования <img class="approved-info__image ms-1"
+                                                                 src={{asset('img/pending.svg')}} alt="Картинка"></p>
                                     @else
                                         <p class="approve-info__text">
                                             На рассмотрении <img class="approved-info__image"

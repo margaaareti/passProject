@@ -18,7 +18,7 @@ class AdminController extends Controller
     public function showAllApplications(AdminPanelService $adminPanelService, Request $request)
     {
 
-        $applications = $adminPanelService->getAllApplications()->run();
+//        $applications = $adminPanelService->getAllApplications()->run();
 
         $filter = $request->input('filter', 'all');
 
@@ -63,6 +63,8 @@ class AdminController extends Controller
         $applicationData = $request->only(['id', 'with_letter']);
 
         $data = $adminPanelService->proccessData($applicationData)->run();
+
+        dd($data);
 
         $approved_status = $adminPanelService->sendDataToGoogleSheets($data)->run();
 

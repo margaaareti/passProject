@@ -3,12 +3,12 @@
 namespace App\Repositories\Applications;
 
 use App\Models\Application;
+use App\Models\Enums\ApplicationStatusEnum;
 use App\Repositories\AppRepository;
 use Illuminate\Support\Facades\Log;
 
 class PropertyAppRepository extends AppRepository
 {
-
     public function create(array $data, array $propertiesList)
     {
 
@@ -26,6 +26,7 @@ class PropertyAppRepository extends AppRepository
 
             $newApplication = Application::create(array_merge($data, [
                 'object' => $data['object_in'] ?? $data['object_out'],
+                'status'=> ApplicationStatusEnum::new,
                 'applicationable_type' => $newPropertyApplication->getApplicationType(),
                 'applicationable_id' => $newPropertyApplication->getApplicationId(),
             ]));
@@ -35,17 +36,6 @@ class PropertyAppRepository extends AppRepository
             return $e->getMessage();
         }
 
-        try {
-
-            $data = $this->formatDates($data);
-
-            $this->propertyAppSheets->create($data);
-        } catch (\Exception $e) {
-            Log::error('Error sending data to Database: ' . $e->getMessage());
-            return $e->getMessage();
-        }
-
         return $newApplication->id;
     }
-
 }

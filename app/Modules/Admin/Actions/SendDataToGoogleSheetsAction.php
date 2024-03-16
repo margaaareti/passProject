@@ -21,6 +21,8 @@ class SendDataToGoogleSheetsAction
     public function run(): string
     {
 
+        $data = $this->appData->formatObject();
+
         $array = [
             $this->appData->application_number,
             $this->appData->department,
@@ -29,7 +31,7 @@ class SendDataToGoogleSheetsAction
             $this->appData->start_date,
             $this->appData->end_date,
             $this->appData->time_range,
-            $this->appData->object,
+            $data,
             $this->appData->application_type,
             $this->appData->purpose,
             '',
