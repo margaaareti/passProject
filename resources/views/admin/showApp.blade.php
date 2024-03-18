@@ -16,24 +16,21 @@
                     Данные заявки успешно внесены в Google таблицу под номером
                     <strong>{{$application->application_number}}</strong>
                 </div>
-                <div class="mb-2">
-                    <a href="{{ route('admin.app.showAllApp', $application->applicationable->id) }}"
-                       class="btn  btn-success mt-3">← {{__('Вернуться к заявкам')}}</a>
-                </div>
             @elseif($application->status->isPending())
                 <div class="text-center d-flex align-items-center justify-content-center">
                     <div class="display-4 mb-3 ms-5">В ожидании!</div>
                     <div class=""><small>({{$application->approver->last_name}} {{$application->approver->name}}
                             ) </small></div>
                 </div>
+                </div>
                 <div class="alert alert-warning text-center mb-0" role="alert">
                     Заявка находится в ожидании по причине: {{$application->pending_comment}}
                 </div>
-                <div class="mb-2">
-                    <a href="{{ route('admin.app.showAllApp', $application->applicationable->id) }}"
-                       class="btn  btn-success mt-3">← {{__('Вернуться к заявкам')}}</a>
-                </div>
             @endif
+            <div class="mb-2">
+                <a href="{{ route('admin.app.showAllApp', $application->applicationable->id) }}"
+                   class="btn  btn-success mt-3">← {{__('Вернуться к заявкам')}}</a>
+            </div>
 
 
             <div class="row">
@@ -47,10 +44,10 @@
                             <tr>
                                 <th>Тип Заявки</th>
                                 <td>
-                                    {{$application->application_type}}
-
                                     @if($application->application_type === 'Внос/Вынос')
-                                        (Действие: {{$application->applicationable->type}})
+                                         {{$application->applicationable->type}} имущества/оборудования
+                                    @else
+                                        {{$application->application_type}}
                                     @endif
                                 </td>
                             </tr>
@@ -67,6 +64,10 @@
                                     ({{$application->user->isu_number}})
                                 </td>
                             </tr>
+                            <tr>
+                                <th>Цель</th>
+                                <td>{{$application->purpose}}</td>
+                            </tr>
                             @if($application['application_type'] !== 'Внос/Вынос')
                                 <tr>
                                     <th>Объекты</th>
@@ -75,7 +76,7 @@
                             @else
                                 @php
                                     $startDate = date_format(date_create($application->start_date), 'd.m.Y');
-                                    $endDate = date_format(date_create($application->start_date), 'd.m.Y');
+                                    $endDate = date_format(date_create($application->end_date), 'd.m.Y');
                                     $objectIn = $application->applicationable->object_in;
                                     $objectOut = $application->applicationable->object_out;
                                 @endphp
@@ -99,7 +100,7 @@
                                 @else
                                     <tr>
                                         <th>Дата вноса — Объект</th>
-                                        <td>{{ $startDate }} — {{ $objectOut }}</td>
+                                        <td>{{ $startDate }} — {{ $objectIn }}</td>
                                     </tr>
                                     <tr>
                                         <th>Дата выноса — Объект</th>
@@ -189,10 +190,13 @@
                                     @endif
                                 </div>
                             @endif
-                            <div>
-                                <a href="{{ route('guests.export', $application->applicationable->id) }}"
-                                   class="btn  btn-success mt-3">{{__('Загрузить список приглашенных в exel')}}</a>
-                            </div>
+
+                            @if($application->application_type === 'Проход')
+                                <div>
+                                    <a href="{{ route('guests.export', $application->applicationable->id) }}"
+                                       class="btn  btn-success mt-3">{{__('Загрузить список приглашенных в exel')}}</a>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>

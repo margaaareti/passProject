@@ -21,8 +21,7 @@
                         <caption>{{__('Таблица заявок')}}</caption>
                         <div class="d-flex mb-4">
                             <div>
-                                <button class="button" onclick="window.location.reload();">Обновить список</button>
-
+                                <button class="btn btn-success" onclick="window.location.reload();">Обновить список</button>
                             </div>
                             <div class="ms-3">
                                 <select class="form-select" name="filterStatus" id="filterStatus"

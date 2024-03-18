@@ -8,14 +8,15 @@ use Illuminate\Support\Facades\Event;
 
 class AdminServiceProvider extends ServiceProvider
 {
-//    protected $listen = [
-//        SendApprovingEmailNotificationEvent::class => [
-//            MyEventListener::class,
-//        ],
-//    ];
+    protected $listen = [
+        SendApprovingEmailNotificationEvent::class => [
+            MyEventListener::class,
+        ],
+    ];
 
     public function boot(): void
     {
+        Event::listen(SendApprovingEmailNotificationEvent::class, MyEventListener::class);
     }
 }
 

@@ -27,9 +27,9 @@ class AdminController extends Controller
         }
 
         if ($filter != 'all') {
-            $applications = Application::where('status', $filter)->get();
+            $applications = Application::where('status', $filter)->orderBy('created_at', 'desc')->get();
         } else {
-            $applications = Application::all();
+            $applications = Application::orderBy('created_at', 'desc')->get();
         }
 
         return view('admin.showAllApp', compact('applications'))->with($filter);
@@ -63,8 +63,6 @@ class AdminController extends Controller
         $applicationData = $request->only(['id', 'with_letter']);
 
         $data = $adminPanelService->proccessData($applicationData)->run();
-
-        dd($data);
 
         $approved_status = $adminPanelService->sendDataToGoogleSheets($data)->run();
 

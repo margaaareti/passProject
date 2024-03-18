@@ -84,6 +84,8 @@ class ApplicationProccessAction
             $sheetData->{$key} = $value;
         }
 
+        $sheetData->unset('applicationable');
+
         return $sheetData;
     }
 

@@ -44,4 +44,12 @@ class GoogleSheetDataDTO
 
         return $object;
     }
+
+
+    public function unset($name)
+    {
+        if (property_exists($this, $name)) {
+            unset($this->{$name});
+        }
+    }
 }

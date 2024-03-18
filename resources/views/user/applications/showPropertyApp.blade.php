@@ -36,13 +36,13 @@
                         <p class="card-body__text">
                             <strong>Отправлено:</strong> {{$application->created_at->format('H:i:s d.m.Y')}}</p>
                         @if($application->applicationable->object_in)
-                            <p class="card-body__text"><strong>Дата вноса:</strong>  </strong>{{date_format(date_create($application->{'property-in-date'}),'d.m.Y') }}
+                            <p class="card-body__text"><strong>Дата вноса:</strong> {{date_format(date_create($application->start_date),'d.m.Y') }}
                             </p>
                             <p class="card-body__text"><strong>Локация:</strong> {{$application->applicationable->object_in}}
                             </p>
                         @endif
                         @if($application->applicationable->object_out)
-                            <p class="card-body__text"><strong>Дата вноса: </strong>{{date_format(date_create($application->{'property-out-date'}),'d.m.Y') }}
+                            <p class="card-body__text"><strong>Дата выноса: </strong>{{date_format(date_create($application->end_date),'d.m.Y') }}
                             </p>
                             <p class="card-body__text"><strong>Локация:</strong> {{$application->applicationable->object_out}}</p>
                         @endif

@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\Jobs\EmailNotificationsJobs\Cars\SendNewCarApplicationNotification;
-use App\Jobs\EmailNotificationsJobs\Guests\SendAddNewGuestNotification;
 use App\Jobs\EmailNotificationsJobs\Guests\SendNewGuestApplicationNotification;
 use App\Models\Application;
 use App\Models\CarApplication;

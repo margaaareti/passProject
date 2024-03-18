@@ -53,16 +53,21 @@ class SendDataToGoogleSheetsAction
             $range_to_fill = 'A1';
             $spreadSheetId = '1aij-vtxBkhL7OpZjPutJdlThGZd0fdYVR7vtPidpVaA';
 
-            // Создаем новый лист
+            // Создание нового листа
 //            Sheets::spreadsheetByTitle($spreadsheetId)->addSheet($newSheetTitle);
             // Получаем объект листа по заголовку
             $newSheet = Sheets::spreadsheetByTitle($sheetName)->sheet($listName);
-            // Вставляем данные в новый лист
-            $newSheet->range($range_to_fill)->append([$array]);
 
-            dispatch(new GoogleSheetsColorCell($spreadSheetId, $listName));
+            if (property_exists($this->appData, 'object_in') && property_exists($this->appData, 'object_out') &&
+                $this->appData->object_in !== null && $this->appData->object_out !== null) {
+                $this->processObjectInOut($array, $newSheet, $range_to_fill,$spreadSheetId,$listName);
+            } else {
+                $newSheet->range($range_to_fill)->append([$array]);
+                dispatch(new GoogleSheetsColorCell($spreadSheetId, $listName));
+            }
 
-            if ($this->appData->with_letter === true) {
+            if ($this->appData->with_letter) {
+                Log::info("Вызов отправки мыла 1");
                 event(new SendApprovingEmailNotificationEvent([
                     'app_id' => $this->appData->app_id,
                     'email' => $this->appData->user_email,
@@ -76,5 +81,22 @@ class SendDataToGoogleSheetsAction
             Log::error('Error sending data To google sheets: ' . $e->getMessage());
             return $e->getMessage();
         }
+    }
+
+    protected function processObjectInOut(array &$array, $newSheet, $range_to_fill, $spreadSheetId, $listName)
+    {
+        $array[4] = $this->appData->start_date;
+        $array[5] = $this->appData->start_date;
+        $array[7] = $this->appData->object_in;
+        $array[9] = 'Внос ' . $array[9];
+        $newSheet->range($range_to_fill)->append([$array]);
+        dispatch(new GoogleSheetsColorCell($spreadSheetId, $listName));
+
+        $array[4] = $this->appData->end_date;
+        $array[5] = $this->appData->end_date;
+        $array[7] = $this->appData->object_out;
+        $array[9] = 'Вынос ' . $array[9];
+        $newSheet->range($range_to_fill)->append([$array]);
+        dispatch(new GoogleSheetsColorCell($spreadSheetId, $listName));
     }
 }
