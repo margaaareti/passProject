@@ -47,7 +47,7 @@
                                 </tr>
                                 <tr>
                                     <th>Локация</th>
-                                    <td>{{$application->object}}</td>
+                                    <td>{!! nl2br(e($application->object)) !!}</td>
                                 </tr>
                                 <tr>
                                     <th>Цель</th>

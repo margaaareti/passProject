@@ -61,6 +61,8 @@
 
                     <x-card-body>
 
+                        <label for="test-input">Test</label>
+
                         <x-card-form id="form1" type="cars" data-target="confirmationModal"
                                      action="{{ route('carCreate')}}"
                                      method="POST">
@@ -103,7 +105,9 @@
                                 </x-common.common-person-info>
 
                                 <x-form-item class="mt-3 mb-3">
-                                    <button type="submit" class="btn">{{__('Отправить')}}</button>
+                                    <x-button class="btn-submit" type="submit">
+                                        {{__('Отправить')}}
+                                    </x-button>
                                 </x-form-item>
 
                             </x-common.common-form-items>
@@ -130,7 +134,6 @@
 
                                 <x-card-form id="form2" type="guests" method="POST" data-target="confirmationModal"
                                              action="{{ route('guest.app.create') }}">
-
                                     <input id='2' type="hidden" name="selected_form" value="Guests"/>
 
                                     <x-common.common-form-items :user="$user" :objects="$objectsForInvitation">
@@ -169,7 +172,7 @@
 
 
                                         <x-form-item class="mt-3 mb-3">
-                                            <x-button type="submit">
+                                            <x-button class="btn-submit" type="submit">
                                                 {{__('Отправить')}}
                                             </x-button>
                                         </x-form-item>
@@ -297,11 +300,6 @@
                             <x-form-item class="mb-1 mt-1">
                                 <x-label for="equipment">{{__('Имущество/оборудованиe')}}:
                                 </x-label>
-{{--                                <x-textarea name="equipment" id="equipment" rows="4"--}}
-{{--                                            cols="40"--}}
-{{--                                            class="equipment-field @error('equipment') is-invalid @enderror">{{old('equipment')}}--}}
-{{--                                </x-textarea>--}}
-{{--                                <x-error name="equipment"/>--}}
                             </x-form-item>
 
                             <button type="button" id="addEquipmentBtn" class="btn btn-primary mb-2">Добавить +</button>
@@ -361,7 +359,7 @@
 
 
                             <x-form-item class="mt-3 mb-3">
-                                <x-button type="submit">
+                                <x-button class="btn-submit" type="submit">
                                     {{__('Отправить')}}
                                 </x-button>
                             </x-form-item>
@@ -375,6 +373,7 @@
             </div>
         </div>
     </div>
+
 
 
     <script>

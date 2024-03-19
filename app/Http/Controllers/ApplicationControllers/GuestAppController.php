@@ -40,6 +40,7 @@ class GuestAppController extends Controller
         if (!$selectedForm) {
             $selectedForm = '';
         }
+        dd($request->all());
 
 
         session(['selected_form' => $selectedForm]);

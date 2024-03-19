@@ -1,0 +1,85 @@
+//стили выпадающего списка при выборе объекта
+
+//кнопка
+.select2-close-btn {
+    width: 150px;
+    position: relative;
+    margin: 10px;
+    padding: 5px;
+    background-color: #e50c0c;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+
+    &:hover {
+        background: #1a202c;
+    }
+}
+
+//Выпадающее меню
+.select2-container {
+    //стилизация крестика удаления объекта в поле выьора
+    &--default .select2-selection--multiple .select2-selection__choice__remove {
+        color: #c53838 !important;
+        cursor: pointer;
+        display: inline-block;
+        font-weight: bold;
+        margin-right: 3px;
+    }
+
+    // Стилизация поля ввода
+    //&--default .select2-selection {
+    //    background: linear-gradient(to bottom right, #e7e1e1, #e3e1e1);
+    //    border-color: black;
+    //    border-width: 1px;
+    //    margin-top: 3px;
+    //    margin-bottom: 5px;
+    //    transition: box-shadow 0.3s ease-in-out;;
+    //
+    //    &:hover {
+    //        border-width: 1px;
+    //        box-shadow: 0 0 5px 3px rgba(62, 63, 66, 0.5);
+    //    }
+    //
+    //    &:focus {
+    //        box-shadow: 0 0 5px 3px rgba(62, 63, 66, 0.85)
+    //    }
+    //
+    //    .select2-search__field {
+    //        &:focus {
+    //            box-shadow: none;
+    //        }
+    //    }
+    //}
+
+
+    // Стилизация выбранных элементов в поле ввода
+    .select2-selection {
+        .select2-selection__choice {
+            background: #ffffff;
+            color: black;
+        }
+    }
+
+
+    // Стилизация выпадающего списка
+    .select2 {
+        &-results__option {
+            background: linear-gradient(to bottom right, #e0e0e0, #d1d1d1);
+
+            &:hover {
+                background: rgba(116, 220, 225, 0.85);
+            }
+
+            &[aria-selected="true"] {
+                background: rgba(137, 175, 180, 0.85);
+                border: #ef4444;
+            }
+        }
+
+        //&-search__field {
+        //    display: none;
+        //}
+    }
+}

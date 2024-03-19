@@ -8,9 +8,6 @@ $(document).ready(function () {
             dropdownParent: $('body')
         });
 
-        $objectSelect.on('select2:close', function () {
-            $(this).select2('close');
-        });
 
         $objectSelect.on('select2:open', function () {
             var $dropdown = $('.select2-dropdown');

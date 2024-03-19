@@ -44,7 +44,6 @@
         </x-textarea>
 
         <x-error name="purpose"/>
-
     </x-form-item>
 
     {{$slot}}

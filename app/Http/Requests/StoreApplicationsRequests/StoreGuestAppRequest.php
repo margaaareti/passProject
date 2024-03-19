@@ -30,10 +30,10 @@ class StoreGuestAppRequest extends FormRequest
             'time_end' => ['nullable', 'required_with:time_start', 'regex:/^\d{2}:\d{2}$/' ],
             'object' => ['required','array'],
             'rooms' => ['nullable','string'],
-            'purpose' => ['required', 'string', 'max:150'],
+            'purpose' => ['required','string', 'max:150'], //'regex:/^[\p{Cyrillic}\s]+$/u'- только кириллица (тольк русские символы)
             'contract_number' => ['nullable', 'string', 'max:150'],
             'equipment' => ['nullable','string', 'max:250'],
-            'guests' => ['required', 'string', 'max:1000','regex:/^[^0-9]+$/'],
+            'guests' => ['required', 'string', 'max:10000',], //'regex:/^[^0-9]+$/' - запрет на ввод цифр в поле
             'responsible_person' => ['required'],
             'phone_number' => ['required', 'string', 'regex:/^8-[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}$/', 'starts_with:8'],
             'additional_info' => ['nullable','max:300'],

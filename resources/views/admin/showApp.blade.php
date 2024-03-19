@@ -22,7 +22,6 @@
                     <div class=""><small>({{$application->approver->last_name}} {{$application->approver->name}}
                             ) </small></div>
                 </div>
-                </div>
                 <div class="alert alert-warning text-center mb-0" role="alert">
                     Заявка находится в ожидании по причине: {{$application->pending_comment}}
                 </div>
@@ -115,7 +114,10 @@
                                     </td>
                                 </tr>
                             @endif
-
+                            <tr>
+                                <th>Цель</th>
+                                <td>{{$application->purpose}}</td>
+                            </tr>
                             <tr>
                                 <th>Ответственный</th>
                                 <td>{{$application->responsible_person}}</td>

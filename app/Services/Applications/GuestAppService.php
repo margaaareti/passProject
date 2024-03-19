@@ -22,9 +22,9 @@ class GuestAppService extends AppService
         $data['guests'] = preg_split("/[\n,]+/", str_replace("\r\n", "\n", $data['guests']));
         $data['guests_count'] = count($data['guests']);
 
-
-        $data = $this->processCommonData($data);
-
+        $data['guests'] = array_map(function($name) {
+            return preg_replace('/^\s*[\d\.]+\s*/', '', $name);
+        }, $data['guests']);
 
         try {
             return $this->guestAppRepository->create($data);
