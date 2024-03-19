@@ -40,11 +40,15 @@
                 </x-label>
             </div>
 
-            <div>
-                <input type="checkbox" name="Checkbox2" class="phone-checkbox paste-checkbox" {{ session('checkbox2') ? 'checked' : '' }}>
-                <x-label class="ms-1" for="Checkbox2">{{__('Указать свой номер:')}}</x-label>
+            <div class="checkbox-wrapper-29">
+                <label class="checkbox">
+                    <input type="checkbox" name="Checkbox2" class="phone-checkbox paste-checkbox checkbox__input" {{ session('checkbox2') ? 'checked' : '' }}>
+                    <span class="checkbox__label"></span>
+                    <span class="ms-1">{{__('Указать свой номер:')}}</span>
+                </label>
             </div>
         </div>
+
         <x-input name="phone_number"
                  class="number-field @error('phone_number') is-invalid @enderror"
         />
@@ -155,6 +159,135 @@
         });
 
     </script>
+
+
+
+    <style>
+        .checkbox-wrapper-29 {
+            --size: 1rem;
+            --background: #fff;
+            font-size: var(--size);
+        }
+
+        .checkbox-wrapper-29 *,
+        .checkbox-wrapper-29 *::after,
+        .checkbox-wrapper-29 *::before {
+            box-sizing: border-box;
+        }
+
+        .checkbox-wrapper-29 input[type="checkbox"] {
+            visibility: hidden;
+            display: none;
+        }
+
+        .checkbox-wrapper-29 .checkbox__label {
+            width: var(--size);
+        }
+
+        .checkbox-wrapper-29 .checkbox__label:before {
+            content: ' ';
+            display: block;
+            height: var(--size);
+            width: var(--size);
+            position: absolute;
+            top: calc(var(--size) * 0.125);
+            left: 0;
+            background: var(--background);
+        }
+
+        .checkbox-wrapper-29 .checkbox__label:after {
+            content: ' ';
+            display: block;
+            height: 20px;
+            width: 20px;
+            border: calc(var(--size) * .14) solid #888686;
+            transition: 200ms;
+            position: absolute;
+            top: calc(var(--size) * 0.125);
+            left: 0;
+            background: var(--background);
+        }
+
+        .checkbox-wrapper-29 .checkbox__label:after {
+            transition: 100ms ease-in-out;
+        }
+
+        .checkbox-wrapper-29 .checkbox__input:checked ~ .checkbox__label:after {
+            border-top-style: none;
+            border-right-style: none;
+            -ms-transform: rotate(-45deg); /* IE9 */
+            transform: rotate(-45deg);
+            height: calc(var(--size) * .5);
+            border-color: green;
+        }
+
+        .checkbox-wrapper-29 .checkbox {
+            position: relative;
+            display: flex;
+            cursor: pointer;
+            /* Mobile Safari: */
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+        }
+
+        .checkbox-wrapper-29 .checkbox__label:after:hover,
+        .checkbox-wrapper-29 .checkbox__label:after:active {
+            border-color: green;
+        }
+
+        .checkbox-wrapper-29 .checkbox__label {
+            margin-right: calc(var(--size) * 0.45);
+        }
+    </style>
+
+
+
+    <style>
+        .checkbox-wrapper-47 input[type="checkbox"] {
+            display: none;
+            visibility: hidden;
+        }
+
+        .checkbox-wrapper-47 label {
+            position: relative;
+            padding-left: 2em;
+            padding-right: 1em;
+            line-height: 2;
+            cursor: pointer;
+            display: inline-flex;
+        }
+
+        .checkbox-wrapper-47 label:before {
+            box-sizing: border-box;
+            content: " ";
+            position: absolute;
+            top: 0.3em;
+            left: 0;
+            display: block;
+            width: 1.4em;
+            height: 1.4em;
+            border: 2px solid #9098A9;
+            border-radius: 6px;
+            z-index: -1;
+        }
+
+        .checkbox-wrapper-47 input[type=checkbox]:checked + label {
+            padding-left: 1em;
+            color: #0f5229;
+        }
+        .checkbox-wrapper-47 input[type=checkbox]:checked + label:before {
+            top: 0;
+            width: 100%;
+            height: 2em;
+            background: #b7e6c9;
+            border-color: #2cbc63;
+        }
+
+        .checkbox-wrapper-47 label,
+        .checkbox-wrapper-47 label::before {
+            transition: 0.25s all ease;
+        }
+    </style>
+
 
 
 </div>
