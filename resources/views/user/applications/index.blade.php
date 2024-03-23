@@ -260,7 +260,7 @@
                                             @enderror
                                         </div>
 
-                                        <x-form-item class="col-md-5">
+                                        <x-form-item class="col-md-5 object-in">
                                             <x-ObjectsInput
                                                 :objects="$objectsForInvitation"
                                                 inputName="object_in"
@@ -283,14 +283,16 @@
                                             @enderror
                                         </div>
 
-                                        <x-form-item class="col-md-5">
+                                        <x-form-item class="col-md-5 object-out">
                                             <x-ObjectsInput :objects="$objectsForInvitation"
                                                             inputName="object_out"
                                                             selectClass="object-out"
                                             >
                                             </x-ObjectsInput>
-
                                         </x-form-item>
+                                        @if($errors->has('object_out'))
+                                            <span class="is-invalid">Упс, ошибка</span>
+                                        @endif
                                     </div>
                                 </div>
 
@@ -414,6 +416,8 @@
             const propertyOutDate = document.querySelector('.property-out-date');
             const selectObjectIn = document.querySelector('.object-in');
             const selectObjectOut = document.querySelector('.object-out');
+            console.log(selectObjectOut, selectObjectIn)
+            console.log('ffff')
 
             function togglePropertyGroups() {
                 const inRadio = document.querySelector('input[name="type"][value="Внос"]');

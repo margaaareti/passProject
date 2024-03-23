@@ -28,6 +28,12 @@
         margin-right: 3px;
     }
 
+    &--default .select2-selection{
+        border-radius: 0;
+        background: linear-gradient(to bottom right, #e7e1e1, #e3e1e1);
+    }
+
+
     // Стилизация поля ввода
     //&--default .select2-selection {
     //    background: linear-gradient(to bottom right, #e7e1e1, #e3e1e1);
@@ -83,3 +89,9 @@
         //}
     }
 }
+
+.object-in,
+.object-out {
+    margin-top: 5px;
+}
+

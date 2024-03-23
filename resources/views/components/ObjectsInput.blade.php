@@ -13,7 +13,7 @@
           title="Указаны объекты, где имеется СКУД. Если нужный объект отсутствует в списке - необходимо подавать заявку на почту"><i
             class="fa-solid fa-circle-exclamation"></i></span>
 
-    <select class="object-select {{$selectClass}}" name="{{$fieldName}}" @if($multiple) multiple="multiple" @endif style="width: 100%" required>
+    <select class="object-select {{$selectClass}}" name="{{$fieldName}}" @if($multiple) multiple="multiple" @endif style="width: 100%">
         @if(!$multiple)
             <option value="" @if(!old($inputName)) selected @endif disabled>Выберите локацию</option>
         @endif

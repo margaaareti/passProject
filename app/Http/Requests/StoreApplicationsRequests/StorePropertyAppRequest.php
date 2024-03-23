@@ -3,6 +3,7 @@
 namespace App\Http\Requests\StoreApplicationsRequests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StorePropertyAppRequest extends FormRequest
 {
@@ -22,12 +23,35 @@ class StorePropertyAppRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'type' => ['required', Rule::in(['Внос','Вынос','Внос-Вынос'])],
             'department' => ['required', 'alpha', 'max:100'],
             'signed_by' => ['required', 'regex:/^[a-zA-Zа-яА-Я\s]+$/u', 'max:100'],
-            'property-in-date' => ['required_without:property-out-date', 'date', 'after or equal:today', 'nullable'],
-            'property-out-date' => ['required_without:property-in-date', 'date', 'after or equal: today', 'nullable'],
-            'object_out' => ['required_without:object_in'],
-            'object_in' => ['required_without:object_out'],
+            'property-in-date' => [
+                Rule::requiredIf(function () {
+                    return $this->type === 'Внос';
+                }),
+                'date',
+                'after_or_equal:today',
+                'nullable',
+            ],
+            'property-out-date' => [
+                Rule::requiredIf(function () {
+                    return $this->type === 'Вынос';
+                }),
+                'date',
+                'after_or_equal:today',
+                'nullable',
+            ],
+            'object_in' => [
+                Rule::requiredIf(function () {
+                    return $this->type === 'Внос' || $this->type === 'Внос-Вынос';
+                }),
+            ],
+            'object_out' => [
+                Rule::requiredIf(function () {
+                    return $this->type === 'Вынос' || $this->type === 'Внос-Вынос';
+                })
+            ],
             'rooms' => ['nullable','string'],
             'purpose' => ['required', 'string', 'max:150'],
             'contract_number' => ['nullable', 'string', 'max:150'],
@@ -44,6 +68,8 @@ class StorePropertyAppRequest extends FormRequest
             'department' => 'Поле "Подразделение" может содержать только буквы',
             'guests.regex' => 'Поле "ФИО гостя" может содержать только буквы',
             'phone_number.regex' => 'Телефон должен быть формата 8-XXX-XXX-XX-XX',
+            'object_in' => __('Поле "Локация для вноса" обязательно для заполнения'),
+            'object_out' => __('Поле "Локация для выноса" обязательно для заполнения'),
         ];
     }
 }

@@ -18,6 +18,7 @@ class PropertyAppController extends Controller
 
     public function store(StorePropertyAppRequest $request)
     {
+        dd($request->all());
 
         $limitExceeded = checkRequestLimit($request, 5);
         if ($limitExceeded) {

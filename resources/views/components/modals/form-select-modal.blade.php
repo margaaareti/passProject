@@ -5,7 +5,7 @@
                 <h1 class="modal-title select-modal-title fs-5" id="exampleModalLabel">Тип заявки</h1>
                 <button type="button" class="select-btn-close" data-bs-dismiss="modal" aria-label="Закрыть">
 {{--                    <span aria-hidden="true">&times;</span>--}}
-                    <span aria-hidden="true"><img style="width: 50px; height: 40px" src="https://i.gifer.com/H0tN.gif" alt=""></span>
+                    <span aria-hidden="true"> Закрыть <img style="width: 50px; height: 40px" src="https://i.gifer.com/H0tN.gif" alt=""></span>
                 </button>
             </div>
             <div class="modal-body select-modal-body">

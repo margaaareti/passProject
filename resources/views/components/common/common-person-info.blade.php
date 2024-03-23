@@ -50,7 +50,7 @@
         </div>
 
         <x-input name="phone_number"
-                 class="number-field @error('phone_number') is-invalid @enderror"
+                 class="number-field @error('phone_number') is-invalid @enderror placeholder-glow" value="8"
         />
 
        <x-error name="phone_number"></x-error>
@@ -87,6 +87,17 @@
             handleCheckbox('.responsible-checkbox', '.person-field', userLastName + ' ' + userName + ' ' + userPatronymic);
             handleCheckbox('.phone-checkbox', '.number-field', userPhoneNumber);
 
+            const phoneInput = document.querySelector('.number-field');
+            const phoneCheckbox = document.querySelector('.phone-checkbox');
+
+            phoneInput.addEventListener('input', function () {
+                if (this.value === userPhoneNumber) {
+                    phoneCheckbox.checked = true;
+                } else {
+                    phoneCheckbox.checked = false;
+                }
+            });
+
             function resetInputs(checkboxSelector, inputSelector) {
                 const checkboxes = document.querySelectorAll(checkboxSelector);
                 const inputs = document.querySelectorAll(inputSelector);
@@ -96,7 +107,11 @@
                 });
 
                 inputs.forEach(function (input) {
-                    input.value = '';
+                    if (input.name === 'phone_number') {
+                        input.value = '8';
+                    } else {
+                        input.value = '';
+                    }
                 });
             }
 
@@ -112,20 +127,17 @@
                     });
                 });
 
-                // Добавляем обработчик события для очистки чекбоксов при изменении значений полей
                 inputs.forEach(function (input) {
                     input.addEventListener('input', function () {
-                        {
-                            checkboxes.forEach(function (checkbox) {
-                                checkbox.checked = false;
-                            });
-                        }
+                        checkboxes.forEach(function (checkbox) {
+                            checkbox.checked = false;
+                        });
                     });
                 });
 
                 inputs.forEach(function (input) {
                     input.addEventListener('input', function () {
-                        if (input.value === userLastName + ' ' + userName + ' ' + userPatronymic || input.value === userPhoneNumber) {
+                        if (input.value === value) {
                             checkboxes.forEach(function (checkbox) {
                                 checkbox.checked = true;
                             });
@@ -238,57 +250,6 @@
             margin-right: calc(var(--size) * 0.45);
         }
     </style>
-
-
-
-    <style>
-        .checkbox-wrapper-47 input[type="checkbox"] {
-            display: none;
-            visibility: hidden;
-        }
-
-        .checkbox-wrapper-47 label {
-            position: relative;
-            padding-left: 2em;
-            padding-right: 1em;
-            line-height: 2;
-            cursor: pointer;
-            display: inline-flex;
-        }
-
-        .checkbox-wrapper-47 label:before {
-            box-sizing: border-box;
-            content: " ";
-            position: absolute;
-            top: 0.3em;
-            left: 0;
-            display: block;
-            width: 1.4em;
-            height: 1.4em;
-            border: 2px solid #9098A9;
-            border-radius: 6px;
-            z-index: -1;
-        }
-
-        .checkbox-wrapper-47 input[type=checkbox]:checked + label {
-            padding-left: 1em;
-            color: #0f5229;
-        }
-        .checkbox-wrapper-47 input[type=checkbox]:checked + label:before {
-            top: 0;
-            width: 100%;
-            height: 2em;
-            background: #b7e6c9;
-            border-color: #2cbc63;
-        }
-
-        .checkbox-wrapper-47 label,
-        .checkbox-wrapper-47 label::before {
-            transition: 0.25s all ease;
-        }
-    </style>
-
-
 
 </div>
 
